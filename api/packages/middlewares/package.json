@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "@chilco/middlewares",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Christoph Abs <christoph.abs@visit4.me>",
+  "homepage": "https://chilco.de",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 0",
+    "test-ci": "yarn test"
+  },
+  "dependencies": {
+    "@chilco/common-service": "^1.0.0",
+    "@chilco/generic": "^1.0.0",
+    "@chilco/messages": "^1.0.0",
+    "@chilco/models": "^1.0.0",
+    "@chilco/types": "^1.0.0",
+    "@chilco/service-authentication": "^1.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "@chilco/testing",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Christoph Abs <christoph.abs@visit4.me>",
+  "homepage": "https://chilco.de",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 0",
+    "test-ci": "yarn test"
+  },
+  "dependencies": {
+    "@chilco/common-service": "^1.0.0",
+    "@chilco/generic": "^1.0.0",
+    "@chilco/messages": "^1.0.0",
+    "@chilco/middlewares": "^1.0.0",
+    "@chilco/models": "^1.0.0",
+    "@chilco/types": "^1.0.0",
+    "generate-password": "^1.4.2",
+    "mongoose": "^5.6.6",
+    "password-hash": "^1.2.2"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "@chilco/generic",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Christoph Abs <christoph.abs@nexenio.com>",
+  "homepage": "https://chilco.de",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 0",
+    "test-ci": "yarn test"
+  },
+  "dependencies": {
+    "@chilco/config": "^1.0.0",
+    "@chilco/types": "^1.0.0",
+    "@chilco/messages": "^1.0.0",
+    "jsonexport": "^2.4.1",
+    "express": "^4.17.1",
+    "form-data": "^2.5.0",
+    "mongoose": "^5.6.6"
+  }
+}
