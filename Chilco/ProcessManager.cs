@@ -11,7 +11,7 @@ namespace Chilco
     {
         private bool IsRunning;
         public Stopwatch RunningTime;
-        public ProcessGroup Processes;
+        public ProcessGroup ProcessGroup;
         public ProcessManager(ProcessGroup processGroup)
         {
             throw new NotImplementedException();
@@ -19,7 +19,20 @@ namespace Chilco
 
         private void KillProcesses()
         {
-            throw new NotImplementedException();
+            //For every Process in the Processgroup
+            foreach(string s in ProcessGroup.Processes)
+            {
+                //For every Process currently running that has the name s
+                foreach(Process p in Process.GetProcessesByName(s))
+                {
+                    //Checks if process is actually running 
+                    //(sometimes the Process closes itself before being killed and Chilco crashes)
+                    if(Process.GetProcessesByName(s).Length > 0)
+                    {
+                        p.Kill();
+                    }
+                }
+            }
         }
 
         /// <summary>
