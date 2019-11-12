@@ -11,12 +11,16 @@ namespace Chilco
         public List<String> Processes;
         public TimeSpan LeftoverTime;
         public bool DoTimeRollover;
+        public DateTime DateLastRun;
+        public TimeSpan DailyPlaytime;
 
-        public ProcessGroup(List<String> Processes, TimeSpan LeftoverTime, bool DoTimeRollover)
+        public ProcessGroup(List<String> processes, TimeSpan leftoverTime, bool doTimeRollover, DateTime dateLastRun, TimeSpan dailyPlaytime)
         {
-            this.Processes = Processes;
-            this.LeftoverTime = LeftoverTime;
-            this.DoTimeRollover = DoTimeRollover;
+            this.Processes = processes;
+            this.LeftoverTime = leftoverTime;
+            this.DoTimeRollover = doTimeRollover;
+            this.DateLastRun = dateLastRun;
+            this.DailyPlaytime = dailyPlaytime;
         }
     }
 }

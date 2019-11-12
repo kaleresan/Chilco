@@ -8,12 +8,12 @@ namespace Chilco
 {
     class FileIO
     {
-        public static ClientData LoadClientData()
+        public static List<ProcessGroup> LoadClientData()
         {
             throw new NotImplementedException();
         }
 
-        public static void SaveClientData(ClientData data)
+        public static void SaveClientData(List<ProcessGroup> data)
         {
             throw new NotImplementedException();
         }

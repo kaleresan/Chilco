@@ -12,7 +12,7 @@ namespace Chilco
         private bool IsRunning;
         public Stopwatch RunningTime;
         public ProcessGroup Processes;
-        public ProcessManager()
+        public ProcessManager(ProcessGroup processGroup)
         {
             throw new NotImplementedException();
         }
