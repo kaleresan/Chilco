@@ -1,0 +1,21 @@
+FROM node:alpine
+
+# Configuration
+ARG CACHEBUST=1 
+ENV source="."
+ENV work="/home/api"
+
+RUN mkdir ${work}
+COPY ${source} ${work}
+
+WORKDIR ${work}
+
+RUN npm i -g yarn lerna json
+
+RUN for d in ./packages/*/; do (cd "$d" && json -I -f "./package.json" -e "this.main='lib/index.js'"); done
+
+RUN yarn --silent && lerna bootstrap
+RUN yarn compile
+
+
+ENTRYPOINT ["/bin/sh"]
