@@ -1,0 +1,7 @@
+node_modules
+dist
+lib
+build
+.idea
+.vscode
+.DS_Store

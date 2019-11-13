@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "name": "@chilco/assets",
+  "main": "index.ts"
+}
