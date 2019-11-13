@@ -1,0 +1,22 @@
+FROM node:alpine
+
+# Configuration
+ARG CACHEBUST=1 
+
+# Environment
+ENV source="."
+ENV work="/home/app"
+ENV SKIP_PREFLIGHT_CHECK=true
+
+RUN mkdir $work
+COPY . $work
+WORKDIR $work
+
+RUN npm i -g yarn lerna
+
+RUN yarn --silent && lerna bootstrap
+# RUN yarn compile
+RUN yarn build
+
+
+ENTRYPOINT ["/bin/sh"]
