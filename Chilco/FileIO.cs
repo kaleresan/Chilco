@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +8,12 @@ namespace Chilco
 {
     class FileIO
     {
-        public static List<ProcessGroup> LoadClientData()
+        public static List<ProcessGroup> Load()
         {
             throw new NotImplementedException();
         }
 
-        public static void SaveClientData(List<ProcessGroup> data)
+        public static void Save(List<ProcessGroup> data)
         {
             throw new NotImplementedException();
         }

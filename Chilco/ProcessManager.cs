@@ -10,7 +10,7 @@ namespace Chilco
     class ProcessManager
     {
         private bool IsRunning;
-        public Stopwatch RunningTime;
+        private Stopwatch RunningTime;
         public ProcessGroup ProcessGroup;
         public ProcessManager(ProcessGroup processGroup)
         {
