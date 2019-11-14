@@ -21,11 +21,13 @@ export interface ServiceConfigType {
     basePath: string;
     sessionConfig: any;
     proxyRoute: string;
+    models?: Array<any>;
     mongodbURI?: string;
     serviceName: string;
     useSession: boolean;
     useWebsocket: boolean;
     websocketPath?: string;
+    postgresdbURI?: string;
     websocket: (ws: any) => void;
     upgradeToWebsocket?: () => any;
     setup?: (app: Application) => void;
@@ -47,6 +49,7 @@ export function createServiceConfig(
         serviceName: 'Service',
         websocketPath: '/socket.io',
         mongodbURI: 'mongodb://mongo/chilco',
+        postgresdbURI: 'postgres://chilco:chilco@postgres:5432/chilco',
         port: parseInt(process.env.PORT) || 8080,
         ...overwrite,
     };

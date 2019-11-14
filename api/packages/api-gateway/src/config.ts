@@ -1,4 +1,4 @@
-import { Application, Router } from 'express';
+import { Application } from 'express';
 
 import { createServiceConfig } from '@chilco/common-service';
 
