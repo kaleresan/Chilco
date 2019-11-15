@@ -13,6 +13,8 @@ namespace Chilco
         public ProcessGroup ProcessGroup;
         public ProcessManager(ProcessGroup processGroup)
         {
+            this.ProcessGroup = processGroup;
+            RunningTime = new Stopwatch();
             throw new NotImplementedException();
         }
 
@@ -57,14 +59,30 @@ namespace Chilco
         /// Checks if any process in the ProcessGroup is running.
         /// </summary>
         /// <returns>true if one or more processes in the Group are running</returns>
-        public bool CheckProcesses()
+        public void CheckProcesses()
         {
-            throw new NotImplementedException();
+            UpdateLeftoverTime();
+            if(ProcessGroup.LeftoverTime.Ticks == 0)
+            {
+                KillProcesses();
+            }
         }
 
         public void UpdateLeftoverTime()
         {
-            throw new NotImplementedException();
+            if (RunningTime.IsRunning)
+            {
+                if (ProcessGroup.LeftoverTime > RunningTime.Elapsed)
+                    ProcessGroup.LeftoverTime -= RunningTime.Elapsed;
+                else ProcessGroup.LeftoverTime = new TimeSpan(0);
+
+                RunningTime.Reset();
+            }
+
+            if (IsRunning() && ProcessGroup.LeftoverTime.Ticks > 0)
+            {
+                RunningTime.Start();
+                ProcessGroup.DateLastRun = DateTime.Now;
+            }
         }
-    }
-}
+
