@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,7 +9,6 @@ namespace Chilco
 {
     class ProcessManager
     {
-        private bool IsRunning;
         private Stopwatch RunningTime;
         public ProcessGroup ProcessGroup;
         public ProcessManager(ProcessGroup processGroup)
@@ -33,6 +32,19 @@ namespace Chilco
                     }
                 }
             }
+
+        public bool IsRunning()
+        {
+            bool running = false;
+            foreach (string s in ProcessGroup.Processes)
+            {
+                if (Process.GetProcessesByName(s).Length > 0)
+                {
+                    running = true;
+                    break;
+                }
+            }
+            return running;
         }
 
         /// <summary>
