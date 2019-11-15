@@ -21,7 +21,7 @@ namespace Chilco
         private void KillProcesses()
         {
             //For every Process in the Processgroup
-            foreach(string s in ProcessGroup.Processes)
+            foreach (string s in ProcessGroup.Processes)
             {
                 KillProcess(s);
             }
@@ -62,7 +62,7 @@ namespace Chilco
         public void CheckProcesses()
         {
             UpdateLeftoverTime();
-            if(ProcessGroup.LeftoverTime.Ticks == 0)
+            if (ProcessGroup.LeftoverTime.Ticks == 0)
             {
                 KillProcesses();
             }
@@ -85,4 +85,6 @@ namespace Chilco
                 ProcessGroup.DateLastRun = DateTime.Now;
             }
         }
+    }
+}
 
