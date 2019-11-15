@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +23,7 @@ namespace Chilco
             this.DoTimeRollover = doTimeRollover;
             this.DateLastRun = dateLastRun;
             this.DailyPlaytime = dailyPlaytime;
+            Settings.GetInstance().settings.Add(this);
         }
     }
 }
