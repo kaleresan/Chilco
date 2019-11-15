@@ -19,8 +19,7 @@ namespace Chilco
 
         public static void Save()
         {
-            var myFile = File.Create(path);
-            myFile.Close();
+            File.Create(path).Close();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(Settings.GetInstance());
             File.WriteAllText(path, json);
         }
