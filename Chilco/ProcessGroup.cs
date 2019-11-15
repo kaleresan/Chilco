@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +8,16 @@ namespace Chilco
 {
     class ProcessGroup
     {
+        public string Title;
         public List<String> Processes;
         public TimeSpan LeftoverTime;
         public bool DoTimeRollover;
         public DateTime DateLastRun;
         public TimeSpan DailyPlaytime;
 
-        public ProcessGroup(List<String> processes, TimeSpan leftoverTime, bool doTimeRollover, DateTime dateLastRun, TimeSpan dailyPlaytime)
+        public ProcessGroup(string title, List<String> processes, TimeSpan leftoverTime, bool doTimeRollover, DateTime dateLastRun, TimeSpan dailyPlaytime)
         {
+            this.Title = title;
             this.Processes = processes;
             this.LeftoverTime = leftoverTime;
             this.DoTimeRollover = doTimeRollover;
