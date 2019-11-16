@@ -40,7 +40,10 @@ namespace Chilco
                 }
             }
         }
-
+        /// <summary>
+        /// Checks if any process in the ProcessGroup is running.
+        /// </summary>
+        /// <returns>true if one or more processes in the Group are running</returns>
         public bool IsRunning()
         {
             bool running = false;
@@ -55,10 +58,7 @@ namespace Chilco
             return running;
         }
 
-        /// <summary>
-        /// Checks if any process in the ProcessGroup is running.
-        /// </summary>
-        /// <returns>true if one or more processes in the Group are running</returns>
+
         public void CheckProcesses()
         {
             UpdateLeftoverTime();
