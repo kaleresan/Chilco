@@ -11,10 +11,7 @@ namespace Chilco
         public static void Load()
         {
             string json = File.ReadAllText(path);
-            Settings settings = Settings.GetInstance();
-            settings.settings.Clear();
-            settings.users.Clear();
-            settings = Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json);
+            Settings.Update(Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json));
         }
 
         public static void Save()
