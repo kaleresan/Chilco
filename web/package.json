@@ -1,0 +1,58 @@
+{
+  "name": "@chilco/web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Visit4me UG",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "eslint . --ext=.ts --ext=.tsx",
+    "lint:fix": "eslint . --ext=.ts --ext=.tsx --fix",
+    "storybook": "cd packages/common-ui && yarn storybook",
+    "@chilco/app-register": "cd packages/app-register && yarn start",
+    "@chilco/app-salesview": "cd packages/app-salesview && yarn start",
+    "@chilco/app-dashboard": "cd packages/app-dashboard && yarn start",
+    "@chilco/app-authentication": "cd packages/app-authentication && yarn start"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@types/history": "^4.7.3",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-intl": "^3.0.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/react-router": "^5.1.1",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
+    "@types/styled-components": "^4.1.19",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "eslint-plugin-typescript": "^0.14.0",
+    "lerna": "^3.16.4",
+    "prettier": "^1.18.2",
+    "react-docgen-typescript-loader": "^3.2.0",
+    "react-docgen-typescript-webpack-plugin": "^1.1.0",
+    "typescript": "^3.6.0"
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2",
+    "typescript": "^3.6.3"
+  }
+}

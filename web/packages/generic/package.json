@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "name": "@chilco/generic",
+  "author": "Christoph Abs <christoph.abs@visit4.me>",
+  "scripts": {
+    "tsc": "tsc"
+  }
+}

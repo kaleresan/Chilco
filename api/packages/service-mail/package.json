@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "@chilco/service-mail",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Jonathan Neidel <jonathan.neidel@visit4.me>",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "tsc": "tsc && cp -r src/static/ lib/src/static/",
+    "start": "TS_NODE_FILES=true ts-node server.ts",
+    "watch": "nodemon -e ts -w ../ -x yarn start",
+    "test": "echo \"Error: run tests from root\" && exit 0",
+    "test-ci": "yarn test",
+    "templates": "node lib/bin/download-template.js all"
+  },
+  "dependencies": {
+    "@chilco/common-service": "^1.0.0",
+    "@chilco/generic": "^1.0.0",
+    "@chilco/middlewares": "^1.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "node-fetch": "^2.6.0",
+    "nodemailer": "^6.3.0"
+  }
+}

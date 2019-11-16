@@ -1,0 +1,107 @@
+#!groovy
+
+def apps = []
+branchName = env.BRANCH_NAME
+escapedBranchName = branchName.replaceAll("/", "-")
+registry = "registry.visit4.me:5000"
+appImageTemplate = "${registry}/"
+builderImage = "${registry}/web_builder:${escapedBranchName}"
+
+def runShellCommand(cmd) {
+    sh "docker run --rm ${builderImage} -c '${cmd}'"
+}
+
+def cleanWorkspace() {
+    // sh "docker stop ${dbContainer} || exit 0"
+    sh 'docker rm $(docker ps -aq) || exit 0'
+    sh "docker rmi ${builderImage} || exit 0"
+    sh 'docker rmi --force $(docker images -f "dangling=true" -q) || exit 0'
+    sh 'docker volume rm $(docker volume ls -q) || exit 0'
+}
+
+Closure getShellCommandInLibOnNodeStep(lib, command) {
+    return {
+        node('docker') {
+            try {
+                runShellCommand('\"cd packages/${lib} && ${command}\"')
+            } finally {}
+            cleanWs() // run "Workspace Cleanup Plugin"
+        }
+    }
+}
+
+def getImageTagFromApp(app) {
+    return "${appImageTemplate}${app}:${branchName}"
+}
+
+pipeline{
+    agent {
+        label "docker"
+    }
+
+    stages {
+        stage('Build Testing Image') {
+           agent {
+                label "docker"
+            }
+            steps {
+                script {
+                    apps = sh (
+                        script: 'cd packages && find app-* -maxdepth 0',
+                        returnStdout: true
+                    ).split().toList()
+
+                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                }
+            }
+        }
+        stage('Testing and Linting') {
+            steps {
+                script {
+                    def appStages = [:]
+                    appStages["Linting"] = {
+                        runShellCommand('yarn lint');
+                    }
+
+                    apps.each { app ->
+                        appStages["Test ${app}"] = {
+                             // runShellCommand("cd packages/${app} && yarn test-ci");
+                        }
+                    }
+
+                    parallel appStages
+                }
+            }
+        }
+        stage('Deploment') {
+            agent {
+                label "docker"
+            }
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    def appStages = [:]
+                    apps.each { app ->
+                        appStages["Push ${app} image in registry"] = {
+                            image = getImageTagFromApp(app);
+                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg APP_NAME=${app} -f ./docker/Dockerfile --no-cache .";
+                            image = getImageTagFromApp(app);
+                            sh "docker push ${image}"
+                            image = getImageTagFromApp(app);
+                            sh "docker rmi ${image} || exit 0"
+                        }
+                    }
+
+                    parallel appStages
+                }
+            }
+        }
+    }
+    post {
+        always{
+            cleanWorkspace();
+        }
+    }
+}

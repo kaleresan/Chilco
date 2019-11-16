@@ -1,0 +1,2 @@
+import { MailService } from '.';
+MailService();

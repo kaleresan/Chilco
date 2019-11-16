@@ -1,0 +1,184 @@
+{
+  "SideBar": {
+    "Contacts": {
+      "Headline": "Contacts",
+      "MyContactTitle": "My Contacts",
+      "AllContactTitle": "All Contacts",
+      "OpenContactsTitle": "Open Contacts"
+    },
+    "Calendar": {
+      "Headline": "Calendar",
+      "Events": "Events"
+    },
+    "Sequence": {
+      "Headline": "Sequence"
+    },
+    "SupportTitle": "Support"
+  },
+  "Authentication": {
+    "Trial": {
+      "Headline": "Start you Free Trial",
+      "Input": {
+        "Email": "E-mail",
+        "Submit": "Start",
+        "FirstName": "First Name"
+      }
+    },
+    "Authorization": {
+      "Subline": "How to Login",
+      "Headline": "Dashboard Login",
+      "LandingPage": "Landingpage"
+    },
+    "Tutorial": {
+      "Headline": "You need more help? Here is our tutorial."
+    }
+  },
+  "ContactList": {
+    "Header": {
+      "Headline": "My Contacts",
+      "SearchPlaceholder": "Search",
+      "AddNewContact": "Add Contact"
+    },
+    "ListHeader": {
+      "Name": "Name",
+      "Owner": "Owner",
+      "Status": "Status",
+      "Channel": "Channel",
+      "Sequence": "Sequence",
+      "LeadSource": "Lead Source"
+    }
+  },
+  "EditContact": {
+    "SubMenu": {
+      "GDPR": "GDPR",
+      "Headline": "Contact",
+      "ContactData": "Contact Data",
+      "CompanyData": "Company Data",
+      "transactionData": "Transaction Data"
+    },
+    "Channel": {
+      "Headline": "Channel:",
+      "Form": {
+        "Email": {
+          "Title": "E-Mail",
+          "Placeholder": "example@example.com"
+        },
+        "Mobile": {
+          "Title": "Mobile",
+          "Placeholder": "+13142543423"
+        },
+        "Phone": {
+          "Title": "Phone",
+          "Placeholder": "+1212442313"
+        },
+        "LinkedIn": {
+          "Title": "LinkedIn",
+          "Placeholder": "https://linkedin.com/...."
+        }
+      }
+    },
+    "ContactData": {
+      "Headline": "Contact Data:",
+      "Form": {
+        "FirstName": {
+          "Title": "First name",
+          "Placeholder": "Moritz"
+        },
+        "SecondFirstName": {
+          "Title": "Middle name",
+          "Placeholder": "Björn"
+        },
+        "LastName": {
+          "Title": "Last name",
+          "Placeholder": "Tittler"
+        },
+        "Role": {
+          "Title": "Title",
+          "Placeholder": "CTO"
+        },
+        "Fax": {
+          "Title": "Fax",
+          "Placeholder": "030 122 211"
+        },
+        "Language": {
+          "Title": "Language",
+          "Placeholder": "German"
+        },
+        "Sex": {
+          "Title": "Sex",
+          "Placeholder": "Male"
+        },
+        "ConversationForm": {
+          "Title": "Conversation form",
+          "Placeholder": "Formal"
+        }
+      }
+    }
+  },
+  "FairsList": {
+    "Header": {
+      "Headline": "Events",
+      "AddNewFair": "Add new Event"
+    },
+    "ListHeader": {
+      "Title": "Title",
+      "Location": "Location",
+      "Date": "Date",
+      "Team": "Team"
+    },
+    "ListItem": {
+      "Actions": {
+        "Edit": "Edit Fair",
+        "Delete": "Delete Fair"
+      }
+    }
+  },
+  "Alert": {
+    "Submit": "Ok",
+    "Cancel": "Cancel"
+  },
+  "Alerts": {
+    "DeleteFair": {
+      "Headline": "Your are sure",
+      "Description": " "
+    }
+  },
+  "EditFair": {
+    "Title": {
+      "Title": "Fair Name",
+      "Placeholder": "Example Fair"
+    },
+    "Location":{
+      "Title": "Fair Location",
+      "Placeholder": "New York"
+    },
+    "StartAt": {
+      "Title": "Start at:",
+      "Placeholder": "dd-mm-yyyy"
+    },
+    "EndAt": {
+      "Title": "End at:",
+      "Placeholder": "dd-mm-yyyy"
+    },
+    "Submit": "Save"
+  },
+  "CreateFair": {
+    "Title": {
+      "Title": "Fair Name",
+      "Placeholder": "Example Fair"
+    },
+    "Location":{
+      "Title": "Fair Location",
+      "Placeholder": "New York"
+    },
+    "StartAt": {
+      "Title": "Start at:",
+      "Placeholder": "dd-mm-yyyy"
+    },
+    "EndAt": {
+      "Title": "End at:",
+      "Placeholder": "dd-mm-yyyy"
+    },
+    "Submit": "Create"
+  }
+}
