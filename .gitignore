@@ -332,3 +332,6 @@ ASALocalRun/
 #Node
 node_modules
 .DS_Store
+
+#Temp Dia file
+*.dia~
