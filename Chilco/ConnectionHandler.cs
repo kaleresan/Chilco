@@ -12,6 +12,7 @@ namespace Chilco
         public static void Connect() {
 
             throw new NotImplementedException();
+
             /*
              Order of tasks
                 -Websocket connect
@@ -36,7 +37,6 @@ namespace Chilco
 
         private static void ConnectWebsocket() {
 
-            throw new NotImplementedException();
             using (var ws = new WebSocket(DOMAIN))
             {
                 ws.OnMessage +=
@@ -71,19 +71,10 @@ namespace Chilco
 
             request.AddHeader("x-access-token", token);
 
-            //request.AddHeader("header", "value");
-
-
-            // sync with deserialization
-            //Settings.Update(client.Execute<Settings>(request).Data);
-
             // async with deserialization
             var asyncHandle = client.ExecuteAsync<Settings>(request, response => {
                 Settings.Update(response.Data);
             });
-
-            //abort the request on demand
-            //asyncHandle.Abort();
         }
     }
 }
