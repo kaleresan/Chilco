@@ -8,7 +8,7 @@ namespace Chilco
     {
 
         private const string DOMAIN = "http://chilco.de";
-
+      
         public static void Connect() {
 
             throw new NotImplementedException();
@@ -52,10 +52,9 @@ namespace Chilco
                         default:            UpdateRules();    break;
 
                     }
-                
                 };
                 //ws.OnOpen += (sender, e) => UpdateRules();               
-                
+               
                 ws.Connect();
             }
         }
@@ -67,13 +66,12 @@ namespace Chilco
             //this is just an example on how it could be with some example data
 
             var client = new RestClient(DOMAIN);
-            // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-            var request = new RestRequest("resource/{id}", Method.POST);
-            request.AddParameter("name", "value"); // adds to POST or URL querystring based on Method
-            request.AddUrlSegment("id", "123"); // replaces matching token in request.Resource
+            var request = new RestRequest("settings/"+username, Method.GET);
 
-            request.AddHeader("header", "value");
+            request.AddHeader("x-access-token", token);
+
+            //request.AddHeader("header", "value");
 
 
             // sync with deserialization
