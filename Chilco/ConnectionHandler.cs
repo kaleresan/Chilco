@@ -1,16 +1,15 @@
-﻿using RestSharp;
+using RestSharp;
 using System;
 using WebSocketSharp;
 
 namespace Chilco
 {
-    static class ConnectionHandler
+    internal static class ConnectionHandler
     {
-
         private const string DOMAIN = "http://chilco.de";
-      
-        public static void Connect() {
 
+        public static void Connect()
+        {
             throw new NotImplementedException();
 
             /*
@@ -26,7 +25,7 @@ namespace Chilco
 
         internal static void Register(string token)
         {
-            System.Diagnostics.Process.Start(DOMAIN+"/register/"+token);
+            System.Diagnostics.Process.Start(DOMAIN + "/register/" + token);
         }
 
         internal static void Auth(string token)
@@ -35,12 +34,13 @@ namespace Chilco
             //save token in a file
         }
 
-        private static void ConnectWebsocket() {
-
+        private static void ConnectWebsocket()
+        {
             using (var ws = new WebSocket(DOMAIN))
             {
                 ws.OnMessage +=
-                (sender, e) => {
+                (sender, e) =>
+                {
                     string[] data = e.Data.Split(':');
                     string type = data[0];
                     string token = data[1];
@@ -50,11 +50,10 @@ namespace Chilco
                         case "register":    Register(token);  break;
                         case "auth":        Auth(token);      break;
                         default:            UpdateRules();    break;
-
                     }
                 };
-                //ws.OnOpen += (sender, e) => UpdateRules();               
-               
+                //ws.OnOpen += (sender, e) => UpdateRules();
+
                 ws.Connect();
             }
         }
@@ -67,12 +66,13 @@ namespace Chilco
 
             var client = new RestClient(DOMAIN);
 
-            var request = new RestRequest("settings/"+username, Method.GET);
+            var request = new RestRequest("settings/" + username, Method.GET);
 
             request.AddHeader("x-access-token", token);
 
             // async with deserialization
-            var asyncHandle = client.ExecuteAsync<Settings>(request, response => {
+            var asyncHandle = client.ExecuteAsync<Settings>(request, response =>
+            {
                 Settings.Update(response.Data);
             });
         }

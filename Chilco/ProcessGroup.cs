@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Chilco
 {
-    class ProcessGroup
+    internal class ProcessGroup
     {
         public string Title;
         public List<String> Processes;

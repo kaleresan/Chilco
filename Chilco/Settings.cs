@@ -18,7 +18,8 @@ namespace Chilco
             return single_instance;
         }
 
-        public static void Update(Settings new_settings) {
+        public static void Update(Settings new_settings)
+        {
             single_instance.settings.Clear();
             single_instance.users.Clear();
             single_instance = new_settings;
