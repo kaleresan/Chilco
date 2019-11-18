@@ -1,10 +1,9 @@
 using System;
 using System.IO;
-using System.Security.Permissions;
 
 namespace Chilco
 {
-    class FileIO
+    internal class FileIO
     {
         private static readonly string path = Path.Combine(Environment.CurrentDirectory, "settings.json");
 

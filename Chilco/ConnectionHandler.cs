@@ -1,17 +1,17 @@
-﻿using RestSharp;
+using RestSharp;
 using System;
 using WebSocketSharp;
 
 namespace Chilco
 {
-    static class ConnectionHandler
+    internal static class ConnectionHandler
     {
-
         private const string DOMAIN = "http://chilco.de";
 
-        public static void Connect() {
-
+        public static void Connect()
+        {
             throw new NotImplementedException();
+
             /*
              Order of tasks
                 -Websocket connect
@@ -25,7 +25,7 @@ namespace Chilco
 
         internal static void Register(string token)
         {
-            System.Diagnostics.Process.Start(DOMAIN+"/register/"+token);
+            System.Diagnostics.Process.Start(DOMAIN + "/register/" + token);
         }
 
         internal static void Auth(string token)
@@ -34,13 +34,13 @@ namespace Chilco
             //save token in a file
         }
 
-        private static void ConnectWebsocket() {
-
-            throw new NotImplementedException();
+        private static void ConnectWebsocket()
+        {
             using (var ws = new WebSocket(DOMAIN))
             {
                 ws.OnMessage +=
-                (sender, e) => {
+                (sender, e) =>
+                {
                     string[] data = e.Data.Split(':');
                     string type = data[0];
                     string token = data[1];
@@ -50,12 +50,10 @@ namespace Chilco
                         case "register":    Register(token);  break;
                         case "auth":        Auth(token);      break;
                         default:            UpdateRules();    break;
-
                     }
-                
                 };
-                //ws.OnOpen += (sender, e) => UpdateRules();               
-                
+                //ws.OnOpen += (sender, e) => UpdateRules();
+
                 ws.Connect();
             }
         }
@@ -67,25 +65,16 @@ namespace Chilco
             //this is just an example on how it could be with some example data
 
             var client = new RestClient(DOMAIN);
-            // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-            var request = new RestRequest("resource/{id}", Method.POST);
-            request.AddParameter("name", "value"); // adds to POST or URL querystring based on Method
-            request.AddUrlSegment("id", "123"); // replaces matching token in request.Resource
+            var request = new RestRequest("settings/" + username, Method.GET);
 
-            request.AddHeader("header", "value");
-
-
-            // sync with deserialization
-            //Settings.Update(client.Execute<Settings>(request).Data);
+            request.AddHeader("x-access-token", token);
 
             // async with deserialization
-            var asyncHandle = client.ExecuteAsync<Settings>(request, response => {
+            var asyncHandle = client.ExecuteAsync<Settings>(request, response =>
+            {
                 Settings.Update(response.Data);
             });
-
-            //abort the request on demand
-            //asyncHandle.Abort();
         }
     }
 }

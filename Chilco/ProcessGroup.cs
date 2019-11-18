@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilco
 {
-    class ProcessGroup
+    internal class ProcessGroup
     {
         public string Title;
         public List<String> Processes;
