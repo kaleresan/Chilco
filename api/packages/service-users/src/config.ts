@@ -3,13 +3,6 @@ import {
     createServiceConfig,
     ServiceConfigType,
 } from '@chilco/common-service';
-import {
-    getUsersModel,
-    getProcessModel,
-    getSettingsModel,
-    getProcessGroupModel,
-    getProcessToProgressGroupModel,
-} from "@chilco/models";
 
 interface AuthenticationConfigType extends ServiceConfigType {
     settings?: {
@@ -21,8 +14,8 @@ interface AuthenticationConfigType extends ServiceConfigType {
 
 export const config: AuthenticationConfigType = createServiceConfig({
     routes,
-    proxyRoute: '/',
+    port: 8082,
+    proxyRoute: '/users',
     serviceName: 'service-users',
-    models: [getUsersModel, getSettingsModel, getProcessModel, getProcessGroupModel, getProcessToProgressGroupModel],
 });
 export default config;

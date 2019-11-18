@@ -72,3 +72,13 @@ curl --request POST \
 }'
 ````
 7. To work with secure routes (services) you need to add the authentication-token from the authentication progress to the header with the key x-access-token
+
+## Services
+- api-gateway
+- service-users
+- service-account
+- service-desktop-sync
+- service-user-settings
+- service-authentication
+- service-dashboard-sync
+

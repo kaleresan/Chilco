@@ -29,6 +29,11 @@ export function checkAuthentication(
     service: ServiceConfigType,
     isSecurityOptional: boolean = false,
 ): (req: Request, res: Response, next: () => void) => Promise<void> {
+    const connection = createServiceCommunicator(
+      authticationServiceConfig,
+      service,
+    );
+
     return async (req: Request, res: Response, next: () => void) => {
         try {
             const token =
@@ -40,26 +45,73 @@ export function checkAuthentication(
                 return;
             }
 
-            const connection = createServiceCommunicator(
-                authticationServiceConfig,
-                service,
-            );
 
-            const { userId } = getServiceResponseData(
+            const { accountId } = getServiceResponseData(
                 await connection.post('/', {
                     token,
                 }),
             );
 
-            if (!userId) {
+            if (!accountId) {
                 handleError(isSecurityOptional, res, next);
                 return;
             }
 
-            req.headers[ACCOUNT_ID_HEADER] = userId;
+            req.headers[ACCOUNT_ID_HEADER] = accountId;
             next();
         } catch (e) {
             handleError(isSecurityOptional, res, next);
+        }
+    };
+}
+
+export function handleWebsocketError(
+  isSecurityOptional: boolean,
+  next: (error?: Error) => void,
+) {
+    if (isSecurityOptional) {
+        next();
+        return;
+    }
+
+    next(new Error("not authorized"));
+}
+
+export function checkWebSocketAuthentication(
+  service: ServiceConfigType,
+  isSecurityOptional: boolean = false,
+): (req: any, next: () => void) => Promise<void> {
+    const connection = createServiceCommunicator(
+      authticationServiceConfig,
+      service,
+    );
+
+    return async (socket: any, next: (error?: Error) => void) => {
+        try {
+            const token = socket.request.query[ACCESS_TOKEN_HEADER];
+
+            if (!token) {
+                handleWebsocketError(isSecurityOptional, next);
+                return;
+            }
+
+
+            const { accountId } = getServiceResponseData(
+              await connection.post('/', {
+                  token,
+              }),
+            );
+
+            if (!accountId) {
+                handleWebsocketError(isSecurityOptional, next);
+                return;
+            }
+
+            socket[ACCOUNT_ID_HEADER] = accountId;
+            next();
+        } catch (e) {
+            handleWebsocketError(isSecurityOptional, next);
+            return;
         }
     };
 }

@@ -12,6 +12,7 @@ import express, { Application, Request, Response, Router } from 'express';
 import { generateKey } from '@chilco/generic';
 
 import { createErrorResponse } from './createErrorResponse';
+import { checkWebSocketAuthentication } from "@chilco/middlewares/src/authentication/checkAuthentication";
 
 export interface ServiceConfigType {
     port: number;
@@ -28,8 +29,10 @@ export interface ServiceConfigType {
     useWebsocket: boolean;
     websocketPath?: string;
     postgresdbURI?: string;
+    isWebsocketSecure: boolean;
     websocket: (ws: any) => void;
     upgradeToWebsocket?: () => any;
+    isWebsocketSecureOptional: boolean;
     setup?: (app: Application) => void;
 }
 
@@ -47,7 +50,9 @@ export function createServiceConfig(
         useWebsocket: false,
         websocket: () => {},
         serviceName: 'Service',
+        isWebsocketSecure: false,
         websocketPath: '/socket.io',
+        isWebsocketSecureOptional: false,
         mongodbURI: 'mongodb://mongo/chilco',
         postgresdbURI: 'postgres://chilco:chilco@postgres:5432/chilco',
         port: parseInt(process.env.PORT) || 8080,
@@ -63,19 +68,24 @@ function websocketMiddleware(ws: any) {
     };
 }
 
-export function createService({
-    port,
-    setup,
-    routes,
-    logType,
-    basePath,
-    websocket,
-    useSession,
-    serviceName,
-    useWebsocket,
-    sessionConfig,
-    websocketPath = '/',
-}: ServiceConfigType): Application {
+export function createService(service: ServiceConfigType): Application {
+    const {
+        port,
+        setup,
+        routes,
+        logType,
+        basePath,
+        websocket,
+        useSession,
+        serviceName,
+        useWebsocket,
+        sessionConfig,
+        isWebsocketSecure,
+        websocketPath = '/',
+        isWebsocketSecureOptional,
+    } = service;
+
+
     const app = express();
 
     let io = null;
@@ -108,6 +118,11 @@ export function createService({
     }
 
     if (useWebsocket) {
+        io.use(function (socket, next) {
+            if (isWebsocketSecure || isWebsocketSecureOptional) {
+                checkWebSocketAuthentication(service, isWebsocketSecureOptional)(socket, next);
+            }
+        });
         io.on('connection', ws => websocket(ws));
         io.on('error', err => console.error(err));
         app.use(websocketMiddleware(io));

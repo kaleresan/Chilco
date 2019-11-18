@@ -21,14 +21,12 @@ AccountSchema.methods.getPublicResponse = function() {
     };
 };
 AccountSchema.methods.changeByObject = function({
-    footer,
     lastname,
     firstname,
 }) {
-    writeValueToObject(this, 'footer', footer);
     writeValueToObject(this, 'lastname', lastname);
     writeValueToObject(this, 'firstname', firstname);
 };
 
-export const Account = mongoose.model('users', AccountSchema);
+export const Account = mongoose.model('accounts', AccountSchema);
 export default Account;

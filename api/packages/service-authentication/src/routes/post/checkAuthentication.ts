@@ -21,18 +21,18 @@ async function checkAuthenticationController(
         const {
             body: { token },
         } = req;
-        const { userId } = await jsonwebtoken.verify(
+        const { accountId } = await jsonwebtoken.verify(
             token,
             config.settings.authenticationKey,
         );
         if (
-            !mongoose.Types.ObjectId.isValid(userId)
+            !mongoose.Types.ObjectId.isValid(accountId)
         ) {
             createErrorResponse(res, 400);
             return;
         }
 
-        createSuccessResponse(res, { userId });
+        createSuccessResponse(res, { accountId });
     } catch (err) {
         createErrorResponse(res, 400);
     }

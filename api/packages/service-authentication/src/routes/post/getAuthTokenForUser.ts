@@ -20,14 +20,16 @@ async function getAuthTokenForUserController(
     try {
         const { id: _id } = req.params;
 
-        const user = await Account.findOne({ _id });
+        console.log(_id);
 
-        if (!user) {
+        const accountId = await Account.findOne({ _id });
+
+        if (!accountId) {
             createErrorResponse(res, 400);
             return;
         }
         const token = jsonwebtoken.sign(
-            { userId: user._id, companyId: user.company._id },
+            { accountId: accountId._id },
             config.settings.authenticationKey,
             {
                 expiresIn: '1 days',
@@ -36,6 +38,7 @@ async function getAuthTokenForUserController(
 
         createSuccessResponse(res, { token });
     } catch (e) {
+        console.log(e);
         createErrorResponse(res, 500);
     }
 }

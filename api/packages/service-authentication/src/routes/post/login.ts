@@ -33,7 +33,7 @@ async function loginController(req: Request, res: Response): Promise<void> {
         }
 
         const token = jsonwebtoken.sign(
-            { userId: account._id },
+            { accountId: account._id },
             config.settings.authenticationKey,
             {
                 expiresIn: '1 days',

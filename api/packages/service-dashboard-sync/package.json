@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "name": "@chilco/service-dashboard-sync",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Christoph Abs <christoph.abs@visit4.me>",
+  "homepage": "https://chilco.de",
+  "license": "ISC",
+  "main": "index.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "start": "TS_NODE_FILES=true ts-node server.ts",
+    "watch": "nodemon -e ts -w ../ -x yarn start",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "test-ci": "exit 0"
+  },
+  "dependencies": {
+    "@chilco/common-service": "^1.0.0",
+    "@chilco/generic": "^1.0.0",
+    "@chilco/messages": "^1.0.0",
+    "@chilco/middlewares": "^1.0.0",
+    "@chilco/models": "^1.0.0",
+    "@chilco/testing": "^1.0.0",
+    "@chilco/types": "^1.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.6",
+    "password-hash": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.0"
+  }
+}
