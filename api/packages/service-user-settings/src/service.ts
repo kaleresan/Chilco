@@ -6,7 +6,7 @@ import {
 
 import config from './config';
 
-export async function UserSettingsService(): Promise<Application> {
+export async function UserSettingsService(): Promise<any> {
     await createPostgresDBConnection(config);
     return createService(config);
 }

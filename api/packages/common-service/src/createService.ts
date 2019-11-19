@@ -12,7 +12,6 @@ import express, { Application, Request, Response, Router } from 'express';
 import { generateKey } from '@chilco/generic';
 
 import { createErrorResponse } from './createErrorResponse';
-import { checkWebSocketAuthentication } from "@chilco/middlewares/src/authentication/checkAuthentication";
 
 export interface ServiceConfigType {
     port: number;
@@ -68,7 +67,7 @@ function websocketMiddleware(ws: any) {
     };
 }
 
-export function createService(service: ServiceConfigType): Application {
+export function createService(service: ServiceConfigType): { app: Application, io: any } {
     const {
         port,
         setup,
@@ -80,9 +79,7 @@ export function createService(service: ServiceConfigType): Application {
         serviceName,
         useWebsocket,
         sessionConfig,
-        isWebsocketSecure,
         websocketPath = '/',
-        isWebsocketSecureOptional,
     } = service;
 
 
@@ -118,11 +115,6 @@ export function createService(service: ServiceConfigType): Application {
     }
 
     if (useWebsocket) {
-        io.use(function (socket, next) {
-            if (isWebsocketSecure || isWebsocketSecureOptional) {
-                checkWebSocketAuthentication(service, isWebsocketSecureOptional)(socket, next);
-            }
-        });
         io.on('connection', ws => websocket(ws));
         io.on('error', err => console.error(err));
         app.use(websocketMiddleware(io));
@@ -142,5 +134,5 @@ export function createService(service: ServiceConfigType): Application {
         console.log(`${serviceName} is up and running...`);
     });
 
-    return app;
+    return { app, io };
 }

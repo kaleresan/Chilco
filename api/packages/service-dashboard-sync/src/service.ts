@@ -6,7 +6,7 @@ import {
 
 import config from './config';
 
-export async function DashboardSyncService(): Promise<Application> {
+export async function DashboardSyncService(): Promise<any> {
     await createMongoDBConnection(config);
     return createService(config);
 }

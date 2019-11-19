@@ -22,3 +22,6 @@ export {
     createBlacklistedRouteConfig,
     createServiceProxyConfigFromServiceConfig,
 } from './src/createServiceProxy';
+export {
+    createAuthenticatedSocket
+} from './src/createAuthenticationWebsocket';

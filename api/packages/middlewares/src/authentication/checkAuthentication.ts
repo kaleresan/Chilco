@@ -10,7 +10,7 @@ import {
     ACCESS_TOKEN_HEADER,
 } from '@chilco/messages';
 // @ts-ignore
-import { config as authticationServiceConfig } from '@chilco/service-authentication';
+import { config as authenticationServiceConfig } from '@chilco/service-authentication';
 
 export function handleError(
     isSecurityOptional: boolean,
@@ -30,7 +30,7 @@ export function checkAuthentication(
     isSecurityOptional: boolean = false,
 ): (req: Request, res: Response, next: () => void) => Promise<void> {
     const connection = createServiceCommunicator(
-      authticationServiceConfig,
+      authenticationServiceConfig,
       service,
     );
 
@@ -82,13 +82,13 @@ export function checkWebSocketAuthentication(
   isSecurityOptional: boolean = false,
 ): (req: any, next: () => void) => Promise<void> {
     const connection = createServiceCommunicator(
-      authticationServiceConfig,
+      authenticationServiceConfig,
       service,
     );
 
     return async (socket: any, next: (error?: Error) => void) => {
         try {
-            const token = socket.request.query[ACCESS_TOKEN_HEADER];
+            const token = socket.handshake.query[ACCESS_TOKEN_HEADER];
 
             if (!token) {
                 handleWebsocketError(isSecurityOptional, next);
@@ -109,7 +109,8 @@ export function checkWebSocketAuthentication(
 
             socket[ACCOUNT_ID_HEADER] = accountId;
             next();
-        } catch (e) {
+        } catch (err) {
+            console.error(err);
             handleWebsocketError(isSecurityOptional, next);
             return;
         }
