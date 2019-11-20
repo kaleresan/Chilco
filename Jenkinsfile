@@ -1,0 +1,112 @@
+#!groovy
+
+def services = []
+branchName = env.BRANCH_NAME
+escapedBranchName = branchName.replaceAll("/", "-")
+registry = "registry.chilco.de:5000"
+serviceImageTemplate = "${registry}/"
+dbContainer = "dev-mongo-db-${escapedBranchName}"
+builderImage = "${registry}/api_builder:${escapedBranchName}"
+
+def runShellCommand(cmd) {
+    sh "docker run --rm --link ${dbContainer}:mongo ${builderImage} -c '${cmd}'"
+}
+
+def cleanWorkspace() {
+    sh "docker stop ${dbContainer} || exit 0"
+    sh 'docker rm $(docker ps -aq) || exit 0'
+    sh "docker rmi ${builderImage} || exit 0"
+    sh 'docker rmi --force $(docker images -f "dangling=true" -q) || exit 0'
+    sh 'docker volume rm $(docker volume ls -q) || exit 0'
+}
+
+Closure getShellCommandInLibOnNodeStep(lib, command) {
+    return {
+        node('docker') {
+            try {
+                runShellCommand('\"cd api/packages/${lib} && ${command}\"')
+            } finally {}
+            cleanWs() // run "Workspace Cleanup Plugin"
+        }
+    }
+}
+
+def getImageTagFromService(service) {
+    return "${serviceImageTemplate}${service}:${branchName}"
+}
+
+pipeline{
+    agent {
+        label "docker"
+    }
+
+    stages {
+        stage('Build Testing Image') {
+           agent {
+                label "docker"
+            }
+            steps {
+                script {
+                    services = sh (
+                        script: 'cd api/packages && find service-* -maxdepth 0',
+                        returnStdout: true
+                    ).split().toList()
+
+                    // Add API-Gateway as default service
+                    services.push('api-gateway');
+
+                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                    sh "docker run -d --name ${dbContainer} mongo"
+                }
+            }
+        }
+        stage('Testing and Linting') {
+            steps {
+                script {
+                    def servicesStages = [:]
+                    servicesStages["Linting"] = {
+                        // runShellCommand('yarn lint');
+                    }
+
+                    services.each { service ->
+                        servicesStages["Test ${service}"] = {
+                             // runShellCommand("cd packages/${service} && yarn test-ci");
+                        }
+                    }
+
+                    parallel servicesStages
+                }
+            }
+        }
+        stage('Deploment') {
+            agent {
+                label "docker"
+            }
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    def servicesStages = [:]
+                    services.each { service ->
+                        servicesStages["Push ${service} image in registry"] = {
+                            image = getImageTagFromService(service);
+                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg SERVICE_NAME=${service} -f ./api/docker/Dockerfile --no-cache .";
+                            image = getImageTagFromService(service);
+                            sh "docker push ${image}"
+                            image = getImageTagFromService(service);
+                            sh "docker rmi ${image} || exit 0"
+                        }
+                    }
+
+                    parallel servicesStages
+                }
+            }
+        }
+    }
+    post {
+        always{
+            cleanWorkspace();
+        }
+    }
+}
