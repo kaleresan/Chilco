@@ -55,7 +55,7 @@ pipeline{
                     // Add API-Gateway as default service
                     services.push('api-gateway');
 
-                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                    sh "docker build -t ${builderImage} --no-cache -f ./api/docker/Dockerfile.build ."
                     sh "docker run -d --name ${dbContainer} mongo"
                 }
             }
