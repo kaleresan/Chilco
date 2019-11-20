@@ -13,6 +13,10 @@ export function getSettingsModel({ sequelize }): any {
     pcTime: {
       type: Sequelize.INTEGER,
     },
+    accountId: {
+      allowNull: false,
+      type: Sequelize.STRING,
+    }
   }, {
     sequelize,
     modelName: SETTINGS_TABLE,

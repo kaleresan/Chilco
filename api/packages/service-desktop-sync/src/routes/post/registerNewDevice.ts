@@ -24,7 +24,7 @@ async function getAccessToken(req) {
     config,
   );
   const { token } = getServiceResponseData(
-    await authenticationService.post(`/${req.accountId}/authToken`),
+    await authenticationService.post(`/device/${req.accountId}/authToken`, { deviceName: 'info' }),
   );
   return token;
 }

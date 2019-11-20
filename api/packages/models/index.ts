@@ -1,4 +1,5 @@
 export { User } from './src/user';
+export { Device } from './src/device';
 export { Account } from './src/account';
 export { AuthToken } from './src/authToken';
 export { ResetToken } from './src/resetToken';

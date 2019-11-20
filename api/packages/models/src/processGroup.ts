@@ -10,7 +10,13 @@ export function getProcessGroupModel({ sequelize }): any {
       autoIncrement: true,
       type: Sequelize.INTEGER,
     },
-    pcTime: {
+    dailyRuntime: {
+      allowNull: false,
+      type: Sequelize.INTEGER,
+      defaultValue: 1000 * 60 * 60,
+    },
+    settingId: {
+      allowNull: false,
       type: Sequelize.INTEGER,
     },
   }, {

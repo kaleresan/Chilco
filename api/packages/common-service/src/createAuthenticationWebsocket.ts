@@ -1,7 +1,6 @@
 import { ServiceConfigType } from './createService';
-import { checkWebSocketAuthentication } from "@chilco/middlewares";
 
-export function createAuthenticatedSocket(service: ServiceConfigType, io: any): void {
+export function createAuthenticatedSocket(service: ServiceConfigType, io: any, authenticationFunction: (req: any, next: () => void) => any): void {
     try {
         const {
             isWebsocketSecure,
@@ -10,7 +9,7 @@ export function createAuthenticatedSocket(service: ServiceConfigType, io: any): 
 
 
         if (isWebsocketSecure || isWebsocketSecureOptional) {
-            io.use(checkWebSocketAuthentication(service, isWebsocketSecureOptional));
+            io.use(authenticationFunction);
         }
     } catch (err) {
         console.log('Websocket cannot start');

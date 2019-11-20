@@ -9,6 +9,7 @@ import {
     getProcessGroupModel,
     getProcessToProgressGroupModel,
 } from "@chilco/models";
+import { readAccountIdFromHeader } from "@chilco/middlewares";
 
 interface AuthenticationConfigType extends ServiceConfigType {
     settings?: {
@@ -23,6 +24,9 @@ export const config: AuthenticationConfigType = createServiceConfig({
     port: 8083,
     proxyRoute: '/settings',
     serviceName: 'service-user-settings',
+    setup: (app) => {
+        app.use(readAccountIdFromHeader);
+    },
     models: [getSettingsModel, getProcessModel, getProcessGroupModel, getProcessToProgressGroupModel],
 });
 export default config;

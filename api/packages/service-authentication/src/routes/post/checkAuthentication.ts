@@ -21,10 +21,12 @@ async function checkAuthenticationController(
         const {
             body: { token },
         } = req;
-        const { accountId } = await jsonwebtoken.verify(
+
+        const { accountId, deviceId } = await jsonwebtoken.verify(
             token,
             config.settings.authenticationKey,
         );
+
         if (
             !mongoose.Types.ObjectId.isValid(accountId)
         ) {
@@ -32,7 +34,7 @@ async function checkAuthenticationController(
             return;
         }
 
-        createSuccessResponse(res, { accountId });
+        createSuccessResponse(res, { accountId, deviceId, type: deviceId ? 'DEVICE' : 'ACCOUNT' });
     } catch (err) {
         createErrorResponse(res, 400);
     }

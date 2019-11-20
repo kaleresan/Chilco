@@ -115,7 +115,13 @@ export function createService(service: ServiceConfigType): { app: Application, i
     }
 
     if (useWebsocket) {
-        io.on('connection', ws => websocket(ws));
+        io.on('connection', ws => {
+            console.log(`${new Date().toISOString()} - NEW DEVICE CONNECTED`);
+            websocket(ws)
+        });
+        io.on('disconnect', () => {
+            console.log(`${new Date().toISOString()} - NEW DEVICE DISCONNECTED`);
+        });
         io.on('error', err => console.error(err));
         app.use(websocketMiddleware(io));
     }
