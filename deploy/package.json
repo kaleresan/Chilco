@@ -1,0 +1,12 @@
+{
+  "name": "@chilco/deploy",
+  "version": "1.0.0",
+  "description": "The Server Infrastructur deployment",
+  "main": "none",
+  "author": "Christoph-Thomas Abs <christoph.abs@chilco.de>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prod:deploy": "docker-compose -f docker-compose.tool.yml -f docker-compose.services.yml -f docker-compose.nginx.yml"
+  }
+}
