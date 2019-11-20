@@ -24,7 +24,7 @@ Closure getShellCommandInLibOnNodeStep(lib, command) {
     return {
         node('docker') {
             try {
-                runShellCommand('\"cd api/packages/${lib} && ${command}\"')
+                runShellCommand('\"cd packages/${lib} && ${command}\"')
             } finally {}
             cleanWs() // run "Workspace Cleanup Plugin"
         }
@@ -48,14 +48,14 @@ pipeline{
             steps {
                 script {
                     services = sh (
-                        script: 'cd api/packages && find service-* -maxdepth 0',
+                        script: 'cd packages && find service-* -maxdepth 0',
                         returnStdout: true
                     ).split().toList()
 
                     // Add API-Gateway as default service
                     services.push('api-gateway');
 
-                    sh "docker build -t ${builderImage} --no-cache -f ./api/docker/Dockerfile.build ."
+                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
                     sh "docker run -d --name ${dbContainer} mongo"
                 }
             }
@@ -91,7 +91,7 @@ pipeline{
                     services.each { service ->
                         servicesStages["Push ${service} image in registry"] = {
                             image = getImageTagFromService(service);
-                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg SERVICE_NAME=${service} -f ./api/docker/Dockerfile --no-cache .";
+                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg SERVICE_NAME=${service} -f ./docker/Dockerfile --no-cache .";
                             image = getImageTagFromService(service);
                             sh "docker push ${image}"
                             image = getImageTagFromService(service);
