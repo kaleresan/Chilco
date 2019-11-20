@@ -1,5 +1,3 @@
-import { FileType } from './file';
-import { CompanyRelationshipType } from './company';
 import { MongoDocumentType } from './mongoDocument';
 
 export interface AccountType extends MongoDocumentType {
@@ -11,6 +9,4 @@ export interface AccountType extends MongoDocumentType {
     expire: string | null;
     outlookAccountId?: string;
     salesforceAccountId?: string;
-    profilePicture: FileType | null;
-    company: CompanyRelationshipType;
 }

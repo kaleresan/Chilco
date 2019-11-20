@@ -12,9 +12,6 @@
     "test": "echo \"Error: run tests from root\" && exit 0",
     "test-ci": "yarn test"
   },
-  "devDependencies": {
-    "@types/sequelize": "^4.28.6"
-  },
   "dependencies": {
     "@chilco/common-service": "^1.0.0",
     "@chilco/generic": "^1.0.0",

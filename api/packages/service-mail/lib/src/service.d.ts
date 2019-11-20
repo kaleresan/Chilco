@@ -1,2 +1,1 @@
-import { Application } from 'express';
-export declare function MailService(): Promise<Application>;
+export declare function MailService(): Promise<any>;
