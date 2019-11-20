@@ -3,7 +3,7 @@
 def services = []
 branchName = env.BRANCH_NAME
 escapedBranchName = branchName.replaceAll("/", "-")
-registry = "registry.visit4.me:5000"
+registry = "registry.chilco.de:5000"
 serviceImageTemplate = "${registry}/"
 dbContainer = "dev-mongo-db-${escapedBranchName}"
 builderImage = "${registry}/api_builder:${escapedBranchName}"
@@ -48,15 +48,15 @@ pipeline{
             steps {
                 script {
                     services = sh (
-                        script: 'cd packages && find service-* -maxdepth 0',
+                        script: 'cd ./api/packages && find service-* -maxdepth 0',
                         returnStdout: true
                     ).split().toList()
 
                     // Add API-Gateway as default service
                     services.push('api-gateway');
 
-                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
-                    sh "docker run -d --name ${dbContainer} mongo"
+                    sh "cd ./api/ && docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                    sh "cd ./api/ && docker run -d --name ${dbContainer} mongo"
                 }
             }
         }
@@ -91,11 +91,11 @@ pipeline{
                     services.each { service ->
                         servicesStages["Push ${service} image in registry"] = {
                             image = getImageTagFromService(service);
-                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg SERVICE_NAME=${service} -f ./docker/Dockerfile --no-cache .";
+                            sh "cd ./api/ && docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg SERVICE_NAME=${service} -f ./docker/Dockerfile --no-cache .";
                             image = getImageTagFromService(service);
-                            sh "docker push ${image}"
+                            sh "cd ./api/ && docker push ${image}"
                             image = getImageTagFromService(service);
-                            sh "docker rmi ${image} || exit 0"
+                            sh "cd ./api/ && docker rmi ${image} || exit 0"
                         }
                     }
 

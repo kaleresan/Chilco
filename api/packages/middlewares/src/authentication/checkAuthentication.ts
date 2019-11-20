@@ -10,7 +10,7 @@ import {
     ACCESS_TOKEN_HEADER,
 } from '@chilco/messages';
 // @ts-ignore
-import { config as authticationServiceConfig } from '@chilco/service-authentication';
+import { config as authenticationServiceConfig } from '@chilco/service-authentication';
 
 export function handleError(
     isSecurityOptional: boolean,
@@ -29,6 +29,11 @@ export function checkAuthentication(
     service: ServiceConfigType,
     isSecurityOptional: boolean = false,
 ): (req: Request, res: Response, next: () => void) => Promise<void> {
+    const connection = createServiceCommunicator(
+      authenticationServiceConfig,
+      service,
+    );
+
     return async (req: Request, res: Response, next: () => void) => {
         try {
             const token =
@@ -40,23 +45,19 @@ export function checkAuthentication(
                 return;
             }
 
-            const connection = createServiceCommunicator(
-                authticationServiceConfig,
-                service,
-            );
 
-            const { userId } = getServiceResponseData(
+            const { accountId } = getServiceResponseData(
                 await connection.post('/', {
                     token,
                 }),
             );
 
-            if (!userId) {
+            if (!accountId) {
                 handleError(isSecurityOptional, res, next);
                 return;
             }
 
-            req.headers[ACCOUNT_ID_HEADER] = userId;
+            req.headers[ACCOUNT_ID_HEADER] = accountId;
             next();
         } catch (e) {
             handleError(isSecurityOptional, res, next);

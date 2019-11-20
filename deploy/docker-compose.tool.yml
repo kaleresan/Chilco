@@ -1,0 +1,34 @@
+version: "2"
+services:
+  minio1:
+    restart: always
+    image: minio/minio
+    container_name: minio1
+    volumes:
+      - ./data/minio:/data:Z
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: 216E2C637B6D744B
+      MINIO_SECRET_KEY: "RM{mn{YO2o54A()2i>Tp%U.Ttpaq2&'J[vJIBZSSGP@FVy?7c#Mv'1!cF%zYoux"
+    command: server /data
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "27017:27017"
+  postgres:
+    db:
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_DB: chilco
+        POSTGRES_USER: chilco
+        POSTGRES_PASSWORD: chilco

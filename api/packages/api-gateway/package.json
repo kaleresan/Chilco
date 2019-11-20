@@ -20,6 +20,11 @@
     "@chilco/messages": "^1.0.0",
     "@chilco/middlewares": "^1.0.0",
     "@chilco/models": "^1.0.0",
+    "@chilco/service-accounts": "^1.0.0",
+    "@chilco/service-users": "^1.0.0",
+    "@chilco/service-desktop-sync": "^1.0.0",
+    "@chilco/service-dashboard-sync": "^1.0.0",
+    "@chilco/service-user-settings": "^1.0.0",
     "@chilco/service-authentication": "^1.0.0",
     "@chilco/types": "^1.0.0",
     "express": "^4.17.1"

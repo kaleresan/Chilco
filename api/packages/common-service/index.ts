@@ -5,6 +5,7 @@ export {
     createSuccessCSVResponse,
 } from './src/createSuccessResponse';
 export { createMongoDBConnection } from './src/createMongoDBConnection';
+export { postgress, createPostgresDBConnection } from './src/createPostgresDBConnection';
 export {
     getServiceResponseData,
     createServiceCommunicator,
@@ -21,3 +22,6 @@ export {
     createBlacklistedRouteConfig,
     createServiceProxyConfigFromServiceConfig,
 } from './src/createServiceProxy';
+export {
+    createAuthenticatedSocket
+} from './src/createAuthenticationWebsocket';

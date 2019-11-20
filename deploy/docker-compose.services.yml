@@ -1,0 +1,57 @@
+version: "2"
+services:
+  api-gateway:
+    restart: always
+    image: registry.chilco.de:5000/api-gateway:master
+    container_name: api-gateway
+    links:
+      - service-accounts
+      - service-desktop-sync
+      - service-dashboard-sync
+      - service-users
+      - service-user-settings
+      - service-user-settings
+  service-authentication:
+    restart: always
+    container_name: service-authentication
+    image: registry.chilco.de:5000/service-authentication:master
+    links:
+      - mongo
+  service-accounts:
+    restart: always
+    container_name: service-accounts
+    image: registry.chilco.de:5000/service-accounts:master
+    links:
+      - mongo
+  service-dashboard-sync:
+    restart: always
+    container_name: service-dashboard-sync
+    image: registry.chilco.de:5000/service-dashboard-sync:master
+    links:
+      - mongo
+      - redis
+  service-desktop-sync:
+    restart: always
+    container_name: service-desktop-sync
+    image: registry.chilco.de:5000/service-desktop-sync:master
+    links:
+      - mongo
+      - redis
+  service-users:
+    restart: always
+    container_name: service-users
+    image: registry.chilco.de:5000/service-users:master
+    links:
+      - mongo
+      - redis
+  service-user-settings:
+    restart: always
+    container_name: service-user-settings
+    image: registry.chilco.de:5000/service-user-settings:master
+    links:
+      - mongo
+      - redis
+  service-mail:
+    restart: always
+    image: registry.visit4.me:5000/service-mail:master
+    container_name: service-mail

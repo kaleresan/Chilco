@@ -1,2 +1,3 @@
 export { checkAuthentication } from './checkAuthentication';
-export { readUserIdFromHeader } from './readUserIdFromHeader';
+export { readAccountIdFromHeader } from './readUserIdFromHeader';
+export { checkWebSocketDeviceAuthentication } from './checkDeviceAuthentication';

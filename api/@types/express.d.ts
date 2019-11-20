@@ -7,6 +7,7 @@ declare namespace Express {
         outlook?: any;
         outlookConnectionInfo?: any;
         hubspot?: any;
+        websocket?: any;
         hubspotConnectionInfo?: any;
     }
 }
