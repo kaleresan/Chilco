@@ -5,22 +5,32 @@ namespace Chilco
 {
     internal class ProcessGroup
     {
-        public string Title;
-        public List<String> Processes;
         public TimeSpan LeftoverTime;
-        public bool DoTimeRollover;
         public DateTime DateLastRun;
-        public TimeSpan DailyPlaytime;
+        public Rules rules;
 
         public ProcessGroup(string title, List<String> processes, TimeSpan leftoverTime, bool doTimeRollover, DateTime dateLastRun, TimeSpan dailyPlaytime)
         {
-            this.Title = title;
-            this.Processes = processes;
             this.LeftoverTime = leftoverTime;
-            this.DoTimeRollover = doTimeRollover;
             this.DateLastRun = dateLastRun;
-            this.DailyPlaytime = dailyPlaytime;
+            this.rules = new Rules(title, processes, doTimeRollover, dailyPlaytime);
             Settings.GetInstance().settings.Add(this);
         }
+
+
+        public struct Rules {
+            public string Title;
+            public List<string> Processes;
+            public bool DoTimeRollover;
+            public TimeSpan DailyPlaytime;
+            public Rules(string Title, List<string> Processes, bool DoTimeRollover, TimeSpan DailyPlaytime)
+            {
+                this.Title = Title;
+                this.Processes = Processes;
+                this.DoTimeRollover = DoTimeRollover;
+                this.DailyPlaytime = DailyPlaytime;
+            }
+        }
+
     }
 }

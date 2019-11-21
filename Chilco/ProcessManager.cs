@@ -18,7 +18,7 @@ namespace Chilco
         private void KillProcesses()
         {
             //For every Process in the Processgroup
-            foreach (string s in ProcessGroup.Processes)
+            foreach (string s in ProcessGroup.rules.Processes)
             {
                 KillProcess(s);
             }
@@ -45,7 +45,7 @@ namespace Chilco
         public bool IsRunning()
         {
             bool running = false;
-            foreach (string s in ProcessGroup.Processes)
+            foreach (string s in ProcessGroup.rules.Processes)
             {
                 if (Process.GetProcessesByName(s).Length > 0)
                 {
