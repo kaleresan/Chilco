@@ -3,26 +3,18 @@ using System.Diagnostics;
 
 namespace Chilco
 {
-    internal class Butcher
+    internal static class Butcher
     {
-
-        public Group Group;
-
-        public Butcher(Group group)
-        {
-            this.Group = group;
-        }
-
-        private void KillProcesses()
+        public static void KillProcesses(Group group)
         {
             //For every Process in the Processgroup
-            foreach (string s in this.Group.ruleset.Processes)
+            foreach (string s in group.ruleset.Processes)
             {
                 KillProcess(s);
             }
         }
 
-        private void KillProcess(string processName)
+        private static void KillProcess(string processName)
         {
             //For every Process currently running that has the name s
             foreach (Process p in Process.GetProcessesByName(processName))
