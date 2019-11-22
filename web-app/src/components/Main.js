@@ -1,29 +1,32 @@
-import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { Component } from "react";
+import MainAppBar from "./MainAppBar"
+import SideDrawer from "./SideDrawer"
 
-const useStyles = makeStyles(theme => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
+export class Main extends Component {
+  constructor (props) {
+   super(props)
+   this.state = {
+     openMenuBar: true
+   }
+ }
+
+  function handleMenuBarToggle(menuBarState) {
+    console.log("change logged")
+    this.setState({openMenuBar: menuBarState});
   }
-}));
 
-export default function SignIn() {
-  const classes = useStyles();
-
+  render() {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Chilco
-        </Typography>
-        <Button color="inherit">Logout</Button>
-      </Toolbar>
-    </AppBar>
-  );
+    <div id="parent">
+    <MainAppBar
+    onMenuBarToggle={handleMenuBarToggle}
+    />
+    <SideDrawer
+    openMenuBar={this.state.openMenuBar}
+    />
+    </div>
+  )
 }
+}
+
+export default Main;
