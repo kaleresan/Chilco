@@ -9,6 +9,7 @@ namespace Chilco
 
         public static void Load()
         {
+            throw new NotImplementedException();
             string json = File.ReadAllText(path);
             //Settings.Update(Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json));
         }
