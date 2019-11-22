@@ -96,10 +96,12 @@ export function createServiceProxy(
     }: ProxyConfigType,
 ) {
     if (isSecure) {
+        // @ts-ignore
         app.use(route, checkAuthentication(proxyService, isSecurityOptional));
     }
 
     if (blacklist) {
+        // @ts-ignore
         app.use(route, checkBlackListedRoutes(route, blacklist));
     }
 
@@ -126,6 +128,7 @@ export function createServiceProxy(
     }
 
     const proxyMiddleware = proxy(proxyConfig);
+    // @ts-ignore
     app.use(route, proxyController(proxyConfig, proxyMiddleware));
 
     return { proxy: proxyMiddleware };
