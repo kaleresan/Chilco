@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Chilco
 {
-    internal class FileIO
+    internal static class FileIO
     {
         private static readonly string path = Path.Combine(Environment.CurrentDirectory, "settings.json");
 
