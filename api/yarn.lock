@@ -1008,7 +1008,7 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.7.tgz#315d570ccb56c53452ff8638738df60726d5b6ea"
   integrity sha512-NYrtPht0wGzhwe9+/idPaBB+TqkY9AhTvOLMkThm0IoEfLaiVQZwBwyJ5puCkO3AUCWrmcoePjp2mbFocKy4SQ==
 
-"@types/node@*", "@types/node@>= 8", "@types/node@^12.6.8":
+"@types/node@*", "@types/node@>= 8", "@types/node@^12.12.11":
   version "12.12.11"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.11.tgz#bec2961975888d964196bf0016a2f984d793d3ce"
   integrity sha512-O+x6uIpa6oMNTkPuHDa9MhMMehlxLAd5QcOvKRjAFsBVpeFWTOPnXbDvILvFgFFZfQ1xh1EZi1FbXxUix+zpsQ==
@@ -1018,7 +1018,7 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/sequelize@^4.28.6":
+"@types/sequelize@^4.28.6", "@types/sequelize@^4.28.7":
   version "4.28.7"
   resolved "https://registry.yarnpkg.com/@types/sequelize/-/sequelize-4.28.7.tgz#ea4ff8cb9e6d879b5c2cd30faffd5919d5365f51"
   integrity sha512-SN5v30XilB554wMpvPNuCbybKJk/0sraBOIDzh+PHfUhMlQgKwBbYjafLtOuH4HoDwq0a0ZlaS/JdVVH8ZWJ5Q==
@@ -1055,6 +1055,11 @@
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@types/validator/-/validator-12.0.0.tgz#a98b3f3db596f176334de8e94ec88b6b2a44c715"
   integrity sha512-3ToPJQmvlDoGnw1XRdn/tAiLauFNCGlmcsFZOQ7pbD6bMp9936myYGL6I81KyCaFpDZc6cb1NlObuMb4Ed+Onw==
+
+"@types/validator@^10.11.3":
+  version "10.11.3"
+  resolved "https://registry.yarnpkg.com/@types/validator/-/validator-10.11.3.tgz#945799bef24a953c5bc02011ca8ad79331a3ef25"
+  integrity sha512-GKF2VnEkMmEeEGvoo03ocrP9ySMuX1ypKazIYMlsjfslfBMhOAtC5dmEWKdJioW4lJN7MZRS88kalTsVClyQ9w==
 
 "@typescript-eslint/eslint-plugin@^1.13.0":
   version "1.13.0"
@@ -7634,7 +7639,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.7.2:
+typescript@^3.6.4:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
   integrity sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
