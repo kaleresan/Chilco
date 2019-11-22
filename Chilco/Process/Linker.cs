@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +11,10 @@ namespace Chilco
     {
         public Tracker Tracker { get; private set; }
         public Group Group { get; private set; }
-        public Butcher Butcher { get; private set; }
 
-        public Linker(Tracker tracker, Group group, Butcher butcher) {
+        public Linker(Tracker tracker, Group group) {
             this.Tracker = tracker;
             this.Group = group;
-            this.Butcher = butcher;
         }
 
 
