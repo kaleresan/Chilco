@@ -41,7 +41,7 @@ namespace Chilco
             UpdateLeftoverTime();
             if (Linker.Group.LeftoverTime.Ticks == 0)
             {
-                Linker.Butcher.KillProcesses();
+                Butcher.KillProcesses(GetGroup);
             }
         }
 
