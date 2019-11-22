@@ -5,20 +5,18 @@ namespace Chilco
 {
     internal class Butcher
     {
-        private Stopwatch RunningTime;
-        public Group ProcessGroup;
 
-        public Butcher(Group processGroup)
+        public Group Group;
+
+        public Butcher(Group group)
         {
-            this.ProcessGroup = processGroup;
-            RunningTime = new Stopwatch();
-            throw new NotImplementedException();
+            this.Group = group;
         }
 
         private void KillProcesses()
         {
             //For every Process in the Processgroup
-            foreach (string s in ProcessGroup.ruleset.Processes)
+            foreach (string s in this.Group.ruleset.Processes)
             {
                 KillProcess(s);
             }
@@ -38,49 +36,6 @@ namespace Chilco
             }
         }
 
-        /// <summary>
-        /// Checks if any process in the ProcessGroup is running.
-        /// </summary>
-        /// <returns>true if one or more processes in the Group are running</returns>
-        public bool IsRunning()
-        {
-            bool running = false;
-            foreach (string s in ProcessGroup.ruleset.Processes)
-            {
-                if (Process.GetProcessesByName(s).Length > 0)
-                {
-                    running = true;
-                    break;
-                }
-            }
-            return running;
-        }
-
-        public void CheckProcesses()
-        {
-            UpdateLeftoverTime();
-            if (ProcessGroup.LeftoverTime.Ticks == 0)
-            {
-                KillProcesses();
-            }
-        }
-
-        public void UpdateLeftoverTime()
-        {
-            if (RunningTime.IsRunning)
-            {
-                if (ProcessGroup.LeftoverTime > RunningTime.Elapsed)
-                    ProcessGroup.LeftoverTime -= RunningTime.Elapsed;
-                else ProcessGroup.LeftoverTime = new TimeSpan(0);
-
-                RunningTime.Reset();
-            }
-
-            if (IsRunning() && ProcessGroup.LeftoverTime.Ticks > 0)
-            {
-                RunningTime.Start();
-                ProcessGroup.DateLastRun = DateTime.Now;
-            }
-        }
+        
     }
 }
