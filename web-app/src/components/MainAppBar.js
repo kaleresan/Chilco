@@ -28,10 +28,6 @@ export default function MainAppBar({onChildClick}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleChange = event => {
-    setAuth(event.target.checked);
-  };
-
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
