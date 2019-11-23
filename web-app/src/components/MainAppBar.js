@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MainAppBar(props, onMenuBarToggle) {
+export default function MainAppBar({onChildClick}) {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,14 +40,14 @@ export default function MainAppBar(props, onMenuBarToggle) {
     setAnchorEl(null);
   };
 
-  function handleMenuButton(event) {
-    onMenuBarToggle(event.target.name);
+  function handleClick() {
+    onChildClick();
   };
 
   return (
     <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleMenuButton}>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleClick}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>

@@ -6,23 +6,28 @@ export class Main extends Component {
   constructor (props) {
    super(props)
    this.state = {
-     openMenuBar: true
+     openMenuBar: false
    }
+   this.handleMenuBarOpen = this.handleMenuBarOpen.bind(this);
+   this.handleMenuBarClose = this.handleMenuBarClose.bind(this);
  }
 
-  function handleMenuBarToggle(menuBarState) {
-    console.log("change logged")
-    this.setState({openMenuBar: menuBarState});
-  }
+ handleMenuBarOpen() {
+   this.setState({openMenuBar: true})
+ }
+
+ handleMenuBarClose() {
+   this.setState({openMenuBar: false})
+ }
 
   render() {
   return (
     <div id="parent">
     <MainAppBar
-    onMenuBarToggle={handleMenuBarToggle}
+    onChildClick={this.handleMenuBarOpen}
     />
     <SideDrawer
-    openMenuBar={this.state.openMenuBar}
+    openMenuBar={this.state.openMenuBar} onMenuBarClose={this.handleMenuBarClose}
     />
     </div>
   )
