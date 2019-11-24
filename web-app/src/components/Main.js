@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MainAppBar from "./MainAppBar"
 import SideDrawer from "./SideDrawer"
+import Devices from "./Devices"
 
 export class Main extends Component {
   constructor (props) {
@@ -26,9 +27,11 @@ export class Main extends Component {
     <MainAppBar
     onChildClick={this.handleMenuBarOpen}
     />
+    <Devices/>
     <SideDrawer
     openMenuBar={this.state.openMenuBar} onMenuBarClose={this.handleMenuBarClose}
     />
+
     </div>
   )
 }

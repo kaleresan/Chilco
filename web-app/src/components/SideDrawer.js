@@ -35,6 +35,7 @@ export default function SideDrawer(props) {
       className={classes.list}
       role="presentation"
       onKeyDown={openDrawer(false)}
+      onClick={openDrawer(false)}
     >
       <List>
         {["Devices"].map((text, index) => (
