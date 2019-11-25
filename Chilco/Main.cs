@@ -7,7 +7,7 @@ using static Chilco.Group;
 
 namespace Chilco
 {
-    static class Linker
+    static class Main
     {
         //Create
         //Update
