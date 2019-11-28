@@ -13,7 +13,8 @@ namespace Chilco
         public static void Connect()
         {
             authToken = FileIO.LoadAuthToken();
-            if (authToken.IsNullOrEmpty()) {
+            if (authToken.IsNullOrEmpty())
+            {
                 RegisterHandshake();
             }
 
@@ -29,7 +30,7 @@ namespace Chilco
                 (sender, e) =>
                 {
                     //TODO Implement Register Handshake
-                        //save auth token with FileIO
+                    //save auth token with FileIO
                 };
 
                 ws.Connect();
@@ -65,7 +66,7 @@ namespace Chilco
             var client = new RestClient(DOMAIN);
 
             string username = "";
-           
+
             var request = new RestRequest("settings/" + username, Method.GET);
 
             request.AddHeader("x-access-token", authToken);
@@ -79,13 +80,15 @@ namespace Chilco
                 {
                     ruleset = response.Data;
                 }
-                else {
+                else
+                {
                     Group[] groups = FileIO.LoadGroups();
                     if (groups == null || groups.Length == 0)
                     {
                         ruleset = GetDefaultRuleset();
                     }
-                    else { 
+                    else
+                    {
                         //extract ruleset from the specified group
                     }
                 }
@@ -93,7 +96,8 @@ namespace Chilco
             });
         }
 
-        private static Group.Ruleset GetDefaultRuleset() {
+        private static Group.Ruleset GetDefaultRuleset()
+        {
             string key = "";
             List<string> processes = new List<string>();
             processes.Add("Firefox");
