@@ -1,16 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Chilco.Group;
 
 namespace Chilco
 {
-    static class Main
+    public static class Main
     {
         //Create
+
         //Update
+        internal static void Update(Group.Ruleset ruleset)
+        {
+            throw new NotImplementedException();
+        }
+
         //Delete
     }
 }
