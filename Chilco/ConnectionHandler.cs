@@ -1,5 +1,6 @@
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using WebSocketSharp;
 
 namespace Chilco
@@ -7,31 +8,37 @@ namespace Chilco
     internal static class ConnectionHandler
     {
         private const string DOMAIN = "http://chilco.de";
+        private static string authToken;
 
         public static void Connect()
         {
-            throw new NotImplementedException();
+            authToken = FileIO.LoadAuthToken();
+            if (authToken.IsNullOrEmpty()) {
+                RegisterHandshake();
+            }
 
-            /*
-             Order of tasks
-                -Websocket connect
-                -get register-token
-                -Open Website with token in url [chilco.de/register/TOKEN]
-                -get auth token from websocket
-                -Websocket idles for update messages
-                -API GET Request: Receive Settings.json
-             */
+            UpdateRules();
+            ConnectWebsocket();
         }
 
-        internal static void Register(string token)
+        private static void RegisterHandshake()
+        {
+            using (var ws = new WebSocket(DOMAIN))
+            {
+                ws.OnMessage +=
+                (sender, e) =>
+                {
+                    //TODO Implement Register Handshake
+                        //save auth token with FileIO
+                };
+
+                ws.Connect();
+            }
+        }
+
+        internal static void OpenWebsite(string token)
         {
             System.Diagnostics.Process.Start(DOMAIN + "/register/" + token);
-        }
-
-        internal static void Auth(string token)
-        {
-            throw new NotImplementedException();
-            //save token in a file
         }
 
         private static void ConnectWebsocket()
@@ -41,18 +48,8 @@ namespace Chilco
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    string[] data = e.Data.Split(':');
-                    string type = data[0];
-                    string token = data[1];
-
-
-                    switch (type) {
-                        case "register":    Register(token);  break;
-                        case "auth":        Auth(token);      break;
-                        default:            UpdateRules();    break;
-                    }
+                    UpdateRules();
                 };
-                //ws.OnOpen += (sender, e) => UpdateRules();
 
                 ws.Connect();
             }
@@ -60,21 +57,53 @@ namespace Chilco
 
         private static void UpdateRules()
         {
-            throw new NotImplementedException();
+            //TODO Implement API GET request
+            //throw new NotImplementedException();
 
             //this is just an example on how it could be with some example data
 
             var client = new RestClient(DOMAIN);
 
+            string username = "";
+           
             var request = new RestRequest("settings/" + username, Method.GET);
 
-            request.AddHeader("x-access-token", token);
+            request.AddHeader("x-access-token", authToken);
 
             // async with deserialization
-            var asyncHandle = client.ExecuteAsync<Settings>(request, response =>
+            var asyncHandle = client.ExecuteAsync<Group.Ruleset>(request, response =>
             {
-                Settings.Update(response.Data);
+                Group.Ruleset ruleset = default;
+
+                if (response.IsSuccessful)
+                {
+                    ruleset = response.Data;
+                }
+                else {
+                    Group[] groups = FileIO.LoadGroups();
+                    if (groups == null || groups.Length == 0)
+                    {
+                        ruleset = GetDefaultRuleset();
+                    }
+                    else { 
+                        //extract ruleset from the specified group
+                    }
+                }
+                Main.Update(ruleset);
             });
+        }
+
+        private static Group.Ruleset GetDefaultRuleset() {
+            string key = "";
+            List<string> processes = new List<string>();
+            processes.Add("Firefox");
+            processes.Add("Chrome");
+
+            DateTime date3 = new DateTime();
+            DateTime date4 = date3.AddMinutes(30);
+            TimeSpan dailyPlaytime = date4 - date3;
+
+            return new Group.Ruleset(key, "Browser", processes, true, dailyPlaytime);
         }
     }
 }
