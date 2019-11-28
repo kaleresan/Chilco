@@ -8,13 +8,13 @@ namespace Chilco
         private static readonly string groupPath = Path.Combine(Environment.CurrentDirectory, "settings.json");
         private static readonly string authTokenPath = Path.Combine(Environment.CurrentDirectory, "token.txt");
 
-        public static Group[] LoadGroup()
+        public static Group[] LoadGroups()
         {
             string json = File.ReadAllText(groupPath);
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Group[]>(json);
         }
 
-        public static void SaveGroup(Group[] groups)
+        public static void SaveGroups(Group[] groups)
         {
             File.Create(groupPath).Close();
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(groups);
