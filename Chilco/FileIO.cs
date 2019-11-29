@@ -5,20 +5,31 @@ namespace Chilco
 {
     internal static class FileIO
     {
-        private static readonly string path = Path.Combine(Environment.CurrentDirectory, "settings.json");
+        private static readonly string groupPath = Path.Combine(Environment.CurrentDirectory, "settings.json");
+        private static readonly string authTokenPath = Path.Combine(Environment.CurrentDirectory, "token.txt");
 
-        public static void Load()
+        public static Group[] LoadGroups()
         {
-            throw new NotImplementedException();
-            string json = File.ReadAllText(path);
-            //Settings.Update(Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(json));
+            string json = File.ReadAllText(groupPath);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Group[]>(json);
         }
 
-        public static void Save()
+        public static void SaveGroups(Group[] groups)
         {
-            File.Create(path).Close();
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(Group.GetGroups);
-            File.WriteAllText(path, json);
+            File.Create(groupPath).Close();
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(groups);
+            File.WriteAllText(groupPath, json);
+        }
+
+        public static string LoadAuthToken()
+        {
+            return File.ReadAllText(authTokenPath);
+        }
+
+        public static void SaveAuthToken(string authToken)
+        {
+            File.Create(authTokenPath).Close();
+            File.WriteAllText(authTokenPath, authToken);
         }
     }
 }
