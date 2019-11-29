@@ -3,7 +3,7 @@
 def services = []
 branchName = env.BRANCH_NAME
 escapedBranchName = branchName.replaceAll("/", "-")
-registry = "registry.chilco.de:5000"
+registry = "registry.chilco.de:5005"
 serviceImageTemplate = "${registry}/"
 dbContainer = "dev-mongo-db-${escapedBranchName}"
 builderImage = "${registry}/api_builder:${escapedBranchName}"
