@@ -10,7 +10,6 @@ services:
       - service-dashboard-sync
       - service-users
       - service-user-settings
-      - service-user-settings
   service-authentication:
     restart: always
     container_name: service-authentication

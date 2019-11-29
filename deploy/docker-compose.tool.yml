@@ -25,10 +25,9 @@ services:
     ports:
       - "27017:27017"
   postgres:
-    db:
-      image: postgres
-      restart: always
-      environment:
-        POSTGRES_DB: chilco
-        POSTGRES_USER: chilco
-        POSTGRES_PASSWORD: chilco
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: chilco
+      POSTGRES_USER: chilco
+      POSTGRES_PASSWORD: chilco
