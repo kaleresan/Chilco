@@ -1,17 +1,12 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-export default function GroupList() {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Group Name', field: 'name' }
-    ],
-    data: [
-      { name: 'Browsers' },
-      { name: 'Games' },
-      { name: 'Text Editors' }
-    ],
-  });
+export default function GroupList(props) {
+  const [state, setState] = React.useState(props.tableData.groupList);
+  React.useEffect(() => {
+    setState(props.tableData.groupList);
+    console.log(state);
+  }, [props.tableData.groupList.data.length]);
 
   return (
     <div>

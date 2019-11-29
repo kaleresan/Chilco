@@ -32,10 +32,33 @@ const useStyles = makeStyles(theme => ({
 export default function Settings() {
   const classes = useStyles();
   const [state, setState] = React.useState({
+    groupName: "",
     timeMinutes: "",
     timeHours: "",
-    timeRollover: false
+    timeRollover: false,
+    selectedProcesses:[],
+    processList: {
+      columns: [
+      { title: 'Process Name', field: 'name' }
+    ],
+    data: [
+      {name: "test"},
+      {name: "test2"},
+      {name: "test3"},
+    ]},
+    groupList: {
+      columns: [
+      { title: 'Group Name', field: 'name'},
+      { title: 'Time', field: 'time' },
+      { title: 'Time Rollover', field: 'timeRollover' }
+    ],
+    data: [{name: "test", time: "1:25", timeRollover: "Enabled"}]
+  }
   });
+
+  const updateGroupName = value => event => {
+    setState({ ...state, groupName: event.target.value });
+  };
 
   const updateTimeRollover = name => event => {
     setState({ ...state, [name]: event.target.checked });
@@ -49,10 +72,35 @@ export default function Settings() {
     setState({ ...state, timeMinutes: event.target.value });
   };
 
+  function getSelectedProcesses(data) {
+    setState({ ...state, selectedProcesses: data })
+  }
+
+  function submitGroup() {
+
+    if (state.groupName === "" || state.timeMinutes === "" || state.timeHours === "" || state.selectedProcesses.length === 0) return;
+    addGroupToList(state.groupName, state.timeMinutes, state.timeHours, state.selectedProcesses);
+  }
+
+  function addGroupToList(name, minutes, hours, timeRollover) {
+    let rollover = "Disabled"
+    if (timeRollover) rollover = "Enabled"
+    let time = hours + ":" + minutes;
+    let group = {name: name, time: time, timeRollover: rollover}
+    let groupList = state.groupList;
+
+    groupList.data.push(group)
+    setState({ ...state, groupList: groupList })
+  }
+
+  function groupsToAPI() {
+    // TODO: Send All Groups TO Database...
+  }
+
   return (
     <div className={classes.wrapper}>
-      <ProcessList className={classes.processList} />
-      <GroupList className={classes.groupList} />
+      <ProcessList className={classes.processList} tableData={state} onProcessesSelected={getSelectedProcesses} />
+      <GroupList className={classes.groupList} tableData={state} />
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Settings
@@ -61,6 +109,8 @@ export default function Settings() {
         <TextField
           id="groupName"
           label="Group Name"
+          value={state.groupName}
+          onChange={updateGroupName()}
           className={classes.textField}
           margin="normal"
         />
@@ -113,7 +163,7 @@ export default function Settings() {
           />
         </FormControl>
 
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={submitGroup}>
           Submit
         </Button>
       </Paper>

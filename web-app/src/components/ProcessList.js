@@ -1,19 +1,8 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-export default function ProcessList() {
-  const [state, setState] = React.useState({
-    columns: [
-      { title: 'Process Name', field: 'name' }
-    ],
-    data: [
-      { name: 'Firefox' },
-      { name: 'Chrome' },
-      { name: 'Minecraft' },
-      { name: 'Edge' },
-      { name: 'Word' }
-    ],
-  });
+export default function ProcessList(props) {
+  const [state, setState] = React.useState(props.tableData.processList);
 
   return (
     <div>
@@ -53,6 +42,7 @@ export default function ProcessList() {
             }, 600);
           })
       }}
+      onSelectionChange={(data) => props.onProcessesSelected(data)}
     />
     </div>
   );
