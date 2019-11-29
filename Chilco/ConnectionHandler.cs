@@ -60,11 +60,6 @@ namespace Chilco
 
         private static void UpdateRuleset()
         {
-            //TODO Implement API GET request
-            //throw new NotImplementedException();
-
-            //this is just an example on how it could be with some example data
-
             var client = new RestClient(DOMAIN);
 
             string username = "";
@@ -73,15 +68,17 @@ namespace Chilco
 
             request.AddHeader("x-access-token", authToken);
 
-            // execute the request
+
+            // API GET request
             IRestResponse response = client.Execute(request);
+
             List<Ruleset> RulesetList = new List<Ruleset>();
 
             if (response.IsSuccessful)
             {
-                var content = response.Content; // raw content as string
+                string rulesets_as_json = response.Content;
 
-                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(content);
+                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
                 RulesetList.AddRange(rulesets);
             }
             else
