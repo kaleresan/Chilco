@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PaperSheet() {
+export default function Settings() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     timeMinutes: "",

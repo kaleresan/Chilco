@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import SettingsIcon from "@material-ui/icons/Settings";
+import DeviceSettings from "./DeviceSettings";
 
 const useStyles = makeStyles({
   root: {
@@ -43,8 +44,13 @@ const rows = [
   createData("PC-BDF381", "Max Müller", false)
 ];
 
-export default function SimpleTable() {
+export default function Devices(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState(props.showDevices);
+
+  const clickSettingsButton = event => {
+    props.onSettingsButtonClick();
+  };
 
   return (
     <Paper className={classes.root}>
@@ -74,6 +80,7 @@ export default function SimpleTable() {
                 <IconButton
                   edge="start"
                   className={classes.settingsButton}
+                  onClick={clickSettingsButton}
                   color="inherit"
                   aria-label="settings"
                 >
