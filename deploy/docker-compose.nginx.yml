@@ -8,10 +8,6 @@ services:
       - "80:80"
       - "443:443"
     links:
-      - share_app_1
       - api-gateway
-      - dashboard_app_1
-      - landingpage_app_1
-      - app-authentication
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
