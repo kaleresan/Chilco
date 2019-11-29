@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ProcessList from "./ProcessList";
+import GroupList from "./GroupList";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
@@ -51,6 +52,7 @@ export default function Settings() {
   return (
     <div className={classes.wrapper}>
       <ProcessList className={classes.processList} />
+      <GroupList className={classes.groupList} />
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Settings

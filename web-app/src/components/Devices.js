@@ -17,7 +17,8 @@ const useStyles = makeStyles({
     left: "50%",
     top: "25%",
     transform: "translate(-50%, -50%)",
-    overflowX: "auto"
+    overflowX: "auto",
+    display: "none"
   },
   table: {
     minWidth: 650
@@ -53,6 +54,7 @@ export default function Devices(props) {
   };
 
   return (
+    <div>
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -92,5 +94,7 @@ export default function Devices(props) {
         </TableBody>
       </Table>
     </Paper>
+    <DeviceSettings />
+    </div>
   );
 }
