@@ -20,7 +20,7 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            UpdateRules();
+            UpdateRuleset();
             ConnectWebsocket();
         }
 
@@ -51,14 +51,14 @@ namespace Chilco
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    UpdateRules();
+                    UpdateRuleset();
                 };
 
                 ws.Connect();
             }
         }
 
-        private static void UpdateRules()
+        private static void UpdateRuleset()
         {
             //TODO Implement API GET request
             //throw new NotImplementedException();
