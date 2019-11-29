@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chilco
 {
-    class Tracker
+    internal class Tracker
     {
         private readonly Linker Linker;
         private Stopwatch RunningTime;
-        private Group GetGroup => Linker.Group; 
-        public Tracker(Linker linker) {
+        private Group GetGroup => Linker.Group;
+
+        public Tracker(Linker linker)
+        {
             this.Linker = linker;
             RunningTime = new Stopwatch();
         }
-
 
         /// <summary>
         /// Checks if any process in the GetGroup is running.
@@ -62,7 +59,5 @@ namespace Chilco
                 GetGroup.DateLastRun = DateTime.Now;
             }
         }
-
-
     }
 }

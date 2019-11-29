@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 
 namespace Chilco
@@ -27,7 +26,5 @@ namespace Chilco
                 }
             }
         }
-
-        
     }
 }
