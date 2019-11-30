@@ -47,7 +47,7 @@ export default function Settings() {
         { title: "Time", field: "time" },
         { title: "Time Rollover", field: "timeRollover" }
       ],
-      data: [{ name: "test", time: "1:25", timeRollover: "Enabled" }]
+      data: []
     }
   });
 
@@ -79,12 +79,18 @@ export default function Settings() {
       state.selectedProcesses.length === 0
     )
       return;
+
+    for (let index = 0; index < state.groupList.data.length; index++) {
+      if (state.groupList.data[index].name === state.groupName) return;
+    }
+
     addGroupToList(
       state.groupName,
       state.timeMinutes,
       state.timeHours,
       state.selectedProcesses
     );
+    setState({ ...state, groupName: "" });
   }
 
   function addGroupToList(name, minutes, hours, timeRollover) {
