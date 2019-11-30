@@ -36,24 +36,19 @@ export default function Settings() {
     timeMinutes: "",
     timeHours: "",
     timeRollover: false,
-    selectedProcesses:[],
+    selectedProcesses: [],
     processList: {
-      columns: [
-      { title: 'Process Name', field: 'name' }
-    ],
-    data: [
-      {name: "test"},
-      {name: "test2"},
-      {name: "test3"},
-    ]},
+      columns: [{ title: "Process Name", field: "name" }],
+      data: [{ name: "test" }, { name: "test2" }, { name: "test3" }]
+    },
     groupList: {
       columns: [
-      { title: 'Group Name', field: 'name'},
-      { title: 'Time', field: 'time' },
-      { title: 'Time Rollover', field: 'timeRollover' }
-    ],
-    data: [{name: "test", time: "1:25", timeRollover: "Enabled"}]
-  }
+        { title: "Group Name", field: "name" },
+        { title: "Time", field: "time" },
+        { title: "Time Rollover", field: "timeRollover" }
+      ],
+      data: [{ name: "test", time: "1:25", timeRollover: "Enabled" }]
+    }
   });
 
   const updateGroupName = value => event => {
@@ -73,24 +68,34 @@ export default function Settings() {
   };
 
   function getSelectedProcesses(data) {
-    setState({ ...state, selectedProcesses: data })
+    setState({ ...state, selectedProcesses: data });
   }
 
   function submitGroup() {
-
-    if (state.groupName === "" || state.timeMinutes === "" || state.timeHours === "" || state.selectedProcesses.length === 0) return;
-    addGroupToList(state.groupName, state.timeMinutes, state.timeHours, state.selectedProcesses);
+    if (
+      state.groupName === "" ||
+      state.timeMinutes === "" ||
+      state.timeHours === "" ||
+      state.selectedProcesses.length === 0
+    )
+      return;
+    addGroupToList(
+      state.groupName,
+      state.timeMinutes,
+      state.timeHours,
+      state.selectedProcesses
+    );
   }
 
   function addGroupToList(name, minutes, hours, timeRollover) {
-    let rollover = "Disabled"
-    if (timeRollover) rollover = "Enabled"
+    let rollover = "Disabled";
+    if (timeRollover) rollover = "Enabled";
     let time = hours + ":" + minutes;
-    let group = {name: name, time: time, timeRollover: rollover}
+    let group = { name: name, time: time, timeRollover: rollover };
     let groupList = state.groupList;
 
-    groupList.data.push(group)
-    setState({ ...state, groupList: groupList })
+    groupList.data.push(group);
+    setState({ ...state, groupList: groupList });
   }
 
   function groupsToAPI() {
@@ -99,7 +104,11 @@ export default function Settings() {
 
   return (
     <div className={classes.wrapper}>
-      <ProcessList className={classes.processList} tableData={state} onProcessesSelected={getSelectedProcesses} />
+      <ProcessList
+        className={classes.processList}
+        tableData={state}
+        onProcessesSelected={getSelectedProcesses}
+      />
       <GroupList className={classes.groupList} tableData={state} />
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
@@ -110,7 +119,7 @@ export default function Settings() {
           id="groupName"
           label="Group Name"
           value={state.groupName}
-          onChange={updateGroupName()}
+          onInput={updateGroupName()}
           className={classes.textField}
           margin="normal"
         />
