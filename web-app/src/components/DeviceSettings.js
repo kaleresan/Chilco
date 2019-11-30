@@ -71,6 +71,14 @@ export default function Settings() {
     setState({ ...state, selectedProcesses: data });
   }
 
+  function updateGroupListData(data) {
+    let temp = state.groupList;
+    temp.data = data;
+    setState({ ...state, groupList: temp });
+
+    groupsToAPI();
+  }
+
   function submitGroup() {
     if (
       state.groupName === "" ||
@@ -115,7 +123,11 @@ export default function Settings() {
         tableData={state}
         onProcessesSelected={getSelectedProcesses}
       />
-      <GroupList className={classes.groupList} tableData={state} />
+      <GroupList
+        className={classes.groupList}
+        tableData={state}
+        onGroupDelete={updateGroupListData}
+      />
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Settings

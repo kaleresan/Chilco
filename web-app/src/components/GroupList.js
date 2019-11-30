@@ -17,6 +17,10 @@ export default function GroupList(props) {
     });
   }, [props.tableData.groupList.data.length]);
 
+  function handleGroupDelete(data) {
+    props.onGroupDelete(data);
+  }
+
   return (
     <div>
       <link
@@ -38,6 +42,7 @@ export default function GroupList(props) {
                 for (var i = 0; i < dataArray.length; i++) {
                   data.splice(data.indexOf(dataArray[i]), 1);
                 }
+                handleGroupDelete(data);
                 return { ...prevState, data };
               })
           }
