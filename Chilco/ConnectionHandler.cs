@@ -1,7 +1,9 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WebSocketSharp;
+using static Chilco.Group;
 
 namespace Chilco
 {
@@ -18,7 +20,7 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            UpdateRules();
+            UpdateRuleset();
             ConnectWebsocket();
         }
 
@@ -49,20 +51,15 @@ namespace Chilco
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    UpdateRules();
+                    UpdateRuleset();
                 };
 
                 ws.Connect();
             }
         }
 
-        private static void UpdateRules()
+        private static void UpdateRuleset()
         {
-            //TODO Implement API GET request
-            //throw new NotImplementedException();
-
-            //this is just an example on how it could be with some example data
-
             var client = new RestClient(DOMAIN);
 
             string username = "";
@@ -71,43 +68,91 @@ namespace Chilco
 
             request.AddHeader("x-access-token", authToken);
 
-            // async with deserialization
-            var asyncHandle = client.ExecuteAsync<Group.Ruleset>(request, response =>
-            {
-                Group.Ruleset ruleset = default;
 
-                if (response.IsSuccessful)
+            // API GET request
+            IRestResponse response = client.Execute(request);
+
+            List<Ruleset> RulesetList = new List<Ruleset>();
+
+            if (response.IsSuccessful)
+            {
+                string rulesets_as_json = response.Content;
+
+                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
+                RulesetList.AddRange(rulesets);
+            }
+            else
+            {
+                Group[] groups = FileIO.LoadGroups();
+                if (groups == null || groups.Length == 0)
                 {
-                    ruleset = response.Data;
+                    RulesetList.AddRange(GetDefaultRulesets());
                 }
                 else
                 {
-                    Group[] groups = FileIO.LoadGroups();
-                    if (groups == null || groups.Length == 0)
-                    {
-                        ruleset = GetDefaultRuleset();
-                    }
-                    else
-                    {
-                        //extract ruleset from the specified group
-                    }
+                    RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
                 }
-                Main.Update(ruleset);
-            });
+            }
+
+            Main.Update(RulesetList.ToArray());
         }
 
-        private static Group.Ruleset GetDefaultRuleset()
+        private static Ruleset[] GetDefaultRulesets()
         {
-            string key = "";
-            List<string> processes = new List<string>();
-            processes.Add("Firefox");
-            processes.Add("Chrome");
+            IList<Ruleset> RulesetList = new List<Ruleset>() {
+                    new Ruleset() {
+                        Key = "Default1",
+                        Title = "Browser",
+                        Processes = new List<string>()
+                                    {
+                                        "Firefox",
+                                        "Chrome"
+                                    },
+                        DoTimeRollover = true,
+                        DailyPlaytime = new TimeSpan(0, 0, 30, 0, 0)
+                    } ,
 
-            DateTime date3 = new DateTime();
-            DateTime date4 = date3.AddMinutes(30);
-            TimeSpan dailyPlaytime = date4 - date3;
+                    new Ruleset() {
+                        Key = "Default2",
+                        Title = "Games",
+                        Processes = new List<string>()
+                                    {
+                                        "Nidhogg",
+                                        "Stardew Valley",
+                                        "Unturned",
+                                        "Ace of Spades",
+                                        "Counterstrike Global Offensive"
+                                    },
+                        DoTimeRollover = true,
+                        DailyPlaytime = new TimeSpan(0, 2, 0, 0, 0)
+                    } ,
 
-            return new Group.Ruleset(key, "Browser", processes, true, dailyPlaytime);
+                    new Ruleset() {
+                        Key = "Default3",
+                        Title = "Malicious Utilities",
+                        Processes = new List<string>()
+                                    {
+                                        "cmd",
+                                        "PowerShell"
+                                    },
+                        DoTimeRollover = true,
+                        DailyPlaytime = new TimeSpan(0, 0, 0, 0, 0)
+                    } ,
+
+                    new Ruleset() {
+                        Key = "Default4",
+                        Title = "",
+                        Processes = new List<string>()
+                                    {
+                                        "",
+                                        ""
+                                    },
+                        DoTimeRollover = true,
+                        DailyPlaytime = new TimeSpan(0, 0, 0, 0, 0)
+                    } ,
+                };
+
+            return RulesetList.ToArray();
         }
     }
 }
