@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import SignIn from "./components/SignIn";
+import Routes from "./Routes";
 import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {
@@ -26,8 +25,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Main></Main>
+      <Routes />
       </ThemeProvider>
     );
   }
