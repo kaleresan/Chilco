@@ -19,7 +19,7 @@ async function getAllSettingsController(
   try {
     const settings = await Setting.findAll({ where: { accountId: req.accountId }});
 
-    createSuccessResponse(res, {"settings":[{"Title":"Browsers","Processes":["Firefox","Chrome"],"LeftoverTime":"00:10:00","DoTimeRollover":true,"DateLastRun":"2019-11-20T12:39:23.8495909-08:00","DailyPlaytime":"00:30:00"}]});
+    createSuccessResponse(res, {"setting":[{"Key":"Default1","Title":"Browser","Processes":["Firefox","Chrome"],"DoTimeRollover":true,"DailyPlaytime":"00:30:00"},{"Key":"Default2","Title":"Games","Processes":["Nidhogg","Stardew Valley","Unturned","Ace of Spades","Counterstrike Global Offensive"],"DoTimeRollover":true,"DailyPlaytime":"02:00:00"},{"Key":"Default3","Title":"Malicious Utilities","Processes":["cmd","PowerShell"],"DoTimeRollover":true,"DailyPlaytime":"00:00:00"},{"Key":"Default4","Title":"","Processes":["",""],"DoTimeRollover":true,"DailyPlaytime":"00:00:00"}]});
   } catch (err) {
     console.log(err);
     createErrorResponse(res, 400);
