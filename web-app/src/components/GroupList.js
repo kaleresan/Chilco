@@ -12,7 +12,6 @@ export default function GroupList(props) {
       for (let index = 0; index < newData.data.length; index++) {
         data.push(newData.data[index]);
       }
-      console.log(data);
 
       return { ...prevState, data };
     });
@@ -43,19 +42,6 @@ export default function GroupList(props) {
               })
           }
         ]}
-        editable={{
-          onRowAdd: newData =>
-            new Promise(resolve => {
-              setTimeout(() => {
-                resolve();
-                setState(prevState => {
-                  const data = [...prevState.data];
-                  data.push(newData);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            })
-        }}
       />
     </div>
   );
