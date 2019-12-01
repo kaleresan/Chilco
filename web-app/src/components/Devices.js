@@ -12,10 +12,10 @@ import DeviceSettings from "./DeviceSettings";
 
 const useStyles = makeStyles({
   deviceList: {
-    width: "90%",
-    position: "absolute",
+    width: "95%",
+    position: "relative",
     left: "50%",
-    top: "25%",
+    top: "130px",
     transform: "translate(-50%, -50%)",
     overflowX: "auto"
   },
@@ -36,7 +36,7 @@ function createData(name, user, isOnline) {
 
 function statusColor(isOnline) {
   if (isOnline) return { backgroundColor: "#00e676" };
-  return { backgroundColor: "#e53935" };
+  return { backgroundColor: "#d81b60" };
 }
 
 const rows = [

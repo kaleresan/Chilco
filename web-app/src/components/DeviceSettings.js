@@ -14,18 +14,24 @@ import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  settings: {
     padding: theme.spacing(3, 2),
-    width: "40%"
+    width: "15%"
   },
   processList: {
-    width: "60%"
+    width: "85%"
+  },
+  groupList: {
+    width: "60%",
+
   },
   wrapper: {
     position: "relative",
-    overflow: "hidden",
-    width: "70%",
-    display: "flex"
+    display: "flex",
+    top: "40px"
+  },
+  root: {
+    textAllign: "center"
   }
 }));
 
@@ -117,18 +123,14 @@ export default function Settings() {
   }
 
   return (
+    <div className={classes.root}>
     <div className={classes.wrapper}>
       <ProcessList
         className={classes.processList}
         tableData={state}
         onProcessesSelected={getSelectedProcesses}
       />
-      <GroupList
-        className={classes.groupList}
-        tableData={state}
-        onGroupDelete={updateGroupListData}
-      />
-      <Paper className={classes.root}>
+      <Paper className={classes.settings}>
         <Typography variant="h5" component="h3">
           Settings
         </Typography>
@@ -194,6 +196,12 @@ export default function Settings() {
           Submit
         </Button>
       </Paper>
+    </div>
+    <GroupList
+      className={classes.groupList}
+      tableData={state}
+      onGroupDelete={updateGroupListData}
+    />
     </div>
   );
 }
