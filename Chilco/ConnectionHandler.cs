@@ -111,7 +111,7 @@ namespace Chilco
                 }
             }
 
-            Main.Update(RulesetList.ToArray());
+            Main.Update(RulesetList);
         }
 
         private static Ruleset[] GetDefaultRulesets()
