@@ -11,14 +11,13 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import DeviceSettings from "./DeviceSettings";
 
 const useStyles = makeStyles({
-  root: {
-    width: "90%",
-    position: "absolute",
+  deviceList: {
+    width: "95%",
+    position: "relative",
     left: "50%",
-    top: "25%",
+    top: "130px",
     transform: "translate(-50%, -50%)",
-    overflowX: "auto",
-    display: "none"
+    overflowX: "auto"
   },
   table: {
     minWidth: 650
@@ -37,7 +36,7 @@ function createData(name, user, isOnline) {
 
 function statusColor(isOnline) {
   if (isOnline) return { backgroundColor: "#00e676" };
-  return { backgroundColor: "#e53935" };
+  return { backgroundColor: "#d81b60" };
 }
 
 const rows = [
@@ -47,54 +46,71 @@ const rows = [
 
 export default function Devices(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState(props.showDevices);
+  const [state, setState] = React.useState({
+    showDevices: true,
+    deviceID: ""
+  });
 
-  const clickSettingsButton = event => {
-    props.onSettingsButtonClick();
-  };
+  function clickSettingsButton(deviceID) {
+    setState({...state, deviceID: deviceID})
+    setState({...state, showDevices: !state.showDevices})
+  }
+
+  function updateDevices() {
+    //TODO: Update Devices Table From API
+  }
+
 
   return (
     <div>
-    <Paper className={classes.root}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Status</TableCell>
-            <TableCell align="left">Device</TableCell>
-            <TableCell align="left">User</TableCell>
-            <TableCell align="right">Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell align="left">
-                <span
-                  className={classes.dot}
-                  style={statusColor(row.isOnline)}
-                ></span>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="left">{row.user}</TableCell>
-              <TableCell align="right">
-                <IconButton
-                  edge="start"
-                  className={classes.settingsButton}
-                  onClick={clickSettingsButton}
-                  color="inherit"
-                  aria-label="settings"
-                >
-                  <SettingsIcon />
-                </IconButton>
-              </TableCell>
+    {
+      state.showDevices?
+      <Paper className={classes.deviceList}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">Status</TableCell>
+              <TableCell align="left">Device</TableCell>
+              <TableCell align="left">User</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-    <DeviceSettings />
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <TableRow key={row.name}>
+                <TableCell align="left">
+                  <span
+                    className={classes.dot}
+                    style={statusColor(row.isOnline)}
+                  ></span>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">{row.user}</TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    edge="start"
+                    className={classes.settingsButton}
+                    onClick={() => clickSettingsButton(row.name)}
+                    color="inherit"
+                    aria-label="settings"
+                  >
+                    <SettingsIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+      :null
+    }
+    {
+      !state.showDevices?
+      <DeviceSettings deviceID={state.deviceID}/>
+      :null
+    }
     </div>
   );
 }

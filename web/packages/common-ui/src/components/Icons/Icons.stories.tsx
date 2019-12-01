@@ -9,16 +9,18 @@ storiesOf('icons', module).add('default', () => {
 
   return (
     <ul>
-    {
-      iconArray.map(iconName => {
+      {iconArray.map(iconName => {
         console.log(iconName);
         const Icon = icons[iconName];
         const StyledIcon = styled(Icon)`
           height: 40px;
         `;
-        return (<li><StyledIcon color="black" key={iconName} /></li>)
-      })
-    }
+        return (
+          <li>
+            <StyledIcon color="black" key={iconName} />
+          </li>
+        );
+      })}
     </ul>
-  )
+  );
 });

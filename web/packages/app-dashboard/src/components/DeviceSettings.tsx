@@ -1,63 +1,57 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ProcessList from "./ProcessList";
-import GroupList from "./GroupList";
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Select from "@material-ui/core/Select";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ProcessList from './ProcessList';
+import GroupList from './GroupList';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-  settings: {
+  root: {
     padding: theme.spacing(3, 2),
-    width: "15%"
+    width: '40%'
   },
   processList: {
-    width: "85%"
-  },
-  groupList: {
-    width: "60%",
-
+    width: '60%'
   },
   wrapper: {
-    position: "relative",
-    display: "flex",
-    top: "40px"
-  },
-  root: {
-    textAllign: "center"
+    position: 'relative',
+    overflow: 'hidden',
+    width: '70%',
+    display: 'flex'
   }
 }));
 
 export default function Settings() {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    groupName: "",
-    timeMinutes: "",
-    timeHours: "",
+  const classes: any = useStyles();
+  const [state, setState] = React.useState<any>({
+    groupName: '',
+    timeMinutes: '',
+    timeHours: '',
     timeRollover: false,
     selectedProcesses: [],
     processList: {
-      columns: [{ title: "Process Name", field: "name" }],
-      data: [{ name: "test" }, { name: "test2" }, { name: "test3" }]
+      columns: [{ title: 'Process Name', field: 'name' }],
+      data: [{ name: 'test' }, { name: 'test2' }, { name: 'test3' }]
     },
     groupList: {
       columns: [
-        { title: "Group Name", field: "name" },
-        { title: "Time", field: "time" },
-        { title: "Time Rollover", field: "timeRollover" }
+        { title: 'Group Name', field: 'name' },
+        { title: 'Time', field: 'time' },
+        { title: 'Time Rollover', field: 'timeRollover' }
       ],
       data: []
     }
   });
 
-  const updateGroupName = value => event => {
+  const updateGroupName = () => event => {
     setState({ ...state, groupName: event.target.value });
   };
 
@@ -65,11 +59,11 @@ export default function Settings() {
     setState({ ...state, [name]: event.target.checked });
   };
 
-  const updateHours = value => event => {
+  const updateHours = () => event => {
     setState({ ...state, timeHours: event.target.value });
   };
 
-  const updateMinutes = value => event => {
+  const updateMinutes = () => event => {
     setState({ ...state, timeMinutes: event.target.value });
   };
 
@@ -78,7 +72,7 @@ export default function Settings() {
   }
 
   function updateGroupListData(data) {
-    let temp = state.groupList;
+    const temp = state.groupList;
     temp.data = data;
     setState({ ...state, groupList: temp });
 
@@ -87,9 +81,9 @@ export default function Settings() {
 
   function submitGroup() {
     if (
-      state.groupName === "" ||
-      state.timeMinutes === "" ||
-      state.timeHours === "" ||
+      state.groupName === '' ||
+      state.timeMinutes === '' ||
+      state.timeHours === '' ||
       state.selectedProcesses.length === 0
     )
       return;
@@ -104,15 +98,15 @@ export default function Settings() {
       state.timeHours,
       state.selectedProcesses
     );
-    setState({ ...state, groupName: "" });
+    setState({ ...state, groupName: '' });
   }
 
   function addGroupToList(name, minutes, hours, timeRollover) {
-    let rollover = "Disabled";
-    if (timeRollover) rollover = "Enabled";
-    let time = hours + ":" + minutes;
-    let group = { name: name, time: time, timeRollover: rollover };
-    let groupList = state.groupList;
+    let rollover = 'Disabled';
+    if (timeRollover) rollover = 'Enabled';
+    const time = hours + ':' + minutes;
+    const group = { name: name, time: time, timeRollover: rollover };
+    const groupList = state.groupList;
 
     groupList.data.push(group);
     setState({ ...state, groupList: groupList });
@@ -123,14 +117,18 @@ export default function Settings() {
   }
 
   return (
-    <div className={classes.root}>
     <div className={classes.wrapper}>
       <ProcessList
         className={classes.processList}
         tableData={state}
         onProcessesSelected={getSelectedProcesses}
       />
-      <Paper className={classes.settings}>
+      <GroupList
+        className={classes.groupList}
+        tableData={state}
+        onGroupDelete={updateGroupListData}
+      />
+      <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Settings
         </Typography>
@@ -185,7 +183,7 @@ export default function Settings() {
             control={
               <Checkbox
                 checked={state.timeRollover}
-                onChange={updateTimeRollover("timeRollover")}
+                onChange={updateTimeRollover('timeRollover')}
               />
             }
             label="Enable time rollover"
@@ -196,12 +194,6 @@ export default function Settings() {
           Submit
         </Button>
       </Paper>
-    </div>
-    <GroupList
-      className={classes.groupList}
-      tableData={state}
-      onGroupDelete={updateGroupListData}
-    />
     </div>
   );
 }

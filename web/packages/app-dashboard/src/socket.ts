@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import { SOCKET_URI } from "./constants/api";
+import { SOCKET_URI } from './constants/api';
 
 //import { setToken, validateToken } from './actions/socket';
 //import { SET_TOKEN, VALIDATE_TOKEN } from './constants/socket';
