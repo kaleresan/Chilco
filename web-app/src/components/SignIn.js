@@ -68,20 +68,22 @@ export default function SignIn(props) {
 
   function signInRequest(event) {
     event.preventDefault();
-    fetch('http://chilco.de/auth/login', {
-      method: 'POST',
+    fetch("http://chilco.de/auth/login", {
+      method: "POST",
       headers: {
-      'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(state)
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(jsondata => {
-        if (jsondata.success == true) {
-          // TODO: Handle Login Event
+        if (jsondata.success === true) {
+          props.updateToken(jsondata.data.token);
+          props.updateAuth(true);
         } else {
           // TODO: Add Error Message
         }
-      })
+      });
   }
 
   return (
