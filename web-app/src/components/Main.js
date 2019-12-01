@@ -1,53 +1,40 @@
-import React, { Component } from "react";
+import React from "react";
 import MainAppBar from "./MainAppBar";
 import SideDrawer from "./SideDrawer";
 import Devices from "./Devices";
 
-export class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openMenuBar: false,
-      showDevices: true
-    };
-    this.handleMenuBarOpen = this.handleMenuBarOpen.bind(this);
-    this.handleMenuBarClose = this.handleMenuBarClose.bind(this);
-    this.handleDevicesButton = this.handleDevicesButton.bind(this);
-    this.handleSettingsButton = this.handleSettingsButton.bind(this);
+export default function Main(props) {
+  const [state, setState] = React.useState({
+    openMenuBar: false,
+    isAuthenticated: props.auth.isAuthenticated,
+    token: props.auth.token
+  });
+  React.useEffect(() => {
+    setState({ ...state, isAuthenticated: props.auth.isAuthenticated });
+    setState({ ...state, token: props.auth.token });
+    checkAuth();
+  }, [props.auth]);
+
+  function checkAuth() {
+    if (!state.isAuthenticated) props.history.push("/");
   }
 
-  handleMenuBarOpen() {
-    this.setState({ openMenuBar: true });
+  function handleMenuBarOpen() {
+    setState({ openMenuBar: true });
   }
 
-  handleMenuBarClose() {
-    this.setState({ openMenuBar: false });
+  function handleMenuBarClose() {
+    setState({ openMenuBar: false });
   }
 
-  handleDevicesButton() {
-    this.setState({ showDevices: true });
-  }
-
-  handleSettingsButton() {
-    this.setState({ showDevices: false });
-  }
-
-  render() {
-    return (
-      <div id="parent">
-        <MainAppBar onChildClick={this.handleMenuBarOpen} />
-        <Devices
-          showDevices={this.showDevices}
-          onSettingsButtonClick={this.handleSettingsButton}
-        />
-        <SideDrawer
-          openMenuBar={this.state.openMenuBar}
-          onMenuBarClose={this.handleMenuBarClose}
-          onDevicesButtonClick={this.handleDevicesButton}
-        />
-      </div>
-    );
-  }
+  return (
+    <div id="parent">
+      <MainAppBar onChildClick={handleMenuBarOpen} />
+      <Devices token={state.token}/>
+      <SideDrawer
+        openMenuBar={state.openMenuBar}
+        onMenuBarClose={handleMenuBarClose}
+      />
+    </div>
+  );
 }
-
-export default Main;
