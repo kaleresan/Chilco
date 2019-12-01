@@ -51,7 +51,7 @@ pipeline{
                         returnStdout: true
                     ).split().toList()
 
-                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                    sh "docker build -t ${builderImage} --no-cache -f ./web/docker/Dockerfile.build ."
                 }
             }
         }
