@@ -47,14 +47,16 @@ namespace Chilco
             {
                 Thread.Sleep(1000);
                 foreach(Tracker tracker in Trackers)
-                {
+                {              
                     tracker.CheckProcesses();
+                    Console.WriteLine("Gruppe "+tracker.group.ruleset.Title + ":  " + tracker.group.LeftoverTime);
                 }
                 List<Group> groups = new List<Group>();
                 groups.AddRange(Trackers.Select(tracker => tracker.group));
                 FileIO.SaveGroups(groups.ToArray());
             }
         }
+        
 
         //Delete
     }

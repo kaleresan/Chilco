@@ -22,8 +22,8 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            //UpdateRuleset();
-            //ConnectWebsocket();
+            UpdateRuleset();
+            ConnectWebsocket();
         }
 
         private static void RegisterHandshake()
@@ -63,7 +63,7 @@ namespace Chilco
 
         private static void ConnectWebsocket()
         {
-            using (var ws = new WebSocket(DOMAIN))
+            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="+authToken))
             {
                 ws.OnMessage +=
                 (sender, e) =>
@@ -114,9 +114,9 @@ namespace Chilco
             Main.Update(RulesetList);
         }
 
-        private static Ruleset[] GetDefaultRulesets()
+        private static List<Ruleset> GetDefaultRulesets()
         {
-            IList<Ruleset> RulesetList = new List<Ruleset>() {
+            List<Ruleset> RulesetList = new List<Ruleset>() {
                     new Ruleset() {
                         Key = "Default1",
                         Title = "Browser",
@@ -169,7 +169,7 @@ namespace Chilco
                     } ,
                 };
 
-            return RulesetList.ToArray();
+            return RulesetList;
         }
     }
 }
