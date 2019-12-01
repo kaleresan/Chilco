@@ -34,6 +34,10 @@ export default function SideDrawer(props) {
     props.onMenuBarClose();
   };
 
+  const clickDevicesButton = event => {
+    props.onDevicesButtonClick();
+  };
+
   const sideList = side => (
     <div
       className={classes.list}
@@ -43,7 +47,7 @@ export default function SideDrawer(props) {
     >
       <List>
         {["Devices"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={clickDevicesButton}>
             <ListItemIcon>
               <DevicesIcon />
             </ListItemIcon>
