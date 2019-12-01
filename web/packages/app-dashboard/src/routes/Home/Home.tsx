@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import MainAppBar from "../../components/MainAppBar";
-import Devices from "../../components/Devices";
-import SideDrawer from "../../components/SideDrawer";
+import MainAppBar from '../../components/MainAppBar';
+import Devices from '../../components/Devices';
+import SideDrawer from '../../components/SideDrawer';
 
 const StyledContainer = styled.div`
   flex: 1;

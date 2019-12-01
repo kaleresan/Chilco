@@ -11,10 +11,7 @@ export function getCurrentUser() {
       fetchStart(GET_CURRENT_USER_ACTION, {
         route: '/account',
         callback: data => {
-          if (
-            data &&
-            window.location.pathname.match('/')
-          ) {
+          if (data && window.location.pathname.match('/')) {
             dispatch(push('/'));
             return;
           }

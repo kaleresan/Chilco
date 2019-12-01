@@ -3,10 +3,7 @@ import {
   SOCKET_SET_TOKEN_ACTION,
   SOCKET_VALIDATE_TOKEN_ACTION
 } from '../actions/socket';
-import {
-  ERROR_FETCH_ACTION,
-  SUCCESS_FETCH_ACTION
-} from '@chilco/middlewares';
+import { ERROR_FETCH_ACTION, SUCCESS_FETCH_ACTION } from '@chilco/middlewares';
 import { GET_CURRENT_USER_ACTION } from '../actions/api';
 
 export interface AccountType {

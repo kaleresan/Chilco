@@ -1,5 +1,5 @@
-import React from "react";
-import MaterialTable from "material-table";
+import React from 'react';
+import MaterialTable from 'material-table';
 
 export default function GroupList(props) {
   const [state, setState] = React.useState(props.tableData.groupList);
@@ -15,7 +15,7 @@ export default function GroupList(props) {
 
       return { ...prevState, data };
     });
-  }, [props.tableData.groupList.data.length]);
+  }, [props.tableData.groupList, props.tableData.groupList.data.length]);
 
   function handleGroupDelete(data) {
     props.onGroupDelete(data);
@@ -34,12 +34,12 @@ export default function GroupList(props) {
         options={{ selection: true }}
         actions={[
           {
-            tooltip: "Remove All Selected Groups",
-            icon: "delete",
+            tooltip: 'Remove All Selected Groups',
+            icon: 'delete',
             onClick: (event: any, dataArray: any[]) =>
               setState(prevState => {
                 const data = [...prevState.data];
-                for (var i = 0; i < dataArray.length; i++) {
+                for (let i = 0; i < dataArray.length; i++) {
                   data.splice(data.indexOf(dataArray[i]), 1);
                 }
                 handleGroupDelete(data);

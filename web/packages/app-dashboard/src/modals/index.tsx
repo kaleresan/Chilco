@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { StateType } from '../reducers';
 
-export type modalType = "";
+export type modalType = '';
 
 interface PropsType {
   activeModal: modalType | null;

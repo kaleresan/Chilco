@@ -1,39 +1,39 @@
 import React from 'react';
-import PageContainer from "../../components/PageContainer";
+import PageContainer from '../../components/PageContainer';
 
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
-import Box from "@material-ui/core/Box";
-import Copyright from "../../components/CopyRight";
-import {makeStyles} from "@material-ui/core";
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import Box from '@material-ui/core/Box';
+import Copyright from '../../components/CopyRight';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  "@global": {
+  '@global': {
     body: {
       backgroundColor: theme.palette.common.white
     }
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   avatarLarge: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -45,8 +45,8 @@ export interface SignUpPropsType {}
 export function SignIn({  }: SignUpPropsType) {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    email: "",
-    password: ""
+    email: '',
+    password: ''
   });
 
   const updateEmail = () => event => {
@@ -65,14 +65,15 @@ export function SignIn({  }: SignUpPropsType) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(state)
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(jsondata => {
-        if (jsondata.success == true) {
+        if (jsondata.success === true) {
           // TODO: Handle Login Event
         } else {
           // TODO: Add Error Message
         }
-      })
+      });
   }
 
   return (

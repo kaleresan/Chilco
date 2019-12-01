@@ -24,11 +24,7 @@ interface PropsType {
   children: any;
   intl: IntlShape;
 }
-export function PageContainer({
-  intl,
-  children,
-}: PropsType) {
-  const msg = (id: string) => intl.formatMessage({ id });
+export function PageContainer({ intl, children }: PropsType) {
   return (
     <StyledContainer>
       <StyledContent>{children}</StyledContent>

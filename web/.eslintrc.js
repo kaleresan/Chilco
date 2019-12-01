@@ -45,5 +45,6 @@ module.exports =  {
     '@typescript-eslint/no-angle-bracket-type-assertion': 0,
     "prettier/prettier": ["error", { "singleQuote": true }],
     "react/jsx-filename-extension": 0,
+    "@typescript-eslint/no-empty-interface": 0
   },
 };
