@@ -15,6 +15,7 @@ namespace Chilco
 
         private static void KillProcess(string processName)
         {
+            System.Console.WriteLine("Trying to kill process: "+ processName);
             //For every Process currently running that has the name s
             foreach (Process p in Process.GetProcessesByName(processName))
             {
@@ -22,6 +23,7 @@ namespace Chilco
                 //(sometimes the Process closes itself before being killed and Chilco crashes)
                 if (Process.GetProcessesByName(processName).Length > 0)
                 {
+                    System.Console.WriteLine("Killing process: "+processName);
                     p.Kill();
                 }
             }
