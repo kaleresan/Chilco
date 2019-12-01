@@ -13,6 +13,7 @@ namespace Chilco
         //Update
         internal static void Update(List<Group.Ruleset> rulesets)
         {
+            Console.WriteLine("Updating ruleset");
             Group[] oldGroups = FileIO.LoadGroups();
             List<Tracker> newTrackers = new List<Tracker>();
             foreach (Group.Ruleset ruleset in rulesets)
@@ -31,7 +32,7 @@ namespace Chilco
             }
             Trackers = newTrackers;
 
-            if(isRunning == false)
+            if (isRunning == false)
             {
                 isRunning = true;
                 Thread Loop = new Thread(new ThreadStart(MainLoop));
@@ -41,6 +42,7 @@ namespace Chilco
 
         private static void MainLoop()
         {
+            Console.WriteLine("Starting Mainloop");
             while (isRunning)
             {
                 Thread.Sleep(1000);
