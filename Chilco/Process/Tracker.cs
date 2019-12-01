@@ -8,8 +8,9 @@ namespace Chilco
         private Stopwatch RunningTime;
         private Group group;
 
-        public Tracker()
+        public Tracker(Group group)
         {
+            this.group = group;
             RunningTime = new Stopwatch();
         }
 
@@ -17,7 +18,7 @@ namespace Chilco
         /// Checks if any process in the GetGroup is running.
         /// </summary>
         /// <returns>true if one or more processes in the Group are running</returns>
-        public bool IsRunning()
+        private bool IsRunning()
         {
             bool running = false;
             foreach (string s in group.ruleset.Processes)
@@ -34,13 +35,13 @@ namespace Chilco
         public void CheckProcesses()
         {
             UpdateLeftoverTime();
-            if (group.LeftoverTime.Ticks == 0)
+            if (group.LeftoverTime.Ticks < 0)
             {
                 Butcher.KillProcesses(group);
             }
         }
 
-        public void UpdateLeftoverTime()
+        private void UpdateLeftoverTime()
         {
             if (RunningTime.IsRunning)
             {
