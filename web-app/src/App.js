@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-import Main from "./components/Main";
+import React from "react";
+import Routes from "./Routes";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
   palette: {
@@ -22,15 +19,23 @@ const theme = createMuiTheme({
   }
 });
 
-class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Main></Main>
-      </ThemeProvider>
-    );
-  }
-}
+export default function App() {
+  const [auth, setAuth] = React.useState({
+    isAuthenticated: false,
+    token: ""
+  });
 
-export default App;
+  function updateAuth(status) {
+    setAuth({ ...auth, isAuthenticated: status });
+  }
+
+  function updateToken(token) {
+    setAuth({ ...auth, token: token });
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Routes appProps={{ auth, updateAuth, updateToken }} />
+    </ThemeProvider>
+  );
+}

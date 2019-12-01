@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 
 namespace Chilco
 {
@@ -15,13 +16,15 @@ namespace Chilco
 
         private static void KillProcess(string processName)
         {
+            System.Console.WriteLine("Trying to kill process: "+ processName);
             //For every Process currently running that has the name s
-            foreach (Process p in Process.GetProcessesByName(processName))
+            foreach (Process p in Process.GetProcesses().Where(p2 => p2.ProcessName == processName || p2.MainWindowTitle == processName))
             {
                 //Checks if process is actually running
                 //(sometimes the Process closes itself before being killed and Chilco crashes)
-                if (Process.GetProcessesByName(processName).Length > 0)
+                if (Process.GetProcesses().Count(p3 => p3.ProcessName == processName || p3.MainWindowTitle == processName) > 0)
                 {
+                    System.Console.WriteLine("Killing process: " + processName);
                     p.Kill();
                 }
             }

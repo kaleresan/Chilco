@@ -5,13 +5,12 @@ namespace Chilco
 {
     internal class Tracker
     {
-        private readonly Linker Linker;
         private Stopwatch RunningTime;
-        private Group GetGroup => Linker.Group;
+        public Group group;
 
-        public Tracker(Linker linker)
+        public Tracker(Group group)
         {
-            this.Linker = linker;
+            this.group = group;
             RunningTime = new Stopwatch();
         }
 
@@ -19,10 +18,10 @@ namespace Chilco
         /// Checks if any process in the GetGroup is running.
         /// </summary>
         /// <returns>true if one or more processes in the Group are running</returns>
-        public bool IsRunning()
+        private bool IsRunning()
         {
             bool running = false;
-            foreach (string s in this.Linker.GetRuleset().Processes)
+            foreach (string s in group.ruleset.Processes)
             {
                 if (Process.GetProcessesByName(s).Length > 0)
                 {
@@ -36,27 +35,27 @@ namespace Chilco
         public void CheckProcesses()
         {
             UpdateLeftoverTime();
-            if (Linker.Group.LeftoverTime.Ticks == 0)
+            if (group.LeftoverTime.Ticks < 1)
             {
-                Butcher.KillProcesses(GetGroup);
+                Butcher.KillProcesses(group);
             }
         }
 
-        public void UpdateLeftoverTime()
+        private void UpdateLeftoverTime()
         {
             if (RunningTime.IsRunning)
             {
-                if (GetGroup.LeftoverTime > RunningTime.Elapsed)
-                    GetGroup.LeftoverTime -= RunningTime.Elapsed;
-                else GetGroup.LeftoverTime = new TimeSpan(0);
+                if (group.LeftoverTime > RunningTime.Elapsed)
+                    group.LeftoverTime -= RunningTime.Elapsed;
+                else group.LeftoverTime = new TimeSpan(0);
 
                 RunningTime.Reset();
             }
 
-            if (IsRunning() && GetGroup.LeftoverTime.Ticks > 0)
+            if (IsRunning() && group.LeftoverTime.Ticks > 0)
             {
                 RunningTime.Start();
-                GetGroup.DateLastRun = DateTime.Now;
+                group.DateLastRun = DateTime.Now;
             }
         }
     }
