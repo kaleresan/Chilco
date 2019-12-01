@@ -1,0 +1,6 @@
+version: "2"
+services:
+  app-dashboard:
+    restart: always
+    image: registry.chilco.de:5005/app-dashboard:master
+    container_name: app-dashboard
