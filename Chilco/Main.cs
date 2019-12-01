@@ -18,9 +18,9 @@ namespace Chilco
             foreach (Group.Ruleset ruleset in rulesets)
             {
                 Group group;
-                if (oldGroups.Where(g => g.ruleset.Key == ruleset.Key).Count() == 1)
+                if (oldGroups.Count(g => g.ruleset.Key == ruleset.Key) == 1)
                 {
-                    group = oldGroups.Where(g => g.ruleset.Key == ruleset.Key).First();
+                    group = oldGroups.First(g => g.ruleset.Key == ruleset.Key);
                     group.ruleset = ruleset;
                 }
                 else
