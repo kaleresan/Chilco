@@ -51,8 +51,38 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    email: "",
+    password: ""
+  });
+
+  const updateEmail = value => event => {
+    setState({ ...state, email: event.target.value });
+  };
+
+  const updatePassword = value => event => {
+    setState({ ...state, password: event.target.value });
+  };
+
+  function signInRequest(event) {
+    event.preventDefault();
+    fetch('http://chilco.de/auth/login', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(state)
+    }).then(response => response.json())
+      .then(jsondata => {
+        if (jsondata.success == true) {
+          // TODO: Handle Login Event
+        } else {
+          // TODO: Add Error Message
+        }
+      })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,8 +94,9 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={signInRequest}>
           <TextField
+            onChange={updateEmail()}
             variant="outlined"
             margin="normal"
             required
@@ -77,6 +108,7 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
+            onChange={updatePassword()}
             variant="outlined"
             margin="normal"
             required
@@ -102,7 +134,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/SignUp" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

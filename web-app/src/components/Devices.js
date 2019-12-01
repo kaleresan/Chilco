@@ -1,50 +1,60 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import SettingsIcon from '@material-ui/icons/Settings';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import SettingsIcon from "@material-ui/icons/Settings";
+import DeviceSettings from "./DeviceSettings";
 
 const useStyles = makeStyles({
   root: {
-    width: '90%',
-    position: 'absolute', left: '50%', top: '25%',
-    transform: 'translate(-50%, -50%)',
-    overflowX: 'auto',
+    width: "90%",
+    position: "absolute",
+    left: "50%",
+    top: "25%",
+    transform: "translate(-50%, -50%)",
+    overflowX: "auto",
+    display: "none"
   },
   table: {
-    minWidth: 650,
+    minWidth: 650
   },
   dot: {
-  height: '10px',
-  width: '10px',
-  borderRadius: '50%',
-  display: 'inline-block'
+    height: "10px",
+    width: "10px",
+    borderRadius: "50%",
+    display: "inline-block"
   }
 });
 
 function createData(name, user, isOnline) {
-  return { name, user, isOnline};
+  return { name, user, isOnline };
 }
 
-function statusColor(isOnline)  {
-  if (isOnline) return {backgroundColor:'#00e676'};
-  return {backgroundColor:'#e53935'}
+function statusColor(isOnline) {
+  if (isOnline) return { backgroundColor: "#00e676" };
+  return { backgroundColor: "#e53935" };
 }
 
 const rows = [
-  createData('PC-XG368', 'Hans Müller', true),
-  createData('PC-BDF381', 'Max Müller', false)
+  createData("PC-XG368", "Hans Müller", true),
+  createData("PC-BDF381", "Max Müller", false)
 ];
 
-export default function SimpleTable() {
+export default function Devices(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState(props.showDevices);
+
+  const clickSettingsButton = event => {
+    props.onSettingsButtonClick();
+  };
 
   return (
+    <div>
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -58,15 +68,24 @@ export default function SimpleTable() {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.name}>
-            <TableCell align="left">
-              <span className={classes.dot} style={statusColor(row.isOnline)}></span>
-            </TableCell>
+              <TableCell align="left">
+                <span
+                  className={classes.dot}
+                  style={statusColor(row.isOnline)}
+                ></span>
+              </TableCell>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
               <TableCell align="left">{row.user}</TableCell>
               <TableCell align="right">
-                <IconButton edge="start" className={classes.settingsButton} color="inherit" aria-label="settings">
+                <IconButton
+                  edge="start"
+                  className={classes.settingsButton}
+                  onClick={clickSettingsButton}
+                  color="inherit"
+                  aria-label="settings"
+                >
                   <SettingsIcon />
                 </IconButton>
               </TableCell>
@@ -75,5 +94,7 @@ export default function SimpleTable() {
         </TableBody>
       </Table>
     </Paper>
+    <DeviceSettings />
+    </div>
   );
 }

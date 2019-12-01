@@ -7,7 +7,7 @@ namespace Chilco
         //Create
 
         //Update
-        internal static void Update(Group.Ruleset ruleset)
+        internal static void Update(Group.Ruleset[] ruleset)
         {
             throw new NotImplementedException();
         }

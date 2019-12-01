@@ -49,8 +49,48 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: ""
+  });
+
+  const updateFirstName = value => event => {
+    setState({ ...state, firstname: event.target.value });
+  };
+
+  const updateLastName = value => event => {
+    setState({ ...state, lastname: event.target.value });
+  };
+
+  const updateEmail = value => event => {
+    setState({ ...state, email: event.target.value });
+  };
+
+  const updatePassword = value => event => {
+    setState({ ...state, password: event.target.value });
+  };
+
+  function signUpRequest(event) {
+    event.preventDefault();
+    fetch('http://chilco.de/auth/register', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(state)
+    }).then(response => response.json())
+      .then(jsondata => {
+        if (jsondata.success == true) {
+          props.history.push('/');
+        } else {
+          // TODO: Add Error Message
+        }
+      })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,10 +102,11 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={signUpRequest}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={updateFirstName()}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -78,6 +119,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                onChange={updateLastName()}
                 variant="outlined"
                 required
                 fullWidth
@@ -89,6 +131,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={updateEmail()}
                 variant="outlined"
                 required
                 fullWidth
@@ -100,6 +143,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={updatePassword()}
                 variant="outlined"
                 required
                 fullWidth
@@ -122,7 +166,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
