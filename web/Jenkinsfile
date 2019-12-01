@@ -3,7 +3,7 @@
 def apps = []
 branchName = env.BRANCH_NAME
 escapedBranchName = branchName.replaceAll("/", "-")
-registry = "registry.chilco.de:5001"
+registry = "registry.chilco.de:5005"
 appImageTemplate = "${registry}/"
 builderImage = "${registry}/web_builder:${escapedBranchName}"
 
