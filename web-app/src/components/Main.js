@@ -6,7 +6,6 @@ import Devices from "./Devices";
 export default function Main(props) {
   const [state, setState] = React.useState({
     openMenuBar: false,
-    showDevices: true,
     isAuthenticated: props.auth.isAuthenticated,
     token: props.auth.token
   });
@@ -39,14 +38,10 @@ export default function Main(props) {
   return (
     <div id="parent">
       <MainAppBar onChildClick={handleMenuBarOpen} />
-      <Devices
-        showDevices={state.showDevices}
-        onSettingsButtonClick={handleSettingsButton}
-      />
+      <Devices token={state.token}/>
       <SideDrawer
         openMenuBar={state.openMenuBar}
         onMenuBarClose={handleMenuBarClose}
-        onDevicesButtonClick={handleDevicesButton}
       />
     </div>
   );

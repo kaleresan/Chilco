@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Router, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import AppliedRoute from "./components/AppliedRoute";
 import PageNotFound from "./components/PageNotFound";
 import SignIn from "./components/SignIn";

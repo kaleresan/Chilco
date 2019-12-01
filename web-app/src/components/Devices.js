@@ -11,7 +11,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import DeviceSettings from "./DeviceSettings";
 
 const useStyles = makeStyles({
-  root: {
+  deviceList: {
     width: "90%",
     position: "absolute",
     left: "50%",
@@ -46,19 +46,26 @@ const rows = [
 
 export default function Devices(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState(props.showDevices);
+  const [state, setState] = React.useState({
+    showDevices: true,
+    deviceID: ""
+  });
 
-  const clickSettingsButton = event => {
-    props.onSettingsButtonClick();
-  };
+  function clickSettingsButton(deviceID) {
+    setState({...state, deviceID: deviceID})
+    setState({...state, showDevices: !state.showDevices})
+  }
 
   function updateDevices() {
-    //TODO: Update Devices Tabe From API
+    //TODO: Update Devices Table From API
   }
+
 
   return (
     <div>
-      <Paper className={classes.root}>
+    {
+      state.showDevices?
+      <Paper className={classes.deviceList}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -85,7 +92,7 @@ export default function Devices(props) {
                   <IconButton
                     edge="start"
                     className={classes.settingsButton}
-                    onClick={clickSettingsButton}
+                    onClick={() => clickSettingsButton(row.name)}
                     color="inherit"
                     aria-label="settings"
                   >
@@ -97,6 +104,13 @@ export default function Devices(props) {
           </TableBody>
         </Table>
       </Paper>
+      :null
+    }
+    {
+      !state.showDevices?
+      <DeviceSettings deviceID={state.deviceID}/>
+      :null
+    }
     </div>
   );
 }
