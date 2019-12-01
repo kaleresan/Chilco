@@ -6,7 +6,7 @@ namespace Chilco
     internal class Tracker
     {
         private Stopwatch RunningTime;
-        private Group group;
+        public Group group;
 
         public Tracker(Group group)
         {
