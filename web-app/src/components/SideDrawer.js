@@ -35,7 +35,7 @@ export default function SideDrawer(props) {
   };
 
   const clickDevicesButton = event => {
-    props.onDevicesButtonClick();
+    // TODO: Do Something With Devices Button
   };
 
   const sideList = side => (
