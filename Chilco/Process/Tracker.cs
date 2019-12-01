@@ -35,7 +35,7 @@ namespace Chilco
         public void CheckProcesses()
         {
             UpdateLeftoverTime();
-            if (group.LeftoverTime.Ticks < 0)
+            if (group.LeftoverTime.Ticks < 1)
             {
                 Butcher.KillProcesses(group);
             }
