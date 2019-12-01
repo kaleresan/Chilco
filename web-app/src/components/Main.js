@@ -27,14 +27,6 @@ export default function Main(props) {
     setState({ openMenuBar: false });
   }
 
-  function handleDevicesButton() {
-    setState({ showDevices: true });
-  }
-
-  function handleSettingsButton() {
-    setState({ showDevices: false });
-  }
-
   return (
     <div id="parent">
       <MainAppBar onChildClick={handleMenuBarOpen} />

@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function MainAppBar({ onChildClick }) {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -54,7 +53,6 @@ export default function MainAppBar({ onChildClick }) {
         <Typography variant="h6" className={classes.title}>
           Chilco
         </Typography>
-        {auth && (
           <div>
             <IconButton
               aria-label="account of current user"
@@ -84,7 +82,6 @@ export default function MainAppBar({ onChildClick }) {
               <MenuItem onClick={handleClose}>My account</MenuItem>
             </Menu>
           </div>
-        )}
       </Toolbar>
     </AppBar>
   );
