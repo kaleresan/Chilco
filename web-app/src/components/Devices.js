@@ -17,8 +17,7 @@ const useStyles = makeStyles({
     left: "50%",
     top: "25%",
     transform: "translate(-50%, -50%)",
-    overflowX: "auto",
-    display: "none"
+    overflowX: "auto"
   },
   table: {
     minWidth: 650
@@ -53,48 +52,51 @@ export default function Devices(props) {
     props.onSettingsButtonClick();
   };
 
+  function updateDevices() {
+    //TODO: Update Devices Tabe From API
+  }
+
   return (
     <div>
-    <Paper className={classes.root}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">Status</TableCell>
-            <TableCell align="left">Device</TableCell>
-            <TableCell align="left">User</TableCell>
-            <TableCell align="right">Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell align="left">
-                <span
-                  className={classes.dot}
-                  style={statusColor(row.isOnline)}
-                ></span>
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="left">{row.user}</TableCell>
-              <TableCell align="right">
-                <IconButton
-                  edge="start"
-                  className={classes.settingsButton}
-                  onClick={clickSettingsButton}
-                  color="inherit"
-                  aria-label="settings"
-                >
-                  <SettingsIcon />
-                </IconButton>
-              </TableCell>
+      <Paper className={classes.root}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">Status</TableCell>
+              <TableCell align="left">Device</TableCell>
+              <TableCell align="left">User</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-    <DeviceSettings />
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <TableRow key={row.name}>
+                <TableCell align="left">
+                  <span
+                    className={classes.dot}
+                    style={statusColor(row.isOnline)}
+                  ></span>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="left">{row.user}</TableCell>
+                <TableCell align="right">
+                  <IconButton
+                    edge="start"
+                    className={classes.settingsButton}
+                    onClick={clickSettingsButton}
+                    color="inherit"
+                    aria-label="settings"
+                  >
+                    <SettingsIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
     </div>
   );
 }

@@ -80,6 +80,7 @@ export default function SignIn(props) {
         if (jsondata.success === true) {
           props.updateToken(jsondata.data.token);
           props.updateAuth(true);
+          props.history.push("/Dashboard");
         } else {
           // TODO: Add Error Message
         }
