@@ -20,13 +20,22 @@ const theme = createMuiTheme({
 });
 
 export default function App() {
-  const [state, setState] = React.useState({
+  const [auth, setAuth] = React.useState({
     isAuthenticated: false,
     token: ""
   });
+
+  function updateAuth(status) {
+    setAuth({ ...auth, isAuthenticated: status });
+  }
+
+  function updateToken(token) {
+    setAuth({ ...auth, token: token });
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <Routes appProps={{ state, setState }} />
+      <Routes appProps={{ auth, updateAuth, updateToken }} />
     </ThemeProvider>
   );
 }

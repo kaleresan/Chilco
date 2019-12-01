@@ -21,7 +21,7 @@ export default function Routes({ appProps }) {
         component={Main}
         appProps={appProps}
       />
-      <Route component={SignIn} />
+      <Route component={SignIn} appProps={appProps} />
     </Switch>
   );
 }

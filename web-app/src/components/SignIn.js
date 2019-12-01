@@ -78,7 +78,8 @@ export default function SignIn(props) {
       .then(response => response.json())
       .then(jsondata => {
         if (jsondata.success === true) {
-          // TODO: Handle Login Event
+          props.updateToken(jsondata.data.token);
+          props.updateAuth(true);
         } else {
           // TODO: Add Error Message
         }
