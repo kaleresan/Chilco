@@ -22,8 +22,8 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            //UpdateRuleset();
-            //ConnectWebsocket();
+            UpdateRuleset();
+            ConnectWebsocket();
         }
 
         private static void RegisterHandshake()
@@ -63,7 +63,7 @@ namespace Chilco
 
         private static void ConnectWebsocket()
         {
-            using (var ws = new WebSocket(DOMAIN))
+            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="+authToken))
             {
                 ws.OnMessage +=
                 (sender, e) =>
@@ -77,46 +77,49 @@ namespace Chilco
 
         private static void UpdateRuleset()
         {
-            var client = new RestClient(DOMAIN);
+            //var client = new RestClient(DOMAIN);
 
-            string username = "";
+            //string username = "";
 
-            var request = new RestRequest("settings/" + username, Method.GET);
+            //var request = new RestRequest("settings/" + username, Method.GET);
 
-            request.AddHeader("x-access-token", authToken);
+            //request.AddHeader("x-access-token", authToken);
 
 
-            // API GET request
-            IRestResponse response = client.Execute(request);
+            //// API GET request
+            //IRestResponse response = client.Execute(request);
 
-            List<Ruleset> RulesetList = new List<Ruleset>();
+            //List<Ruleset> RulesetList = new List<Ruleset>();
 
-            if (response.IsSuccessful)
-            {
-                string rulesets_as_json = response.Content;
+            //if (response.IsSuccessful)
+            //{
+            //    string rulesets_as_json = response.Content;
 
-                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
-                RulesetList.AddRange(rulesets);
-            }
-            else
-            {
-                Group[] groups = FileIO.LoadGroups();
-                if (groups == null || groups.Length == 0)
-                {
-                    RulesetList.AddRange(GetDefaultRulesets());
-                }
-                else
-                {
-                    RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
-                }
-            }
+            //    Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
+            //    RulesetList.AddRange(rulesets);
+            //}
+            //else
+            //{
+            //    Group[] groups = FileIO.LoadGroups();
+            //    if (groups == null || groups.Length == 0)
+            //    {
+            //        RulesetList.AddRange(GetDefaultRulesets());
+            //    }
+            //    else
+            //    {
+            //        RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
+            //    }
+            //}
 
-            Main.Update(RulesetList);
+            //Main.Update(RulesetList);
+
+            //Testing
+            Main.Update(GetDefaultRulesets());
         }
 
-        private static Ruleset[] GetDefaultRulesets()
+        private static List<Ruleset> GetDefaultRulesets()
         {
-            IList<Ruleset> RulesetList = new List<Ruleset>() {
+            List<Ruleset> RulesetList = new List<Ruleset>() {
                     new Ruleset() {
                         Key = "Default1",
                         Title = "Browser",
@@ -169,7 +172,7 @@ namespace Chilco
                     } ,
                 };
 
-            return RulesetList.ToArray();
+            return RulesetList;
         }
     }
 }
