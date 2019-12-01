@@ -22,9 +22,9 @@ export function AppRouter() {
   return (
     <Router history={history}>
       <Switch>
-        <Route path={HOME_PATH} component={AsyncHomeComponent} />
         <Route path={SIGN_IN_PATH} component={AsyncSignInComponent} />
         <Route path={SIGN_UP_PATH} component={AsyncSignUpComponent} />
+        <Route path={HOME_PATH} component={AsyncHomeComponent} />
       </Switch>
     </Router>
   );
