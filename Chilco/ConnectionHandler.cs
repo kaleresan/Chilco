@@ -77,44 +77,41 @@ namespace Chilco
 
         private static void UpdateRuleset()
         {
-            //var client = new RestClient(DOMAIN);
+            var client = new RestClient(DOMAIN);
 
-            //string username = "";
+            string username = "";
 
-            //var request = new RestRequest("settings/" + username, Method.GET);
+            var request = new RestRequest("settings/" + username, Method.GET);
 
-            //request.AddHeader("x-access-token", authToken);
+            request.AddHeader("x-access-token", authToken);
 
 
-            //// API GET request
-            //IRestResponse response = client.Execute(request);
+            // API GET request
+            IRestResponse response = client.Execute(request);
 
-            //List<Ruleset> RulesetList = new List<Ruleset>();
+            List<Ruleset> RulesetList = new List<Ruleset>();
 
-            //if (response.IsSuccessful)
-            //{
-            //    string rulesets_as_json = response.Content;
+            if (response.IsSuccessful)
+            {
+                string rulesets_as_json = response.Content;
 
-            //    Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
-            //    RulesetList.AddRange(rulesets);
-            //}
-            //else
-            //{
-            //    Group[] groups = FileIO.LoadGroups();
-            //    if (groups == null || groups.Length == 0)
-            //    {
-            //        RulesetList.AddRange(GetDefaultRulesets());
-            //    }
-            //    else
-            //    {
-            //        RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
-            //    }
-            //}
+                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
+                RulesetList.AddRange(rulesets);
+            }
+            else
+            {
+                Group[] groups = FileIO.LoadGroups();
+                if (groups == null || groups.Length == 0)
+                {
+                    RulesetList.AddRange(GetDefaultRulesets());
+                }
+                else
+                {
+                    RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
+                }
+            }
 
-            //Main.Update(RulesetList);
-
-            //Testing
-            Main.Update(GetDefaultRulesets());
+            Main.Update(RulesetList);
         }
 
         private static List<Ruleset> GetDefaultRulesets()
