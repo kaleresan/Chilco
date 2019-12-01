@@ -14,28 +14,45 @@ namespace Chilco
 
         public static void Connect()
         {
+            Console.WriteLine("Booting connection");
             authToken = FileIO.LoadAuthToken();
             if (authToken.IsNullOrEmpty())
             {
+
                 RegisterHandshake();
             }
 
-            UpdateRuleset();
-            ConnectWebsocket();
+            //UpdateRuleset();
+            //ConnectWebsocket();
         }
 
         private static void RegisterHandshake()
         {
-            using (var ws = new WebSocket(DOMAIN))
+            Console.WriteLine("Register Handshake");
+            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="))
             {
+                ws.OnOpen += (sender, e) =>
+                {
+                    Console.WriteLine("Sending socket: GET_REGISTER_TOKEN");
+                    ws.Send("GET_REGISTER_TOKEN");
+                };
+
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    //TODO Implement Register Handshake
-                    //save auth token with FileIO
+                    Console.WriteLine("Socket message: "+e.Data);
+                    //TODO save auth token with FileIO
                 };
-
+                Console.WriteLine("Trying to connect");
+               
+                ws.OnError += (sender, e) =>
+                {
+                    Console.WriteLine(e.Message);
+                };
                 ws.Connect();
+                
+
+                Console.WriteLine("Socket is alive: "+ws.IsAlive);
             }
         }
 

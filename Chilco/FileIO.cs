@@ -21,9 +21,13 @@ namespace Chilco
             File.WriteAllText(groupPath, json);
         }
 
-        public static string LoadAuthToken()
+        public static string LoadAuthToken() 
         {
-            return File.ReadAllText(authTokenPath);
+            Console.WriteLine("Loading auth token");
+            if (File.Exists(authTokenPath))
+                return File.ReadAllText(authTokenPath);
+            else
+                return "";
         }
 
         public static void SaveAuthToken(string authToken)
