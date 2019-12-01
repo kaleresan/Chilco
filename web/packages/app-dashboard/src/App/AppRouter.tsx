@@ -5,14 +5,16 @@ import { asyncComponent } from '@chilco/common-ui';
 import { history } from './store';
 
 export const HOME_PATH = '/';
-export const FAIRS_PATH = '/fairs';
-export const EDIT_CONTACT_PATH = '/contacts/:id';
-export const DEVICE_AUTHORIZATION_PATH = '/auth';
+export const SIGN_UP_PATH = '/signUp';
+export const SIGN_IN_PATH = '/signIn';
 
-const AsyncAuthentication: any = asyncComponent(() => {
-  return import('../routes/Authentication/Authentication');
+const AsyncSignUpComponent: any = asyncComponent(() => {
+  return import('../routes/SignUp/SignUp');
 });
-const AsyncHome: any = asyncComponent(() => {
+const AsyncSignInComponent: any = asyncComponent(() => {
+  return import('../routes/SignIn/SignIn');
+});
+const AsyncHomeComponent: any = asyncComponent(() => {
   return import('../routes/Home/Home');
 });
 
@@ -20,11 +22,9 @@ export function AppRouter() {
   return (
     <Router history={history}>
       <Switch>
-        <Route
-          path={DEVICE_AUTHORIZATION_PATH}
-          component={AsyncAuthentication}
-        />
-        <Route path={HOME_PATH} component={AsyncHome} />
+        <Route path={HOME_PATH} component={AsyncHomeComponent} />
+        <Route path={SIGN_IN_PATH} component={AsyncSignInComponent} />
+        <Route path={SIGN_UP_PATH} component={AsyncSignUpComponent} />
       </Switch>
     </Router>
   );

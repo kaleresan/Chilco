@@ -1,8 +1,6 @@
 import { push } from 'connected-react-router';
 import { fetchStart } from '@chilco/middlewares';
 
-import { DEVICE_AUTHORIZATION_PATH, HOME_PATH } from '../../App/AppRouter';
-
 export type GET_CURRENT_USER_ACTION_TYPE = 'GET_CURRENT_USER_ACTION';
 export const GET_CURRENT_USER_ACTION: GET_CURRENT_USER_ACTION_TYPE =
   'GET_CURRENT_USER_ACTION';
@@ -15,14 +13,14 @@ export function getCurrentUser() {
         callback: data => {
           if (
             data &&
-            window.location.pathname.match(DEVICE_AUTHORIZATION_PATH)
+            window.location.pathname.match('/')
           ) {
-            dispatch(push(HOME_PATH));
+            dispatch(push('/'));
             return;
           }
 
           if (!data) {
-            dispatch(push(DEVICE_AUTHORIZATION_PATH));
+            dispatch(push('/'));
             return;
           }
         }

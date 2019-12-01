@@ -1,8 +1,6 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 import { StateType } from '../reducers';
-import { asyncComponent } from '@chilco/common-ui';
 
 export type modalType = "";
 
