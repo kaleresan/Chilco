@@ -76,20 +76,21 @@ export default function SignUp(props) {
 
   function signUpRequest(event) {
     event.preventDefault();
-    fetch('http://chilco.de/auth/register', {
-      method: 'POST',
+    fetch("http://chilco.de/auth/register", {
+      method: "POST",
       headers: {
-      'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(state)
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(jsondata => {
-        if (jsondata.success == true) {
-          props.history.push('/');
+        if (jsondata.success === true) {
+          props.history.push("/");
         } else {
           // TODO: Add Error Message
         }
-      })
+      });
   }
 
   return (
