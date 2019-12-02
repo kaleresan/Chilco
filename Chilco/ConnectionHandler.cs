@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,46 +16,74 @@ namespace Chilco
 
         public static void Connect()
         {
-            Console.WriteLine("Booting connection");
+            Console.WriteLine("Booting up connection");
             authToken = FileIO.LoadAuthToken();
             if (authToken.IsNullOrEmpty())
             {
-
+                Console.WriteLine("No valid token");
                 RegisterHandshake();
             }
 
-            UpdateRuleset();
-            ConnectWebsocket();
+            // UpdateRuleset();
+            //ConnectWebsocket();
         }
 
         private static void RegisterHandshake()
         {
-            Console.WriteLine("Register Handshake");
-            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="))
+            Console.WriteLine("Beginning register handshake");
+            using (var ws = new WebSocket("ws://chilco.de/api/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="))
             {
                 ws.OnOpen += (sender, e) =>
                 {
-                    Console.WriteLine("Sending socket: GET_REGISTER_TOKEN");
-                    ws.Send("GET_REGISTER_TOKEN");
+                    Console.WriteLine("Sending register token request");
+                    ws.Send("42[\"GET_REGISTER_TOKEN\",{}]");
                 };
 
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    Console.WriteLine("Socket message: "+e.Data);
-                    //TODO save auth token with FileIO
+                    Console.WriteLine("received message: " + e.Data);
+
+                    string register_token = "";
+                    if (e.Data.Length > "SET_REGISTER_TOKEN".Length || e.Data.Contains("SET_REGISTER_TOKEN"))
+                    {
+                        register_token = extractToken(e.Data);
+                    }
+
+                    if (register_token.IsNullOrEmpty() == false)
+                    {
+                        Console.WriteLine("Extracted Token is = " + register_token);
+                        OpenWebsite(register_token);
+                    }
+
+                    if (e.Data.Contains("SET_AUTH_TOKEN"))
+                    {
+                        authToken = extractToken(e.Data);
+                        FileIO.SaveAuthToken(authToken);
+                    }
                 };
                 Console.WriteLine("Trying to connect");
-               
+
                 ws.OnError += (sender, e) =>
                 {
                     Console.WriteLine(e.Message);
                 };
                 ws.Connect();
+                Console.WriteLine("Socket is alive: " + ws.IsAlive); // Do not delete this line
+            }
+        }
                 
 
-                Console.WriteLine("Socket is alive: "+ws.IsAlive);
+        private static string extractToken(string raw_message)
+        {
+            if (raw_message.Length < "SET_REGISTER_TOKEN".Length || raw_message.Contains("SET_REGISTER_TOKEN") == false)
+            {
+                return "";
             }
+            string json = raw_message.Remove(0, raw_message.IndexOf('['));
+            var data = (JArray)JsonConvert.DeserializeObject(json);
+            var payload = data[1].Value<JObject>();
+            return payload["token"].Value<string>();
         }
 
         internal static void OpenWebsite(string token)
@@ -63,7 +93,7 @@ namespace Chilco
 
         private static void ConnectWebsocket()
         {
-            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="+authToken))
+            using (var ws = new WebSocket("ws://chilco.de/api/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token=" + authToken))
             {
                 ws.OnMessage +=
                 (sender, e) =>
@@ -77,14 +107,13 @@ namespace Chilco
 
         private static void UpdateRuleset()
         {
-            var client = new RestClient(DOMAIN);
+            var client = new RestClient(DOMAIN + "/api/");
 
             string username = "";
 
             var request = new RestRequest("settings/" + username, Method.GET);
 
             request.AddHeader("x-access-token", authToken);
-
 
             // API GET request
             IRestResponse response = client.Execute(request);
@@ -95,7 +124,7 @@ namespace Chilco
             {
                 string rulesets_as_json = response.Content;
 
-                Ruleset[] rulesets = Newtonsoft.Json.JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
+                Ruleset[] rulesets = JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
                 RulesetList.AddRange(rulesets);
             }
             else
