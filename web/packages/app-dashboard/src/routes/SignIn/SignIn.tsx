@@ -116,7 +116,7 @@ export function SignIn({  }: SignUpPropsType) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/SignUp" variant="body2">
+                <Link href="/signUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
