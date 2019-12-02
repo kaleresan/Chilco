@@ -62,15 +62,14 @@ namespace Chilco
                         FileIO.SaveAuthToken(authToken);
                     }
                 };
-
                 Console.WriteLine("Trying to connect");
 
                 ws.OnError += (sender, e) =>
                 {
                     Console.WriteLine(e.Message);
                 };
-
                 ws.Connect();
+                Console.WriteLine("Socket is alive: " + ws.IsAlive); // Do not delete this line
             }
         }
                 
