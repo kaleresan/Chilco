@@ -5,7 +5,7 @@ services:
     image: registry.chilco.de:5005/api-gateway:master
     container_name: api-gateway
     links:
-      - service-accounts
+      - service-account
       - service-desktop-sync
       - service-dashboard-sync
       - service-users
@@ -16,10 +16,10 @@ services:
     image: registry.chilco.de:5005/service-authentication:master
     links:
       - mongo
-  service-accounts:
+  service-account:
     restart: always
-    container_name: service-accounts
-    image: registry.chilco.de:5005/service-accounts:master
+    container_name: service-account
+    image: registry.chilco.de:5005/service-account:master
     links:
       - mongo
   service-dashboard-sync:
