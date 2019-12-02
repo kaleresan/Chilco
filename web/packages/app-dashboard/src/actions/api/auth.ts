@@ -48,12 +48,13 @@ export function login({
         route: '/auth/login',
         body: { email, password },
         callback: data => {
-          if (data && window.location.pathname.match(HOME_PATH)) {
-            dispatch(push(HOME_PATH));
-            return;
+          const query = new URLSearchParams(window.location.search);
+          console.log(query.get('path') || HOME_PATH);
+          if (data) {
+            dispatch(push(query.get('path') || HOME_PATH));
           }
 
-          if (!data) {
+          if (!data && !window.location.href.includes(SIGN_IN_PATH)) {
             dispatch(push(SIGN_IN_PATH));
             return;
           }
