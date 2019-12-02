@@ -40,12 +40,11 @@ function* handleDeviceAuthenticationSaga(action) {
 function* setupApp() {
   // @ts-ignore
   yield put(getCurrentUser());
-
 }
 
 export function* deviceSaga() {
   yield all([
-    // takeEvery(DEVICE_SETUP_ACTION, setupApp),
-    // takeEvery(START_DEVICE_AUTHENTICATION, handleDeviceAuthenticationSaga)
+    takeEvery(DEVICE_SETUP_ACTION, setupApp),
+    takeEvery(START_DEVICE_AUTHENTICATION, handleDeviceAuthenticationSaga)
   ]);
 }

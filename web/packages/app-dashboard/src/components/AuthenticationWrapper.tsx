@@ -7,7 +7,11 @@ interface PropsType {
   setupDevice: () => void;
 }
 function AuthenticationWrapperComponent({ children, setupDevice }: PropsType) {
-  useEffect(() => setupDevice(), [setupDevice]);
+  useEffect(() => {
+    if (window.location.href.includes('/signUp')) return;
+
+    setupDevice();
+  }, [setupDevice]);
 
   return children;
 }

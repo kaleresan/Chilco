@@ -3,11 +3,12 @@ import {
   SOCKET_SET_TOKEN_ACTION,
   SOCKET_VALIDATE_TOKEN_ACTION
 } from '../actions/socket';
+import { ERROR_FETCH_ACTION, SUCCESS_FETCH_ACTION } from '@chilco/middlewares';
 import {
-  ERROR_FETCH_ACTION,
-  SUCCESS_FETCH_ACTION
-} from '@chilco/middlewares';
-import { GET_CURRENT_USER_ACTION } from '../actions/api';
+  GET_CURRENT_USER_ACTION,
+  LOGIN_ACTION,
+  LOGOUT_ACTION
+} from '../actions/api';
 
 export interface AccountType {
   id?: string;
@@ -30,6 +31,11 @@ export function accountReducer(state = initialState, action: Action = {}) {
             ...state,
             ...action.payload.data
           };
+        case LOGIN_ACTION:
+          return {
+            ...state,
+            token: action.payload.data.token
+          };
         default:
           return state;
       }
@@ -48,6 +54,9 @@ export function accountReducer(state = initialState, action: Action = {}) {
         default:
           return state;
       }
+    case LOGOUT_ACTION: {
+      return initialState;
+    }
     default:
       return state;
   }

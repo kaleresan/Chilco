@@ -14,9 +14,11 @@ namespace Chilco
 
         public static void Connect()
         {
+            Console.WriteLine("Booting connection");
             authToken = FileIO.LoadAuthToken();
             if (authToken.IsNullOrEmpty())
             {
+
                 RegisterHandshake();
             }
 
@@ -26,16 +28,31 @@ namespace Chilco
 
         private static void RegisterHandshake()
         {
-            using (var ws = new WebSocket(DOMAIN))
+            Console.WriteLine("Register Handshake");
+            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="))
             {
+                ws.OnOpen += (sender, e) =>
+                {
+                    Console.WriteLine("Sending socket: GET_REGISTER_TOKEN");
+                    ws.Send("GET_REGISTER_TOKEN");
+                };
+
                 ws.OnMessage +=
                 (sender, e) =>
                 {
-                    //TODO Implement Register Handshake
-                    //save auth token with FileIO
+                    Console.WriteLine("Socket message: "+e.Data);
+                    //TODO save auth token with FileIO
                 };
-
+                Console.WriteLine("Trying to connect");
+               
+                ws.OnError += (sender, e) =>
+                {
+                    Console.WriteLine(e.Message);
+                };
                 ws.Connect();
+                
+
+                Console.WriteLine("Socket is alive: "+ws.IsAlive);
             }
         }
 
@@ -46,7 +63,7 @@ namespace Chilco
 
         private static void ConnectWebsocket()
         {
-            using (var ws = new WebSocket(DOMAIN))
+            using (var ws = new WebSocket("ws://chilco.de/desktop-sync/socket.io/?EIO=2&transport=websocket&x-access-token="+authToken))
             {
                 ws.OnMessage +=
                 (sender, e) =>
@@ -94,12 +111,12 @@ namespace Chilco
                 }
             }
 
-            Main.Update(RulesetList.ToArray());
+            Main.Update(RulesetList);
         }
 
-        private static Ruleset[] GetDefaultRulesets()
+        private static List<Ruleset> GetDefaultRulesets()
         {
-            IList<Ruleset> RulesetList = new List<Ruleset>() {
+            List<Ruleset> RulesetList = new List<Ruleset>() {
                     new Ruleset() {
                         Key = "Default1",
                         Title = "Browser",
@@ -152,7 +169,7 @@ namespace Chilco
                     } ,
                 };
 
-            return RulesetList.ToArray();
+            return RulesetList;
         }
     }
 }

@@ -8,7 +8,7 @@ import {
   SOCKET_REFRESH_TOKEN_ACTION_TYPE,
   SOCKET_VALIDATE_TOKEN_ACTION_TYPE
 } from './socket';
-import { FetchActionType } from './api';
+import { FetchActionType, LOGOUT_ACTION_TYPE } from './api';
 import {
   DEVICE_SETUP_ACTION_TYPE,
   START_DEVICE_AUTHENTICATION_TYPE
@@ -18,6 +18,7 @@ import { CLOSE_ALERT_TYPE, SHOW_ALERT_TYPE } from './alert';
 
 export type ActionType =
   | FetchActionType
+  | LOGOUT_ACTION_TYPE
   | ERROR_FETCH_ACTION_TYPE
   | START_FETCH_ACTION_TYPE
   | SUCCESS_FETCH_ACTION_TYPE

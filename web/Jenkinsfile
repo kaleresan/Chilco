@@ -3,7 +3,7 @@
 def apps = []
 branchName = env.BRANCH_NAME
 escapedBranchName = branchName.replaceAll("/", "-")
-registry = "registry.visit4.me:5000"
+registry = "registry.chilco.de:5005"
 appImageTemplate = "${registry}/"
 builderImage = "${registry}/web_builder:${escapedBranchName}"
 
@@ -23,7 +23,7 @@ Closure getShellCommandInLibOnNodeStep(lib, command) {
     return {
         node('docker') {
             try {
-                runShellCommand('\"cd packages/${lib} && ${command}\"')
+                runShellCommand('\"cd web/packages/${lib} && ${command}\"')
             } finally {}
             cleanWs() // run "Workspace Cleanup Plugin"
         }
@@ -47,11 +47,11 @@ pipeline{
             steps {
                 script {
                     apps = sh (
-                        script: 'cd packages && find app-* -maxdepth 0',
+                        script: 'cd web/packages && find app-* -maxdepth 0',
                         returnStdout: true
                     ).split().toList()
 
-                    sh "docker build -t ${builderImage} --no-cache -f ./docker/Dockerfile.build ."
+                    sh "cd ./web/ && docker build -t ${builderImage} --no-cache -f docker/Dockerfile.build ."
                 }
             }
         }
@@ -86,11 +86,11 @@ pipeline{
                     apps.each { app ->
                         appStages["Push ${app} image in registry"] = {
                             image = getImageTagFromApp(app);
-                            sh "docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg APP_NAME=${app} -f ./docker/Dockerfile --no-cache .";
+                            sh "cd ./web/ && docker build -t ${image} --build-arg BUILDING_IMAGE=${builderImage} --build-arg APP_NAME=${app} -f ./docker/Dockerfile --no-cache .";
                             image = getImageTagFromApp(app);
-                            sh "docker push ${image}"
+                            sh "cd ./web/ && docker push ${image}"
                             image = getImageTagFromApp(app);
-                            sh "docker rmi ${image} || exit 0"
+                            sh "cd ./web/ && docker rmi ${image} || exit 0"
                         }
                     }
 
