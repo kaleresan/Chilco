@@ -24,8 +24,10 @@ export function AppRouter() {
       <Switch>
         <Route path={SIGN_IN_PATH} component={AsyncSignInComponent} />
         <Route path={SIGN_UP_PATH} component={AsyncSignUpComponent} />
-        <Route path={HOME_PATH} component={AsyncHomeComponent} />
+        <Route exact path={HOME_PATH} component={AsyncHomeComponent} />
       </Switch>
     </Router>
   );
 }
+/*
+ */

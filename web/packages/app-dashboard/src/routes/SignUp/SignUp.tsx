@@ -79,7 +79,7 @@ export function SignUp({ history }: SignUpPropsType) {
       .then(response => response.json())
       .then(jsondata => {
         if (jsondata.success === true) {
-          history.push('/');
+          // history.push('/');
         } else {
           // TODO: Add Error Message
         }

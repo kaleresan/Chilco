@@ -16,12 +16,21 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SideDrawer(props) {
+interface SideDrawerPropsType {
+  openMenuBar: boolean;
+  onMenuBarClose: () => void;
+  onDevicesButtonClick: () => void;
+}
+export default function SideDrawer({
+  openMenuBar,
+  onMenuBarClose = () => {},
+  onDevicesButtonClick = () => {}
+}: SideDrawerPropsType) {
   const classes = useStyles();
-  const [state, setState] = React.useState(props.openMenuBar);
+  const [state, setState] = React.useState(openMenuBar);
   React.useEffect(() => {
-    setState(props.openMenuBar);
-  }, [props.openMenuBar]);
+    setState(openMenuBar);
+  }, [openMenuBar]);
 
   const openDrawer = open => event => {
     if (
@@ -31,11 +40,11 @@ export default function SideDrawer(props) {
       return;
     }
 
-    props.onMenuBarClose();
+    onMenuBarClose();
   };
 
   const clickDevicesButton = event => {
-    props.onDevicesButtonClick();
+    onDevicesButtonClick();
   };
 
   const sideList = () => (

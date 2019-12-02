@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { logout } from '../actions/api';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,12 +26,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function MainAppBar({ onChildClick }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [auth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   const handleClose = () => {
@@ -81,7 +89,7 @@ export default function MainAppBar({ onChildClick }) {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         )}
