@@ -1,36 +1,36 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ProcessList from './ProcessList';
-import GroupList from './GroupList';
-import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import ProcessList from "./ProcessList";
+import GroupList from "./GroupList";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   settings: {
     padding: theme.spacing(3, 2),
-    width: '15%'
+    width: "15%"
   },
   processList: {
-    width: '85%'
+    width: "85%"
   },
   groupList: {
-    width: '60%'
+    width: "60%"
   },
   wrapper: {
-    position: 'relative',
-    display: 'flex',
-    top: '40px'
+    position: "relative",
+    display: "flex",
+    top: "40px"
   },
   root: {
-    textAllign: 'center'
+    textAllign: "center"
   }
 }));
 
@@ -40,20 +40,20 @@ interface DeviceSettingsPropsType {
 export function DeviceSettings({  }: DeviceSettingsPropsType) {
   const classes = useStyles();
   const [state, setState] = React.useState<any>({
-    groupName: '',
-    timeMinutes: '',
-    timeHours: '',
+    groupName: "",
+    timeMinutes: "",
+    timeHours: "",
     timeRollover: false,
     selectedProcesses: [],
     processList: {
-      columns: [{ title: 'Process Name', field: 'name' }],
-      data: [{ name: 'test' }, { name: 'test2' }, { name: 'test3' }]
+      columns: [{ title: "Process Name", field: "name" }],
+      data: [{ name: "test" }, { name: "test2" }, { name: "test3" }]
     },
     groupList: {
       columns: [
-        { title: 'Group Name', field: 'name' },
-        { title: 'Time', field: 'time' },
-        { title: 'Time Rollover', field: 'timeRollover' }
+        { title: "Group Name", field: "name" },
+        { title: "Time", field: "time" },
+        { title: "Time Rollover", field: "timeRollover" }
       ],
       data: []
     }
@@ -63,8 +63,9 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
     setState({ ...state, groupName: event.target.value });
   };
 
-  const updateTimeRollover = name => event => {
-    setState({ ...state, [name]: event.target.checked });
+  const updateTimeRollover = () => event => {
+    setState({ ...state, timeRollover: event.target.checked });
+    console.log(state.timeRollover);
   };
 
   const updateHours = () => event => {
@@ -89,9 +90,9 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
 
   function submitGroup() {
     if (
-      state.groupName === '' ||
-      state.timeMinutes === '' ||
-      state.timeHours === '' ||
+      state.groupName === "" ||
+      state.timeMinutes === "" ||
+      state.timeHours === "" ||
       state.selectedProcesses.length === 0
     )
       return;
@@ -104,15 +105,15 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
       state.groupName,
       state.timeMinutes,
       state.timeHours,
-      state.selectedProcesses
+      state.timeRollover
     );
-    setState({ ...state, groupName: '' });
+    setState({ ...state, groupName: "" });
   }
 
   function addGroupToList(name, minutes, hours, timeRollover) {
-    let rollover = 'Disabled';
-    if (timeRollover) rollover = 'Enabled';
-    const time = hours + ':' + minutes;
+    let rollover = "Disabled";
+    if (timeRollover) rollover = "Enabled";
+    const time = hours + ":" + minutes;
     const group = { name: name, time: time, timeRollover: rollover };
     const groupList = state.groupList;
 
@@ -186,7 +187,7 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
               control={
                 <Checkbox
                   checked={state.timeRollover}
-                  onChange={updateTimeRollover('timeRollover')}
+                  onChange={updateTimeRollover()}
                 />
               }
               label="Enable time rollover"
