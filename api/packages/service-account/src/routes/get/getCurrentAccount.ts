@@ -17,10 +17,7 @@ async function getCurrentAccountController(
         const { account } = req;
         createSuccessResponse(
             res,
-            account.addProfilePictureFileLinkToResponse(
-                `${config.proxyRoute}/profilePicture`,
-                account.getAuthResponse(),
-            ),
+            account.getAuthResponse(),
         );
     } catch (err) {
         console.log(err);

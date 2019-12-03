@@ -13,6 +13,8 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core';
 import Copyright from '../../components/CopyRight';
+import { useDispatch } from 'react-redux';
+import { register } from '../../actions/api';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -42,48 +44,64 @@ const useStyles = makeStyles(theme => ({
 export interface SignUpPropsType {
   history: any;
 }
+export interface SignUpStateType {
+  email: string;
+  password: string;
+  lastname: string;
+  firstname: string;
+  isEmailValid: boolean;
+  isLastnameValid: boolean;
+  isPasswordValid: boolean;
+  isFirstnameValid: boolean;
+}
 export function SignUp({ history }: SignUpPropsType) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [state, setState] = React.useState({
-    firstname: '',
-    lastname: '',
     email: '',
-    password: ''
+    password: '',
+    lastname: '',
+    firstname: '',
+    isEmailValid: true,
+    isFirstnameValid: true,
+    isLastnameValid: true,
+    isPasswordValid: true
   });
 
   const updateFirstName = () => event => {
-    setState({ ...state, firstname: event.target.value });
+    setState({
+      ...state,
+      firstname: event.target.value,
+      isFirstnameValid: true
+    });
   };
 
   const updateLastName = () => event => {
-    setState({ ...state, lastname: event.target.value });
+    setState({ ...state, lastname: event.target.value, isLastnameValid: true });
   };
 
   const updateEmail = () => event => {
-    setState({ ...state, email: event.target.value });
+    setState({ ...state, email: event.target.value, isEmailValid: true });
   };
 
   const updatePassword = () => event => {
-    setState({ ...state, password: event.target.value });
+    setState({ ...state, password: event.target.value, isPasswordValid: true });
   };
 
   function signUpRequest(event) {
+    const { email, password, firstname, lastname } = state;
+
+    if (
+      (email || '').match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      setState({ ...state, isPasswordValid: false });
+      return;
+    }
+
+    dispatch(register({ email, password, firstname, lastname }));
     event.preventDefault();
-    fetch('http://chilco.de/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(state)
-    })
-      .then(response => response.json())
-      .then(jsondata => {
-        if (jsondata.success === true) {
-          history.push('/');
-        } else {
-          // TODO: Add Error Message
-        }
-      });
   }
   return (
     <PageContainer>
@@ -109,6 +127,7 @@ export function SignUp({ history }: SignUpPropsType) {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={!state.isFirstnameValid}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -121,6 +140,7 @@ export function SignUp({ history }: SignUpPropsType) {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  error={!state.isLastnameValid}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -132,6 +152,7 @@ export function SignUp({ history }: SignUpPropsType) {
                   id="email"
                   label="Email Address"
                   name="email"
+                  error={!state.isEmailValid}
                   autoComplete="email"
                 />
               </Grid>
@@ -145,6 +166,7 @@ export function SignUp({ history }: SignUpPropsType) {
                   label="Password"
                   type="password"
                   id="password"
+                  error={!state.isPasswordValid}
                   autoComplete="current-password"
                 />
               </Grid>

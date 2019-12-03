@@ -15,6 +15,8 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import Copyright from '../../components/CopyRight';
 import { makeStyles } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { login } from '../../actions/api';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -48,6 +50,7 @@ export function SignIn({  }: SignUpPropsType) {
     email: '',
     password: ''
   });
+  const dispatch = useDispatch();
 
   const updateEmail = () => event => {
     setState({ ...state, email: event.target.value });
@@ -57,24 +60,10 @@ export function SignIn({  }: SignUpPropsType) {
     setState({ ...state, password: event.target.value });
   };
 
-  function signInRequest(event) {
+  const signInRequest = event => {
     event.preventDefault();
-    fetch('http://chilco.de/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(state)
-    })
-      .then(response => response.json())
-      .then(jsondata => {
-        if (jsondata.success === true) {
-          // TODO: Handle Login Event
-        } else {
-          // TODO: Add Error Message
-        }
-      });
-  }
+    dispatch(login(state));
+  };
 
   return (
     <PageContainer>
@@ -127,7 +116,7 @@ export function SignIn({  }: SignUpPropsType) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/SignUp" variant="body2">
+                <Link href="/signUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -9,6 +9,7 @@ import modal, { ModalType } from './modal';
 import account, { AccountType } from './account';
 
 export interface StateType {
+  router: any;
   modal: ModalType;
   alert: AlertType;
   account: AccountType;

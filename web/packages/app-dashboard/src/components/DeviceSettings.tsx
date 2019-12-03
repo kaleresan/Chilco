@@ -14,23 +14,31 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  settings: {
     padding: theme.spacing(3, 2),
-    width: '40%'
+    width: '15%'
   },
   processList: {
+    width: '85%'
+  },
+  groupList: {
     width: '60%'
   },
   wrapper: {
     position: 'relative',
-    overflow: 'hidden',
-    width: '70%',
-    display: 'flex'
+    display: 'flex',
+    top: '40px'
+  },
+  root: {
+    textAllign: 'center'
   }
 }));
 
-export default function Settings() {
-  const classes: any = useStyles();
+interface DeviceSettingsPropsType {
+  deviceId?: string;
+}
+export function DeviceSettings({  }: DeviceSettingsPropsType) {
+  const classes = useStyles();
   const [state, setState] = React.useState<any>({
     groupName: '',
     timeMinutes: '',
@@ -117,83 +125,85 @@ export default function Settings() {
   }
 
   return (
-    <div className={classes.wrapper}>
-      <ProcessList
-        className={classes.processList}
-        tableData={state}
-        onProcessesSelected={getSelectedProcesses}
-      />
+    <div className={classes.root}>
+      <div className={classes.wrapper}>
+        <ProcessList
+          className={classes.processList}
+          tableData={state}
+          onProcessesSelected={getSelectedProcesses}
+        />
+        <Paper className={classes.settings}>
+          <Typography variant="h5" component="h3">
+            Settings
+          </Typography>
+
+          <TextField
+            id="groupName"
+            margin="normal"
+            label="Group Name"
+            value={state.groupName}
+            onInput={updateGroupName()}
+          />
+
+          <FormControl>
+            <FormControl>
+              <InputLabel>Hours</InputLabel>
+              <Select value={state.timeHours} onChange={updateHours()}>
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={9}>9</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={11}>11</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl>
+              <InputLabel>Minutes</InputLabel>
+              <Select value={state.timeMinutes} onChange={updateMinutes()}>
+                <MenuItem value={0}>0</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={15}>15</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
+                <MenuItem value={30}>30</MenuItem>
+                <MenuItem value={35}>35</MenuItem>
+                <MenuItem value={40}>40</MenuItem>
+                <MenuItem value={45}>45</MenuItem>
+                <MenuItem value={50}>50</MenuItem>
+                <MenuItem value={55}>55</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.timeRollover}
+                  onChange={updateTimeRollover('timeRollover')}
+                />
+              }
+              label="Enable time rollover"
+            />
+          </FormControl>
+
+          <Button variant="contained" color="primary" onClick={submitGroup}>
+            Submit
+          </Button>
+        </Paper>
+      </div>
       <GroupList
         className={classes.groupList}
         tableData={state}
         onGroupDelete={updateGroupListData}
       />
-      <Paper className={classes.root}>
-        <Typography variant="h5" component="h3">
-          Settings
-        </Typography>
-
-        <TextField
-          id="groupName"
-          label="Group Name"
-          value={state.groupName}
-          onInput={updateGroupName()}
-          className={classes.textField}
-          margin="normal"
-        />
-
-        <FormControl>
-          <FormControl>
-            <InputLabel>Hours</InputLabel>
-            <Select value={state.timeHours} onChange={updateHours()}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
-              <MenuItem value={7}>7</MenuItem>
-              <MenuItem value={8}>8</MenuItem>
-              <MenuItem value={9}>9</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={11}>11</MenuItem>
-              <MenuItem value={12}>12</MenuItem>
-            </Select>
-          </FormControl>
-
-          <FormControl>
-            <InputLabel>Minutes</InputLabel>
-            <Select value={state.timeMinutes} onChange={updateMinutes()}>
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={15}>15</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={25}>25</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-              <MenuItem value={35}>35</MenuItem>
-              <MenuItem value={40}>40</MenuItem>
-              <MenuItem value={45}>45</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
-              <MenuItem value={55}>55</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={state.timeRollover}
-                onChange={updateTimeRollover('timeRollover')}
-              />
-            }
-            label="Enable time rollover"
-          />
-        </FormControl>
-
-        <Button variant="contained" color="primary" onClick={submitGroup}>
-          Submit
-        </Button>
-      </Paper>
     </div>
   );
 }
+export default DeviceSettings;
