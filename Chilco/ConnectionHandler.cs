@@ -69,8 +69,11 @@ namespace Chilco
                     Console.WriteLine(e.Message);
                 };
                 ws.Connect();
-                Console.WriteLine("Socket is alive: " + ws.IsAlive); // Do not delete this line
-                while (authToken.IsNullOrEmpty()) ;
+
+                if (ws.IsAlive)
+                {
+                    while (authToken.IsNullOrEmpty()) ;
+                }
             }
         }
                 
