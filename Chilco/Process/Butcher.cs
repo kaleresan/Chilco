@@ -16,7 +16,6 @@ namespace Chilco
 
         private static void KillProcess(string processName)
         {
-            System.Console.WriteLine("Trying to kill process: "+ processName);
             //For every Process currently running that has the name s
             foreach (Process p in Process.GetProcesses().Where(
                 p2 => p2.ProcessName == processName || 
@@ -31,7 +30,6 @@ namespace Chilco
                     p3.MainWindowTitle != "" && 
                     processName != "")) > 0)
                 {
-                    System.Console.WriteLine("Killing process: " + processName);
                     p.Kill();
                 }
             }

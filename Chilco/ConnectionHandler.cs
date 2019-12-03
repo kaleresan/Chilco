@@ -24,7 +24,7 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            // UpdateRuleset();
+            UpdateRuleset();
             //ConnectWebsocket();
         }
 
@@ -56,7 +56,7 @@ namespace Chilco
                         OpenWebsite(register_token);
                     }
 
-                    if (e.Data.Contains("SET_AUTH_TOKEN"))
+                    if (e.Data.Contains("VALIDATE_TOKEN"))
                     {
                         authToken = extractToken(e.Data);
                         FileIO.SaveAuthToken(authToken);
@@ -69,26 +69,35 @@ namespace Chilco
                     Console.WriteLine(e.Message);
                 };
                 ws.Connect();
-                Console.WriteLine("Socket is alive: " + ws.IsAlive); // Do not delete this line
+
+                if (ws.IsAlive)
+                {
+                    while (authToken.IsNullOrEmpty()) ;
+                }
             }
         }
                 
 
         private static string extractToken(string raw_message)
         {
-            if (raw_message.Length < "SET_REGISTER_TOKEN".Length || raw_message.Contains("SET_REGISTER_TOKEN") == false)
-            {
-                return "";
-            }
             string json = raw_message.Remove(0, raw_message.IndexOf('['));
-            var data = (JArray)JsonConvert.DeserializeObject(json);
+            var data = JsonConvert.DeserializeObject<JArray>(json);
             var payload = data[1].Value<JObject>();
             return payload["token"].Value<string>();
         }
 
+        private static Ruleset[] extractRulesets(string raw_json) {
+
+            var jObject = JsonConvert.DeserializeObject<JObject>(raw_json);
+            var data = (JObject)jObject["data"];
+            var setting = data["setting"];
+            var rulesets_as_json = setting.ToString();
+            return JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
+        }
+
         internal static void OpenWebsite(string token)
         {
-            System.Diagnostics.Process.Start(DOMAIN + "/register/" + token);
+            System.Diagnostics.Process.Start(DOMAIN + "/approve/device/" + token);
         }
 
         private static void ConnectWebsocket()
@@ -123,19 +132,21 @@ namespace Chilco
             if (response.IsSuccessful)
             {
                 string rulesets_as_json = response.Content;
+                Console.WriteLine("Rulesets as json:"+rulesets_as_json);
 
-                Ruleset[] rulesets = JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
-                RulesetList.AddRange(rulesets);
+                RulesetList.AddRange(extractRulesets(rulesets_as_json));
             }
             else
             {
                 Group[] groups = FileIO.LoadGroups();
                 if (groups == null || groups.Length == 0)
                 {
+                    Console.WriteLine("no Groups saved, getting default rulesets");
                     RulesetList.AddRange(GetDefaultRulesets());
                 }
                 else
                 {
+                    Console.WriteLine("Reading saved rulesets");
                     RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
                 }
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Chilco
@@ -10,11 +11,12 @@ namespace Chilco
         public Ruleset ruleset;
         public static List<Group> GetGroups { get; private set; } = new List<Group>();
 
-        public Group(string key, string title, List<String> processes, TimeSpan leftoverTime, bool doTimeRollover, DateTime dateLastRun, TimeSpan dailyPlaytime)
+        [JsonConstructor]
+        public Group(string Key, string Title, List<String> Processes, TimeSpan LeftoverTime, bool DoTimeRollover, DateTime DateLastRun, TimeSpan DailyPlaytime)
         {
-            this.LeftoverTime = leftoverTime;
-            this.DateLastRun = dateLastRun;
-            this.ruleset = new Ruleset(key, title, processes, doTimeRollover, dailyPlaytime);
+            this.LeftoverTime = LeftoverTime;
+            this.DateLastRun = DateLastRun;
+            this.ruleset = new Ruleset(Key, Title, Processes, DoTimeRollover, DailyPlaytime);
         }
 
         public Group(TimeSpan leftoverTime, DateTime dateLastRun, Ruleset ruleset)
@@ -32,6 +34,7 @@ namespace Chilco
             public bool DoTimeRollover;
             public TimeSpan DailyPlaytime;
 
+            [JsonConstructor]
             public Ruleset(string Key, string Title, List<string> Processes, bool DoTimeRollover, TimeSpan DailyPlaytime)
             {
                 this.Key = Key;
