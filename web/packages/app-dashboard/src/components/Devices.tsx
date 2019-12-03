@@ -40,8 +40,7 @@ function statusColor(isOnline) {
 }
 
 const rows = [
-  createData('PC-XG368', 'Hans Müller', true),
-  createData('PC-BDF381', 'Max Müller', false)
+  createData('Default-PC', 'Default User', true)
 ];
 
 interface DevicesPropsType {

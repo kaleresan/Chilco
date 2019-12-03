@@ -43,7 +43,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Chilco
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" href="/signIn">Login</Button>
         </Toolbar>
       </AppBar>
 
@@ -59,16 +59,16 @@ export default function ButtonAppBar() {
           For Windows 7 x64 or later
         </Typography>
         <Typography variant="body2" color="textSecondary">
-        <Link href="#" color="inherit">
+        <Link href="https://github.com/kaleresan/Chilco/releases" color="inherit">
         Release Notes
         </Link>
         </Typography>
       </CardContent>
       <CardActions>
-      <Button size="small" variant="outlined" color="primary">
+      <Button size="small" variant="outlined" color="primary" href="https://github.com/kaleresan/Chilco/releases/download/1.0/ChilcoInstaller.msi">
       Download
       </Button>
-      <Button size="small" variant="outlined" color="secondary">
+      <Button size="small" variant="outlined" color="secondary" href="https://github.com/kaleresan/Chilco/releases">
       Earlier Versions
       </Button>
       </CardActions>

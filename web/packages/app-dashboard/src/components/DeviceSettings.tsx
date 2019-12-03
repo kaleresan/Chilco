@@ -47,7 +47,7 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
     selectedProcesses: [],
     processList: {
       columns: [{ title: "Process Name", field: "name" }],
-      data: [{ name: "test" }, { name: "test2" }, { name: "test3" }]
+      data: [{ name: "Firefox" }, { name: "Chrome" }, { name: "Edge" }, { name: "Word" }]
     },
     groupList: {
       columns: [
