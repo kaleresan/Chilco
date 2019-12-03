@@ -34,6 +34,7 @@ namespace Chilco
             public bool DoTimeRollover;
             public TimeSpan DailyPlaytime;
 
+            [JsonConstructor]
             public Ruleset(string Key, string Title, List<string> Processes, bool DoTimeRollover, TimeSpan DailyPlaytime)
             {
                 this.Key = Key;

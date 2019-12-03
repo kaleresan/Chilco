@@ -24,7 +24,7 @@ namespace Chilco
                 RegisterHandshake();
             }
 
-            // UpdateRuleset();
+            UpdateRuleset();
             //ConnectWebsocket();
         }
 
@@ -78,9 +78,18 @@ namespace Chilco
         private static string extractToken(string raw_message)
         {
             string json = raw_message.Remove(0, raw_message.IndexOf('['));
-            var data = (JArray)JsonConvert.DeserializeObject(json);
+            var data = JsonConvert.DeserializeObject<JArray>(json);
             var payload = data[1].Value<JObject>();
             return payload["token"].Value<string>();
+        }
+
+        private static Ruleset[] extractRulesets(string raw_json) {
+
+            var jObject = JsonConvert.DeserializeObject<JObject>(raw_json);
+            var data = (JObject)jObject["data"];
+            var setting = data["setting"];
+            var rulesets_as_json = setting.ToString();
+            return JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
         }
 
         internal static void OpenWebsite(string token)
@@ -120,9 +129,9 @@ namespace Chilco
             if (response.IsSuccessful)
             {
                 string rulesets_as_json = response.Content;
+                Console.WriteLine("Rulesets as json:"+rulesets_as_json);
 
-                Ruleset[] rulesets = JsonConvert.DeserializeObject<Ruleset[]>(rulesets_as_json);
-                RulesetList.AddRange(rulesets);
+                RulesetList.AddRange(extractRulesets(rulesets_as_json));
             }
             else
             {
