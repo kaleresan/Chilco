@@ -63,6 +63,8 @@ export function SignIn({  }: SignUpPropsType) {
   const signInRequest = event => {
     event.preventDefault();
     dispatch(login(state));
+
+    setState({ ...state, password: '' })
   };
 
   return (
@@ -91,6 +93,7 @@ export function SignIn({  }: SignUpPropsType) {
             />
             <TextField
               onChange={updatePassword()}
+              value={state.password}
               variant="outlined"
               margin="normal"
               required
