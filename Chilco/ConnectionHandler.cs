@@ -56,7 +56,7 @@ namespace Chilco
                         OpenWebsite(register_token);
                     }
 
-                    if (e.Data.Contains("SET_AUTH_TOKEN"))
+                    if (e.Data.Contains("VALIDATE_TOKEN"))
                     {
                         authToken = extractToken(e.Data);
                         FileIO.SaveAuthToken(authToken);
@@ -70,16 +70,13 @@ namespace Chilco
                 };
                 ws.Connect();
                 Console.WriteLine("Socket is alive: " + ws.IsAlive); // Do not delete this line
+                while (authToken.IsNullOrEmpty()) ;
             }
         }
                 
 
         private static string extractToken(string raw_message)
         {
-            if (raw_message.Length < "SET_REGISTER_TOKEN".Length || raw_message.Contains("SET_REGISTER_TOKEN") == false)
-            {
-                return "";
-            }
             string json = raw_message.Remove(0, raw_message.IndexOf('['));
             var data = (JArray)JsonConvert.DeserializeObject(json);
             var payload = data[1].Value<JObject>();
@@ -88,7 +85,7 @@ namespace Chilco
 
         internal static void OpenWebsite(string token)
         {
-            System.Diagnostics.Process.Start(DOMAIN + "/register/" + token);
+            System.Diagnostics.Process.Start(DOMAIN + "/approve/device/" + token);
         }
 
         private static void ConnectWebsocket()
