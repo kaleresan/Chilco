@@ -41,8 +41,29 @@ namespace Chilco
             }
         }
 
+        public void TimeRollover()
+        {
+            int diff = DateTime.Now.DayOfYear - group.DateLastRun.DayOfYear;
+            Console.WriteLine("Diff, Ignoring newyear: " + diff);
+            while(diff < 0)
+            {
+                diff += 365;
+            }
+            Console.WriteLine("Diff, with newyear: " + diff);
+            if (diff > 0)
+            {
+                for (int i = 0; i < diff; i++)
+                {
+                    group.LeftoverTime += group.ruleset.DailyPlaytime;
+                }
+                group.DateLastRun = DateTime.Now;
+            }
+        }
+
         private void UpdateLeftoverTime()
         {
+            TimeRollover();
+
             if (RunningTime.IsRunning)
             {
                 if (group.LeftoverTime > RunningTime.Elapsed)
