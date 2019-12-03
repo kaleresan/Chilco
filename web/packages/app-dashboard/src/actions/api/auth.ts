@@ -49,7 +49,6 @@ export function login({
         body: { email, password },
         callback: data => {
           const query = new URLSearchParams(window.location.search);
-          console.log(query.get('path') || HOME_PATH);
           if (data) {
             dispatch(push(query.get('path') || HOME_PATH));
           }

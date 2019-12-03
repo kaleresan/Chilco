@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import PageContainer from '../../components/PageContainer';
@@ -56,17 +56,55 @@ export function ApproveDevice({
 }: ApproveDevicePropsType) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [isErrored, setIsErrored] = useState(false);
 
   const authToken = useSelector((state: StateType) => state.account.token);
   useEffect(() => {
     !authToken &&
-      dispatch(push(`${SIGN_IN_PATH}?path=${window.location.href}`));
+      dispatch(push(`${SIGN_IN_PATH}?path=${window.location.pathname}`));
   }, [authToken, dispatch]);
 
   const onSubmit = event => {
     event.preventDefault();
-    dispatch(approveDevice(token));
+    dispatch(approveDevice(token, () => setIsErrored(true)));
   };
+
+  if (isErrored) {
+    return (
+      <StyledContainer>
+        <PageContainer>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={classes.paper}>
+              <Avatar className={classes.avatarLarge}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Your token does not work please try it again!
+              </Typography>
+              <form
+                className={classes.form}
+                onSubmit={() => dispatch(push('/'))}
+              >
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Go to Dashboard
+                </Button>
+              </form>
+            </div>
+            <Box mt={8}>
+              <Copyright />
+            </Box>
+          </Container>
+        </PageContainer>
+      </StyledContainer>
+    );
+  }
 
   return (
     <StyledContainer>
@@ -78,7 +116,7 @@ export function ApproveDevice({
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              You need to approve the device
             </Typography>
             <form className={classes.form} onSubmit={onSubmit}>
               <Button

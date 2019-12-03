@@ -3,7 +3,7 @@ import { fetchStart } from '@chilco/middlewares';
 
 export type APPROVE_DEVICE_TYPE = 'APPROVE_DEVICE';
 export const APPROVE_DEVICE: APPROVE_DEVICE_TYPE = 'APPROVE_DEVICE';
-export function approveDevice(token: string) {
+export function approveDevice(token: string, onError = () => {}) {
   return dispatch => {
     dispatch(
       fetchStart(APPROVE_DEVICE, {
@@ -14,6 +14,8 @@ export function approveDevice(token: string) {
             dispatch(push('/'));
             return;
           }
+
+          onError();
         }
       })
     );
