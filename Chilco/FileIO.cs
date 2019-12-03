@@ -10,7 +10,7 @@ namespace Chilco
 
         public static Group[] LoadGroups()
         {
-            if (File.Exists(authTokenPath))
+            if (File.Exists(groupPath))
             {
                 string json = File.ReadAllText(groupPath);
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<Group[]>(json);
