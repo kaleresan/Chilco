@@ -7,7 +7,7 @@ import { history } from './store';
 export const HOME_PATH = '/';
 export const SIGN_UP_PATH = '/signUp';
 export const SIGN_IN_PATH = '/signIn';
-export const APPROVE_DEVICE_PATH = '/approve/device/:token';
+export const DOWNLOAD_PATH = '/download';
 
 const AsyncSignUpComponent: any = asyncComponent(() => {
   return import('../routes/SignUp/SignUp');
@@ -20,6 +20,9 @@ const AsyncSignInComponent: any = asyncComponent(() => {
 });
 const AsyncHomeComponent: any = asyncComponent(() => {
   return import('../routes/Home/Home');
+});
+const AsyncDownloadComponent: any = asyncComponent(() => {
+  return import('../routes/Download/Download');
 });
 
 export function AppRouter() {
