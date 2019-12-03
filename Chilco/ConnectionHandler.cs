@@ -129,10 +129,12 @@ namespace Chilco
                 Group[] groups = FileIO.LoadGroups();
                 if (groups == null || groups.Length == 0)
                 {
+                    Console.WriteLine("no Groups saved, getting default rulesets");
                     RulesetList.AddRange(GetDefaultRulesets());
                 }
                 else
                 {
+                    Console.WriteLine("Reading saved rulesets");
                     RulesetList.AddRange(groups.Select(group => group.ruleset).ToList());
                 }
             }
