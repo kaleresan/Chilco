@@ -40,6 +40,9 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  error: {
+    color: "red"
   }
 }));
 
@@ -50,6 +53,8 @@ export function SignIn({  }: SignUpPropsType) {
     email: '',
     password: ''
   });
+  const [error, setError] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const updateEmail = () => event => {
@@ -65,6 +70,7 @@ export function SignIn({  }: SignUpPropsType) {
     dispatch(login(state));
 
     setState({ ...state, password: '' })
+    setError(true)
   };
 
   return (
@@ -108,6 +114,11 @@ export function SignIn({  }: SignUpPropsType) {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            {error ? (
+            <Typography className={classes.error} color="textSecondary">
+            Wrong Password and Email combination!
+            </Typography>
+            ) : null}
             <Button
               type="submit"
               fullWidth
