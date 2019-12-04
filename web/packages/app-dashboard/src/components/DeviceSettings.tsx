@@ -47,7 +47,10 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
     selectedProcesses: [],
     processList: {
       columns: [{ title: "Process Name", field: "name" }],
-      data: [{ name: "Firefox" }, { name: "Chrome" }, { name: "Edge" }, { name: "Word" }]
+      data: [{ name: "Firefox" }, { name: "Chrome" }, { name: "Nidhogg" }, { name: "Stardew Valley"},
+             { name: "Unturned" }, { name: "Ace Of Spades" }, { name: "Counterstrike Global Offensive" }
+             { name: "cmd" }, { name: "Power Shell" }
+            ]
     },
     groupList: {
       columns: [
@@ -55,7 +58,10 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
         { title: "Time", field: "time" },
         { title: "Time Rollover", field: "timeRollover" }
       ],
-      data: []
+      data: [ { name: "Browser", time: "0:30", timeRollover: true },
+              { name: "Games", time: "2:00", timeRollover: true },
+              { name: "Malicious Utilities", time: "0:00", timeRollover: true } 
+            ]
     }
   });
 
