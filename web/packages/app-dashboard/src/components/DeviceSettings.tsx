@@ -50,8 +50,13 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
       data: [
         { name: 'Firefox' },
         { name: 'Chrome' },
-        { name: 'Edge' },
-        { name: 'Word' }
+        { name: 'Nidhogg' },
+        { name: 'Stardew Valley' },
+        { name: 'Unturned' },
+        { name: 'Ace Of Spades' },
+        { name: 'Counterstrike Global Offensive' },
+        { name: 'cmd' },
+        { name: 'Power Shell' }
       ]
     },
     groupList: {
@@ -60,7 +65,11 @@ export function DeviceSettings({  }: DeviceSettingsPropsType) {
         { title: 'Time', field: 'time' },
         { title: 'Time Rollover', field: 'timeRollover' }
       ],
-      data: []
+      data: [
+        { name: 'Browser', time: '0:30', timeRollover: true },
+        { name: 'Games', time: '2:00', timeRollover: true },
+        { name: 'Malicious Utilities', time: '0:00', timeRollover: true }
+      ]
     }
   });
 
