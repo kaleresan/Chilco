@@ -74,7 +74,7 @@ export default function ButtonAppBar() {
             size="small"
             variant="outlined"
             color="primary"
-            href="https://github.com/kaleresan/Chilco/releases/download/1.0/ChilcoInstaller.msi"
+            href="https://github.com/kaleresan/Chilco/releases/download/1.0.2/ChilcoInstaller.msi"
           >
             Download
           </Button>
