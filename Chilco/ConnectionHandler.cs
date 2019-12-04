@@ -142,7 +142,7 @@ namespace Chilco
                 if (groups == null || groups.Length == 0)
                 {
                     Console.WriteLine("no Groups saved, getting default rulesets");
-                    RulesetList.AddRange(GetDefaultRulesets());
+                    RulesetList.AddRange(CreateDefaultRulesets());
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Chilco
             Main.Update(RulesetList);
         }
 
-        private static List<Ruleset> GetDefaultRulesets()
+        private static List<Ruleset> CreateDefaultRulesets()
         {
             List<Ruleset> RulesetList = new List<Ruleset>() {
                     new Ruleset() {

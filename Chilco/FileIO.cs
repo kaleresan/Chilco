@@ -5,8 +5,9 @@ namespace Chilco
 {
     internal static class FileIO
     {
-        private static readonly string groupPath = Path.Combine(Environment.CurrentDirectory, "settings.json");
-        private static readonly string authTokenPath = Path.Combine(Environment.CurrentDirectory, "token.txt");
+       
+        private static readonly string groupPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "settings.json");
+        private static readonly string authTokenPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "token.txt");
 
         public static Group[] LoadGroups()
         {
