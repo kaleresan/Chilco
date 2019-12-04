@@ -8,7 +8,7 @@ export const HOME_PATH = '/';
 export const SIGN_UP_PATH = '/signUp';
 export const SIGN_IN_PATH = '/signIn';
 export const DASHBOARD_PATH = '/dashboard';
-export const APPROVE_DEVICE_PATH = '/ApproveDevice';
+export const APPROVE_DEVICE_PATH = '/approve/device/:token';
 
 const AsyncSignUpComponent: any = asyncComponent(() => {
   return import('../routes/SignUp/SignUp');

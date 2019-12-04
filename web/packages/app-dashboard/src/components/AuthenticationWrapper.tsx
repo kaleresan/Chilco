@@ -19,6 +19,7 @@ function AuthenticationWrapperComponent({
 }: PropsType) {
   useEffect(() => {
     if (window.location.href.includes(SIGN_UP_PATH)) return;
+    if (window.location.href.includes('/approve/device')) return;
     if (window.location.pathname === HOME_PATH) return;
 
     setupDevice();
