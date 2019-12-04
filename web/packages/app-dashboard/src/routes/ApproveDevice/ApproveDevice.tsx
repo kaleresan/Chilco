@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { approveDevice } from '../../actions/api';
 import { StateType } from '../../reducers';
-import { SIGN_IN_PATH } from '../../App/AppRouter';
+import {DASHBOARD_PATH, SIGN_IN_PATH} from '../../App/AppRouter';
 import { push } from 'connected-react-router';
 
 const StyledContainer = styled.div`
@@ -84,7 +84,7 @@ export function ApproveDevice({
               </Typography>
               <form
                 className={classes.form}
-                onSubmit={() => dispatch(push('/'))}
+                onSubmit={() => dispatch(push(DASHBOARD_PATH))}
               >
                 <Button
                   type="submit"

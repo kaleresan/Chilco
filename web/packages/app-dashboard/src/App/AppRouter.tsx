@@ -7,7 +7,7 @@ import { history } from './store';
 export const HOME_PATH = '/';
 export const SIGN_UP_PATH = '/signUp';
 export const SIGN_IN_PATH = '/signIn';
-export const DOWNLOAD_PATH = '/download';
+export const DASHBOARD_PATH = '/dashboard';
 export const APPROVE_DEVICE_PATH = '/ApproveDevice';
 
 const AsyncSignUpComponent: any = asyncComponent(() => {
@@ -22,8 +22,8 @@ const AsyncSignInComponent: any = asyncComponent(() => {
 const AsyncHomeComponent: any = asyncComponent(() => {
   return import('../routes/Home/Home');
 });
-const AsyncDownloadComponent: any = asyncComponent(() => {
-  return import('../routes/Download/Download');
+const AsyncDashboardComponent: any = asyncComponent(() => {
+  return import('../routes/Dashboard/Dashboard');
 });
 
 export function AppRouter() {
@@ -33,6 +33,7 @@ export function AppRouter() {
         <Route path={SIGN_UP_PATH} component={AsyncSignUpComponent} />
         <Route path={SIGN_IN_PATH} component={AsyncSignInComponent} />
         <Route path={APPROVE_DEVICE_PATH} component={ApproveDeviceComponent} />
+        <Route path={DASHBOARD_PATH} component={AsyncDashboardComponent} />
         <Route exact path={HOME_PATH} component={AsyncHomeComponent} />
       </Switch>
     </Router>

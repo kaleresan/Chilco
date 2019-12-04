@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 import { fetchStart } from '@chilco/middlewares';
-import { HOME_PATH, SIGN_IN_PATH } from '../../App/AppRouter';
+import {DASHBOARD_PATH, SIGN_IN_PATH} from '../../App/AppRouter';
 
 export type REGISTER_ACTION_TYPE = 'REGISTER';
 export const REGISTER_ACTION: REGISTER_ACTION_TYPE = 'REGISTER';
@@ -50,7 +50,7 @@ export function login({
         callback: data => {
           const query = new URLSearchParams(window.location.search);
           if (data) {
-            dispatch(push(query.get('path') || HOME_PATH));
+            dispatch(push(query.get('path') || DASHBOARD_PATH));
           }
 
           if (!data && !window.location.href.includes(SIGN_IN_PATH)) {

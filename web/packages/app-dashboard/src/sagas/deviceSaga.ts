@@ -19,6 +19,7 @@ import {
   START_DEVICE_AUTHENTICATION
 } from '../actions/device';
 import { getCurrentUser } from '../actions/api';
+import {DASHBOARD_PATH} from "../App/AppRouter";
 
 function* refreshTokenSaga() {
   try {
@@ -34,7 +35,7 @@ function* handleDeviceAuthenticationSaga(action) {
   const refreshTokenTask = yield fork(refreshTokenSaga);
   yield take(SOCKET_VALIDATE_TOKEN_ACTION);
   yield cancel(refreshTokenTask);
-  yield put(push('/'));
+  yield put(push(DASHBOARD_PATH));
 }
 
 function* setupApp() {
