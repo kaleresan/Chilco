@@ -1,6 +1,10 @@
 import { push } from 'connected-react-router';
 import { fetchStart } from '@chilco/middlewares';
-import {DASHBOARD_PATH, SIGN_IN_PATH, SIGN_UP_PATH} from '../../App/AppRouter';
+import {
+  DASHBOARD_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH
+} from '../../App/AppRouter';
 
 export type GET_CURRENT_USER_ACTION_TYPE = 'GET_CURRENT_USER_ACTION';
 export const GET_CURRENT_USER_ACTION: GET_CURRENT_USER_ACTION_TYPE =

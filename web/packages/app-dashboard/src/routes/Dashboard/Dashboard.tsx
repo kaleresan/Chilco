@@ -14,7 +14,10 @@ interface DashboardStateType {
   showDevices: boolean;
   openMenuBar: boolean;
 }
-export class Dashboard extends Component<DashboardPropsType, DashboardStateType> {
+export class Dashboard extends Component<
+  DashboardPropsType,
+  DashboardStateType
+> {
   constructor(props) {
     super(props);
     this.state = {

@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { approveDevice } from '../../actions/api';
 import { StateType } from '../../reducers';
-import {DASHBOARD_PATH, SIGN_IN_PATH} from '../../App/AppRouter';
+import { DASHBOARD_PATH, SIGN_IN_PATH } from '../../App/AppRouter';
 import { push } from 'connected-react-router';
 
 const StyledContainer = styled.div`

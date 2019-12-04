@@ -19,7 +19,7 @@ import {
   START_DEVICE_AUTHENTICATION
 } from '../actions/device';
 import { getCurrentUser } from '../actions/api';
-import {DASHBOARD_PATH} from "../App/AppRouter";
+import { DASHBOARD_PATH } from '../App/AppRouter';
 
 function* refreshTokenSaga() {
   try {

@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
 import { fetchStart } from '@chilco/middlewares';
-import {DASHBOARD_PATH, SIGN_IN_PATH} from '../../App/AppRouter';
+import { DASHBOARD_PATH, SIGN_IN_PATH } from '../../App/AppRouter';
 
 export type REGISTER_ACTION_TYPE = 'REGISTER';
 export const REGISTER_ACTION: REGISTER_ACTION_TYPE = 'REGISTER';

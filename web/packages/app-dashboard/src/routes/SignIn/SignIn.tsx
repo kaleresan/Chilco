@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   },
   error: {
-    color: "red"
+    color: 'red'
   }
 }));
 
@@ -69,8 +69,8 @@ export function SignIn({  }: SignUpPropsType) {
     event.preventDefault();
     dispatch(login(state));
 
-    setState({ ...state, password: '' })
-    setError(true)
+    setState({ ...state, password: '' });
+    setError(true);
   };
 
   return (
@@ -115,9 +115,9 @@ export function SignIn({  }: SignUpPropsType) {
               label="Remember me"
             />
             {error ? (
-            <Typography className={classes.error} color="textSecondary">
-            Wrong Password and Email combination!
-            </Typography>
+              <Typography className={classes.error} color="textSecondary">
+                Wrong Password and Email combination!
+              </Typography>
             ) : null}
             <Button
               type="submit"

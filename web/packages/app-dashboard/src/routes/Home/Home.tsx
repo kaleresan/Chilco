@@ -12,25 +12,25 @@ import Copyright from '../../components/CopyRight';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   card: {
-    minWidth: 275,
+    minWidth: 275
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)',
+    transform: 'scale(0.8)'
   },
   pos: {
-    marginBottom: 12,
-  },
+    marginBottom: 12
+  }
 }));
 
 export default function ButtonAppBar() {
@@ -43,35 +43,50 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Chilco
           </Typography>
-          <Button color="inherit" href="/signIn">Login</Button>
+          <Button color="inherit" href="/signIn">
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
 
       <Card className={classes.card}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          Download Chilco
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-        Version 1.0
-        </Typography>
-        <Typography variant="body2" component="p">
-          For Windows 7 x64 or later
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-        <Link href="https://github.com/kaleresan/Chilco/releases" color="inherit">
-        Release Notes
-        </Link>
-        </Typography>
-      </CardContent>
-      <CardActions>
-      <Button size="small" variant="outlined" color="primary" href="https://github.com/kaleresan/Chilco/releases/download/1.0/ChilcoInstaller.msi">
-      Download
-      </Button>
-      <Button size="small" variant="outlined" color="secondary" href="https://github.com/kaleresan/Chilco/releases">
-      Earlier Versions
-      </Button>
-      </CardActions>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            Download Chilco
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            Version 1.0
+          </Typography>
+          <Typography variant="body2" component="p">
+            For Windows 7 x64 or later
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            <Link
+              href="https://github.com/kaleresan/Chilco/releases"
+              color="inherit"
+            >
+              Release Notes
+            </Link>
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            size="small"
+            variant="outlined"
+            color="primary"
+            href="https://github.com/kaleresan/Chilco/releases/download/1.0/ChilcoInstaller.msi"
+          >
+            Download
+          </Button>
+          <Button
+            size="small"
+            variant="outlined"
+            color="secondary"
+            href="https://github.com/kaleresan/Chilco/releases"
+          >
+            Earlier Versions
+          </Button>
+        </CardActions>
       </Card>
 
       <Copyright />

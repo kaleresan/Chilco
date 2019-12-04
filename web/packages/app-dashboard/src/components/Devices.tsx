@@ -39,9 +39,7 @@ function statusColor(isOnline) {
   return { backgroundColor: '#d81b60' };
 }
 
-const rows = [
-  createData('Default-PC', 'Default User', true)
-];
+const rows = [createData('Default-PC', 'Default User', true)];
 
 interface DevicesPropsType {
   showDevices: boolean;
