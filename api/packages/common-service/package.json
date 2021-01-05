@@ -23,7 +23,7 @@
     "@types/express-session": "^1.15.13",
     "@types/socket.io": "^2.1.2",
     "@types/sequelize": "^4.28.6",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
